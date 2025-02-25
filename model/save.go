@@ -2,24 +2,31 @@ package model
 
 import (
 	"filmeta/tmdb"
+	"fmt"
 	"strings"
 )
 
-func (m *Model) Save(f tmdb.FilmMeta) (int64, error) {
+func (m *Model) Save(f tmdb.FilmWithCredits) error {
 
 	iFilmID := f.Id
+
+	tx, err := m.DbHandle.Begin()
+	if err != nil {
+		return fmt.Errorf("error starting transaction: %w", err)
+	}
+	defer tx.Rollback()
 
 	qry := `REPLACE INTO film 
 				(iFilmID, vTitle, vOriginalTitle, vOverView, vLanguage, vBackdropPath, vPosterPath, dtReleaseDate)
 			VALUES (
-				?, ?, NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), ?, ?, ?
+				?, ?, NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), ?, ?, NULLIF(?, '')
 			)`
 
-	_, err := m.DbHandle.Exec(qry,
+	_, err = tx.Exec(qry,
 		iFilmID, f.Title, f.OriginalTitle, f.Overview, f.OriginalLanguage, f.BackdropPath, f.PosterPath, f.ReleaseDate,
 	)
 	if err != nil {
-		return 0, err
+		return fmt.Errorf("error inserting film: %w", err)
 	}
 
 	genreCount := len(f.Genres)
@@ -38,51 +45,51 @@ func (m *Model) Save(f tmdb.FilmMeta) (int64, error) {
 			AS new
 			ON DUPLICATE KEY UPDATE 
 			vGenreName  = new.vGenreName`
-	_, err = m.DbHandle.Exec(gQry, bindValues...)
+	_, err = tx.Exec(gQry, bindValues...)
 	if err != nil {
-		return 0, err
+		return fmt.Errorf("error inserting genres: %w", err)
 	}
 
 	delQry := `DELETE FROM film_credit WHERE iFilmID = ?`
-	_, err = m.DbHandle.Exec(delQry, iFilmID)
+	_, err = tx.Exec(delQry, iFilmID)
 	if err != nil {
-		return 0, err
+		return fmt.Errorf("error deleting credits: %w", err)
 	}
 
-	cast := f.Cast
+	cast := f.Credits.Cast
 	castCount := len(cast)
-	bindStr = `(?, ?, ?, ?, ?)`
+	bindStr = `(?, ?, ?, ?, ?, ?)`
 	bindArray = make([]string, castCount)
 	bindValues = []any{}
 	for i := range castCount {
 		bindArray[i] = bindStr
-		bindValues = append(bindValues, iFilmID, "cast", cast[i].Name, cast[i].Role, i)
+		bindValues = append(bindValues, iFilmID, "cast", cast[i].Name, cast[i].Character, cast[i].ProfilePath, cast[i].Order)
 	}
 	castQry := `INSERT INTO film_credit 
-					(iFilmID, eCreditType, vName, vRole, iOrderID)
+					(iFilmID, eCreditType, vName, vRole, vProfilePath, iOrderID)
 				VALUES
 				` + strings.Join(bindArray, ", ")
-	_, err = m.DbHandle.Exec(castQry, bindValues...)
+	_, err = tx.Exec(castQry, bindValues...)
 	if err != nil {
-		return 0, nil
+		return fmt.Errorf("error inserting cast row: %w", err)
 	}
 
-	crew := f.Crew
-	bindStr = `(?, ?, ?, ?)`
+	crew := f.Credits.Crew
+	bindStr = `(?, ?, ?, ?, ?)`
 	bindArray = []string{}
 	bindValues = []any{}
-	for role, name := range crew {
+	for i := range len(crew) {
 		bindArray = append(bindArray, bindStr)
-		bindValues = append(bindValues, iFilmID, "crew", name, role)
+		bindValues = append(bindValues, iFilmID, "crew", crew[i].Name, crew[i].Job, crew[i].ProfilePath)
 	}
 	crewQry := `INSERT INTO film_credit 
-					(iFilmID, eCreditType, vName, vRole)
+					(iFilmID, eCreditType, vName, vRole, vProfilePath)
 				VALUES
 				` + strings.Join(bindArray, ", ")
-	_, err = m.DbHandle.Exec(crewQry, bindValues...)
+	_, err = tx.Exec(crewQry, bindValues...)
 	if err != nil {
-		return 0, nil
+		return fmt.Errorf("error inserting crew row: %w", err)
 	}
 
-	return 0, err
+	return nil
 }

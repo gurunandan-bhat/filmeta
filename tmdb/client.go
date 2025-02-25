@@ -54,7 +54,7 @@ func (c *Client) sendRequest(req *http.Request, v interface{}) error {
 		return fmt.Errorf("error with status %s: %s", res.Status, errStr)
 	}
 
-	if err = json.NewDecoder(res.Body).Decode(&v); err != nil {
+	if err = json.NewDecoder(res.Body).Decode(v); err != nil {
 		return fmt.Errorf("error unmarshaling body: %w", err)
 	}
 

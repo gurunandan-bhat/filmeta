@@ -11,24 +11,6 @@ type Genre struct {
 	Name string `json:"name,omitempty"`
 }
 
-type Film struct {
-	Id               int     `json:"id,omitempty"`
-	Title            string  `json:"title,omitempty"`
-	OriginalTitle    string  `json:"original_title,omitempty"`
-	OriginalLanguage string  `json:"original_language,omitempty"`
-	GenreIds         []int   `json:"genre_ids,omitempty"`
-	Genres           []Genre `json:"genres,omitempty"`
-	Overview         string  `json:"overview,omitempty"`
-	BackdropPath     string  `json:"backdrop_path,omitempty"`
-	PosterPath       string  `json:"poster_path,omitempty"`
-	ReleaseDate      string  `json:"release_date,omitempty"`
-}
-
-type CastCredit struct {
-	Name string `json:"name,omitempty"`
-	Role string `json:"role,omitempty"`
-}
-
 type FilmMeta struct {
 	Film `json:"film,omitempty"`
 	Cast []CastCredit      `json:"cast,omitempty"`

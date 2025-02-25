@@ -7,19 +7,21 @@ import (
 )
 
 type CastMember struct {
-	Id        int    `json:"id,omitempty"`
-	Order     int    `json:"order,omitempty"`
-	Name      string `json:"name,omitempty"`
-	Character string `json:"character,omitempty"`
-	Gender    int    `json:"gender,omitempty"`
+	Id          int    `json:"id,omitempty"`
+	Order       int    `json:"order"`
+	Name        string `json:"name,omitempty"`
+	ProfilePath string `json:"profile_path,omitempty"`
+	Character   string `json:"character,omitempty"`
+	Gender      int    `json:"gender,omitempty"`
 }
 
 type CrewMember struct {
-	Id         int    `json:"id,omitempty"`
-	Name       string `json:"name,omitempty"`
-	Job        string `json:"job,omitempty"`
-	Department string `json:"department,omitempty"`
-	Gender     int    `json:"gender,omitempty"`
+	Id          int    `json:"id,omitempty"`
+	Name        string `json:"name,omitempty"`
+	ProfilePath string `json:"profile_path,omitempty"`
+	Job         string `json:"job,omitempty"`
+	Department  string `json:"department,omitempty"`
+	Gender      int    `json:"gender,omitempty"`
 }
 
 type Credits struct {
