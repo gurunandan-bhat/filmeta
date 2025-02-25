@@ -30,7 +30,7 @@ var saveCmd = &cobra.Command{
 		}
 
 		client := tmdb.NewClient(cfg.TMDB.APIKey)
-		film, err := client.FilmWithCredits(context.Background(), id)
+		film, err := client.Film(context.Background(), id)
 		if err != nil {
 			return err
 		}
