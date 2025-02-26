@@ -18,7 +18,6 @@ var filmCmd = &cobra.Command{
 	Use:   "film",
 	Short: "Fetch film info with credits",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("film called")
 
 		filmID, err := cmd.Flags().GetInt("film-id")
 		if err != nil {

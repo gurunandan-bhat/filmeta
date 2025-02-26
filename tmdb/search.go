@@ -23,7 +23,7 @@ type SearchOptions struct {
 	Year         string `schema:"year,omitempty"`
 }
 
-func (c *Client) Search(ctx context.Context, options *SearchOptions) (*SearchResults, error) {
+func (c *Client) Search(ctx context.Context, opts *SearchOptions) (*SearchResults, error) {
 
 	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("%s/search/movie", c.BaseURL), nil)
 	if err != nil {
@@ -31,12 +31,11 @@ func (c *Client) Search(ctx context.Context, options *SearchOptions) (*SearchRes
 	}
 
 	v := url.Values{}
-	if err := encoder.Encode(options, v); err != nil {
+	if err := encoder.Encode(opts, v); err != nil {
 		return nil, fmt.Errorf("error encoding query params: %w", err)
 	}
 
 	req.URL.RawQuery = v.Encode()
-	fmt.Println("URL: ", req.URL.String())
 	results := SearchResults{}
 	if err := c.sendRequest(req, &results); err != nil {
 		return nil, fmt.Errorf("response error: %w", err)

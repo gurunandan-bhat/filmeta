@@ -8,7 +8,6 @@ import (
 	"filmeta/config"
 	"filmeta/model"
 	"filmeta/tmdb"
-	"fmt"
 
 	"github.com/spf13/cobra"
 )
@@ -18,7 +17,6 @@ var saveCmd = &cobra.Command{
 	Use:   "save",
 	Short: "A brief description of your command",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("save called")
 
 		id, err := cmd.Flags().GetInt("film-id")
 		if err != nil {
