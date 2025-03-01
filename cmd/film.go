@@ -24,12 +24,20 @@ var filmCmd = &cobra.Command{
 			return err
 		}
 
+		tv, err := cmd.Flags().GetBool("tv")
+		if err != nil {
+			return err
+		}
+		showType := "movie"
+		if tv {
+			showType = "tv"
+		}
 		cfg, err := config.Configuration()
 		if err != nil {
 			return err
 		}
 		client := tmdb.NewClient(cfg.TMDB.APIKey)
-		film, err := client.Film(context.Background(), filmID)
+		film, err := client.Film(context.Background(), showType, filmID)
 		if err != nil {
 			return err
 		}
@@ -57,5 +65,6 @@ func init() {
 	// is called directly, e.g.:
 	// filmCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	filmCmd.Flags().IntP("film-id", "i", 0, "TMDB id of film to display film info")
+	filmCmd.Flags().BoolP("tv", "t", false, "this is a tv show")
 	cobra.MarkFlagRequired(filmCmd.Flags(), "film-id")
 }

@@ -23,9 +23,14 @@ type SearchOptions struct {
 	Year         string `schema:"year,omitempty"`
 }
 
-func (c *Client) Search(ctx context.Context, opts *SearchOptions) (*SearchResults, error) {
+func (c *Client) Search(ctx context.Context, serial bool, opts *SearchOptions) (*SearchResults, error) {
 
-	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("%s/search/movie", c.BaseURL), nil)
+	showType := "movie"
+	if serial {
+		showType = "tv"
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("%s/search/%s", c.BaseURL, showType), nil)
 	if err != nil {
 		return nil, fmt.Errorf("error initializing request: %w", err)
 	}

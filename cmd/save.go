@@ -8,6 +8,7 @@ import (
 	"filmeta/config"
 	"filmeta/model"
 	"filmeta/tmdb"
+	"fmt"
 
 	"github.com/spf13/cobra"
 )
@@ -22,23 +23,35 @@ var saveCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
+
+		tv, err := cmd.Flags().GetBool("tv")
+		if err != nil {
+			return err
+		}
 		cfg, err := config.Configuration()
 		if err != nil {
 			return err
 		}
 
+		showType := "movie"
+		if tv {
+			showType = "tv"
+		}
+
 		client := tmdb.NewClient(cfg.TMDB.APIKey)
-		film, err := client.Film(context.Background(), id)
+		film, err := client.Film(context.Background(), showType, id)
 		if err != nil {
 			return err
 		}
+
+		fmt.Printf("%#v\n", film)
 
 		model, err := model.NewModel(cfg)
 		if err != nil {
 			return err
 		}
 
-		if err := model.Save(film); err != nil {
+		if err := model.Save(film, showType); err != nil {
 			return err
 		}
 
@@ -59,5 +72,6 @@ func init() {
 	// is called directly, e.g.:
 	// saveCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	saveCmd.Flags().IntP("film-id", "i", 0, "TMDB id of film to save")
+	saveCmd.Flags().BoolP("tv", "t", false, "This is a television serial")
 	cobra.MarkFlagRequired(saveCmd.Flags(), "film-id")
 }

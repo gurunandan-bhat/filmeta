@@ -28,6 +28,11 @@ var searchCmd = &cobra.Command{
 			return err
 		}
 
+		tv, err := cmd.Flags().GetBool("tv")
+		if err != nil {
+			return err
+		}
+
 		cfg, err := config.Configuration()
 		if err != nil {
 			return err
@@ -48,7 +53,7 @@ var searchCmd = &cobra.Command{
 			opts.Year = strconv.Itoa(year)
 		}
 
-		films, err := client.FilmSearch(context.Background(), &opts)
+		films, err := client.ShowSearch(context.Background(), tv, &opts)
 		if err != nil {
 			return err
 		}
@@ -77,6 +82,7 @@ func init() {
 	// searchCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	searchCmd.Flags().StringP("query", "q", "", "title to search for")
 	searchCmd.Flags().StringP("language", "l", "en", "language of the output")
+	searchCmd.Flags().BoolP("tv", "t", false, "search in television serials not movies")
 	searchCmd.Flags().IntP("year", "y", 0, "year of release")
 
 	cobra.MarkFlagRequired(searchCmd.Flags(), "query")

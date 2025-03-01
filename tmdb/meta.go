@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func (c *Client) FilmSearch(ctx context.Context, opts *SearchOptions) (*[]Film, error) {
+func (c *Client) ShowSearch(ctx context.Context, tv bool, opts *SearchOptions) (*[]Film, error) {
 
 	if opts.Page == 0 {
 		opts.Page = 1
@@ -13,7 +13,7 @@ func (c *Client) FilmSearch(ctx context.Context, opts *SearchOptions) (*[]Film, 
 
 	films := []Film{}
 	for {
-		results, err := c.Search(context.Background(), opts)
+		results, err := c.Search(context.Background(), tv, opts)
 		if err != nil {
 			log.Fatalf("err calling search: %s", err)
 		}

@@ -9,6 +9,7 @@ import (
 type Film struct {
 	Id               int     `json:"id,omitempty"`
 	Title            string  `json:"title,omitempty"`
+	Name             string  `json:"name,omitempty"`
 	OriginalTitle    string  `json:"original_title,omitempty"`
 	OriginalLanguage string  `json:"original_language,omitempty"`
 	GenreIds         []int   `json:"genre_ids,omitempty"`
@@ -55,10 +56,10 @@ type FilmWithCredits struct {
 	} `json:"credits,omitempty"`
 }
 
-func (client *Client) Film(ctx context.Context, filmID int) (FilmWithCredits, error) {
+func (client *Client) Film(ctx context.Context, showType string, filmID int) (FilmWithCredits, error) {
 
 	film := FilmWithCredits{}
-	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("%s/movie/%d?append_to_response=credits", client.BaseURL, filmID), nil)
+	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("%s/%s/%d?append_to_response=credits", client.BaseURL, showType, filmID), nil)
 	if err != nil {
 		return film, fmt.Errorf("error initializing request: %w", err)
 	}

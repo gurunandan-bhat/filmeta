@@ -6,9 +6,9 @@ import (
 	"strings"
 )
 
-func (m *Model) Save(f tmdb.FilmWithCredits) error {
+func (m *Model) Save(f tmdb.FilmWithCredits, showType string) error {
 
-	iFilmID := f.Id
+	iTMDBID := f.Id
 
 	tx, err := m.DbHandle.Begin()
 	if err != nil {
@@ -17,16 +17,25 @@ func (m *Model) Save(f tmdb.FilmWithCredits) error {
 	defer tx.Rollback()
 
 	qry := `REPLACE INTO film 
-				(iFilmID, vTitle, vOriginalTitle, vOverView, vLanguage, vBackdropPath, vPosterPath, dtReleaseDate)
+				(iTMDBID, vTitle, vOriginalTitle, vType, vOverView, vLanguage, vBackdropPath, vPosterPath, dtReleaseDate)
 			VALUES (
-				?, ?, NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), ?, ?, NULLIF(?, '')
+				?, ?, NULLIF(?, ''), ?, NULLIF(?, ''), NULLIF(?, ''), ?, ?, NULLIF(?, '')
 			)`
 
-	_, err = tx.Exec(qry,
-		iFilmID, f.Title, f.OriginalTitle, f.Overview, f.OriginalLanguage, f.BackdropPath, f.PosterPath, f.ReleaseDate,
+	title := f.Title
+	if title == "" {
+		title = f.Name
+	}
+	result, err := tx.Exec(qry,
+		iTMDBID, title, f.OriginalTitle, showType, f.Overview, f.OriginalLanguage, f.BackdropPath, f.PosterPath, f.ReleaseDate,
 	)
 	if err != nil {
 		return fmt.Errorf("error inserting film: %w", err)
+	}
+
+	iFilmID, err := result.LastInsertId()
+	if err != nil {
+		return fmt.Errorf("error fetching inserted id")
 	}
 
 	genreCount := len(f.Genres)
@@ -89,6 +98,10 @@ func (m *Model) Save(f tmdb.FilmWithCredits) error {
 	_, err = tx.Exec(crewQry, bindValues...)
 	if err != nil {
 		return fmt.Errorf("error inserting crew row: %w", err)
+	}
+
+	if err = tx.Commit(); err != nil {
+		return err
 	}
 
 	return nil
