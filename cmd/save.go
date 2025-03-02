@@ -60,14 +60,15 @@ var saveCmd = &cobra.Command{
 			return err
 		}
 
-		fName, err := cmd.Flags().GetString("basename")
+		fName, err := cmd.Flags().GetString("fcg-name")
 		if err != nil {
-			return fmt.Errorf("error fetching basename: %w", err)
+			return fmt.Errorf("error fetching fcg-name: %w", err)
 		}
 		if fName == "" {
-			// no file name supplied: generate default
-			fName = fmt.Sprintf("%x.json", md5.Sum([]byte(film.Title)))
+			fName = film.Title
 		}
+		film.FCGTitle = fName
+		fName = fmt.Sprintf("%x.json", md5.Sum([]byte(fName)))
 		oFile := filepath.Join(outPath, fName)
 
 		jsonBytes, err := json.MarshalIndent(film, "", "\t")
@@ -109,7 +110,7 @@ func init() {
 	// saveCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	saveCmd.Flags().BoolP("tv", "t", false, "This is a television serial")
 	saveCmd.Flags().StringP("output-dir", "o", "", "Output directory to save JSON")
-	saveCmd.Flags().StringP("basename", "f", "", "Basename of file to save JSON (uses md5(Title) if none supplied)")
+	saveCmd.Flags().StringP("fcg-name", "f", "", "Name of film in FCG to save JSON (uses md5(Title).json if none supplied)")
 
 	cobra.MarkFlagRequired(saveCmd.Flags(), "output-dir")
 }

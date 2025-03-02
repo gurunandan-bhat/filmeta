@@ -17,17 +17,13 @@ func (m *Model) Save(f tmdb.FilmWithCredits, showType string) error {
 	defer tx.Rollback()
 
 	qry := `REPLACE INTO film 
-				(iTMDBID, vTitle, vOriginalTitle, vType, vOverView, vLanguage, vBackdropPath, vPosterPath, dtReleaseDate)
+				(iTMDBID, vTitle, vFCGTitle, vOriginalTitle, vType, vOverView, vLanguage, vBackdropPath, vPosterPath, dtReleaseDate)
 			VALUES (
-				?, ?, NULLIF(?, ''), ?, NULLIF(?, ''), NULLIF(?, ''), ?, ?, NULLIF(?, '')
+				?, NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), ?, NULLIF(?, ''), NULLIF(?, ''), ?, ?, NULLIF(?, '')
 			)`
 
-	title := f.Title
-	if title == "" {
-		title = f.Name
-	}
 	result, err := tx.Exec(qry,
-		iTMDBID, title, f.OriginalTitle, showType, f.Overview, f.OriginalLanguage, f.BackdropPath, f.PosterPath, f.ReleaseDate,
+		iTMDBID, f.Title, f.FCGTitle, f.OriginalTitle, showType, f.Overview, f.OriginalLanguage, f.BackdropPath, f.PosterPath, f.ReleaseDate,
 	)
 	if err != nil {
 		return fmt.Errorf("error inserting film: %w", err)

@@ -9,7 +9,7 @@ import (
 type Film struct {
 	Id               int     `json:"id,omitempty"`
 	Title            string  `json:"title,omitempty"`
-	Name             string  `json:"name,omitempty"`
+	FCGTitle         string  `json:"fcg_title,omitempty"`
 	OriginalTitle    string  `json:"original_title,omitempty"`
 	OriginalLanguage string  `json:"original_language,omitempty"`
 	GenreIds         []int   `json:"genre_ids,omitempty"`
