@@ -16,13 +16,15 @@ import (
 
 // searchCmd represents the search command
 var searchCmd = &cobra.Command{
-	Use:   "search",
+	Use:   `search "query-string"`,
 	Short: "Search a film by title",
+	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		query, err := cmd.Flags().GetString("query")
-		if err != nil {
-			return err
+		query := args[0]
+		if query == "" {
+			return fmt.Errorf("query must be a non-empty string")
 		}
+
 		language, err := cmd.Flags().GetString("language")
 		if err != nil {
 			return err
@@ -83,7 +85,6 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// searchCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	searchCmd.Flags().StringP("query", "q", "", "title to search for")
 	searchCmd.Flags().StringP("language", "l", "en", "language of the output")
 	searchCmd.Flags().BoolP("tv", "t", false, "search in television serials not movies")
 	searchCmd.Flags().IntP("year", "y", 0, "year of release")
