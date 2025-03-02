@@ -88,6 +88,4 @@ func init() {
 	searchCmd.Flags().StringP("language", "l", "en", "language of the output")
 	searchCmd.Flags().BoolP("tv", "t", false, "search in television serials not movies")
 	searchCmd.Flags().IntP("year", "y", 0, "year of release")
-
-	cobra.MarkFlagRequired(searchCmd.Flags(), "query")
 }

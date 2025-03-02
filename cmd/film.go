@@ -9,19 +9,22 @@ import (
 	"filmeta/config"
 	"filmeta/tmdb"
 	"fmt"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
 // filmCmd represents the film command
 var filmCmd = &cobra.Command{
-	Use:   "film",
+	Use:   "film film-id",
 	Short: "Fetch film info with credits",
+	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		filmID, err := cmd.Flags().GetInt("film-id")
-		if err != nil {
-			return err
+		id := args[0]
+		filmID, err := strconv.Atoi(id)
+		if err != nil || filmID == 0 {
+			return fmt.Errorf("arg must be a non-zero integer")
 		}
 
 		tv, err := cmd.Flags().GetBool("tv")
@@ -64,7 +67,6 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// filmCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	filmCmd.Flags().IntP("film-id", "i", 0, "TMDB id of film to display film info")
 	filmCmd.Flags().BoolP("tv", "t", false, "this is a tv show")
 	cobra.MarkFlagRequired(filmCmd.Flags(), "film-id")
 }

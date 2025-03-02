@@ -5,6 +5,7 @@ package cmd
 
 import (
 	"context"
+	"crypto/md5"
 	"encoding/json"
 	"filmeta/config"
 	"filmeta/model"
@@ -12,19 +13,22 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
 // saveCmd represents the save command
 var saveCmd = &cobra.Command{
-	Use:   "save",
+	Use:   "save -o output-dir",
 	Short: "A brief description of your command",
+	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		id, err := cmd.Flags().GetInt("film-id")
-		if err != nil {
-			return err
+		id := args[0]
+		filmID, err := strconv.Atoi(id)
+		if err != nil || filmID == 0 {
+			return fmt.Errorf("arg must be a non-zero integer")
 		}
 
 		tv, err := cmd.Flags().GetBool("tv")
@@ -36,7 +40,7 @@ var saveCmd = &cobra.Command{
 			showType = "tv"
 		}
 
-		outPath, err := cmd.Flags().GetString("output")
+		outPath, err := cmd.Flags().GetString("output-dir")
 		if err != nil {
 			return err
 		}
@@ -51,13 +55,21 @@ var saveCmd = &cobra.Command{
 		}
 
 		client := tmdb.NewClient(cfg.TMDB.APIKey)
-		film, err := client.Film(context.Background(), showType, id)
+		film, err := client.Film(context.Background(), showType, filmID)
 		if err != nil {
 			return err
 		}
 
-		fName := fmt.Sprintf("%s-%d.json", showType, film.Id)
+		fName, err := cmd.Flags().GetString("basename")
+		if err != nil {
+			return fmt.Errorf("error fetching basename: %w", err)
+		}
+		if fName == "" {
+			// no file name supplied: generate default
+			fName = fmt.Sprintf("%x.json", md5.Sum([]byte(film.Title)))
+		}
 		oFile := filepath.Join(outPath, fName)
+
 		jsonBytes, err := json.MarshalIndent(film, "", "\t")
 		if err != nil {
 			return fmt.Errorf("error marshaling film: %w", err)
@@ -95,11 +107,11 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// saveCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	saveCmd.Flags().IntP("film-id", "i", 0, "TMDB id of film to save")
 	saveCmd.Flags().BoolP("tv", "t", false, "This is a television serial")
-	saveCmd.Flags().StringP("output", "o", "", "Save data as JSON in output file")
+	saveCmd.Flags().StringP("output-dir", "o", "", "Output directory to save JSON")
+	saveCmd.Flags().StringP("basename", "f", "", "Basename of file to save JSON (uses md5(Title) if none supplied)")
 
-	cobra.MarkFlagRequired(saveCmd.Flags(), "film-id")
+	cobra.MarkFlagRequired(saveCmd.Flags(), "output-dir")
 }
 
 func mkAbsPath(path string) (string, error) {
