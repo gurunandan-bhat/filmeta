@@ -3,6 +3,7 @@ package tmdb
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 )
@@ -23,12 +24,30 @@ type SearchOptions struct {
 	Year         string `schema:"year,omitempty"`
 }
 
-func (c *Client) Search(ctx context.Context, serial bool, opts *SearchOptions) (*SearchResults, error) {
+func (c *Client) ShowSearch(ctx context.Context, showType string, opts *SearchOptions) (*[]Film, error) {
 
-	showType := "movie"
-	if serial {
-		showType = "tv"
+	if opts.Page == 0 {
+		opts.Page = 1
 	}
+
+	films := []Film{}
+	for {
+		results, err := c.search(context.Background(), showType, opts)
+		if err != nil {
+			log.Fatalf("err calling search: %s", err)
+		}
+		films = append(films, results.Results...)
+		if results.Page == results.TotalPages {
+			break
+		}
+
+		opts.Page = opts.Page + 1
+	}
+
+	return &films, nil
+}
+
+func (c *Client) search(ctx context.Context, showType string, opts *SearchOptions) (*SearchResults, error) {
 
 	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("%s/search/%s", c.BaseURL, showType), nil)
 	if err != nil {

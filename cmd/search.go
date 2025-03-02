@@ -32,7 +32,10 @@ var searchCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-
+		showType := "movie"
+		if tv {
+			showType = "tv"
+		}
 		cfg, err := config.Configuration()
 		if err != nil {
 			return err
@@ -53,7 +56,7 @@ var searchCmd = &cobra.Command{
 			opts.Year = strconv.Itoa(year)
 		}
 
-		films, err := client.ShowSearch(context.Background(), tv, &opts)
+		films, err := client.ShowSearch(context.Background(), showType, &opts)
 		if err != nil {
 			return err
 		}
