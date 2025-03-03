@@ -97,8 +97,10 @@ var saveCmd = &cobra.Command{
 			return fmt.Errorf("error creating directory %s: %w", imgOutPath, err)
 		}
 
-		if err := client.Poster(context.Background(), film.PosterPath, imgOutPath); err != nil {
-			return fmt.Errorf("error fetching image: %w", err)
+		if film.PosterPath != "" {
+			if err := client.Poster(context.Background(), film.PosterPath, imgOutPath); err != nil {
+				return fmt.Errorf("error fetching image: %w", err)
+			}
 		}
 
 		return nil

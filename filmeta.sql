@@ -27,6 +27,7 @@ CREATE TABLE `film` (
   `iTMDBID` bigint unsigned NOT NULL,
   `vType` varchar(8) NOT NULL,
   `vTitle` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `vFCGTitle` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `vOriginalTitle` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `vOverview` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `vLanguage` varchar(16) DEFAULT NULL,
@@ -106,4 +107,4 @@ CREATE TABLE `mdbsession` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-02  9:27:30
+-- Dump completed on 2025-03-03 21:05:11

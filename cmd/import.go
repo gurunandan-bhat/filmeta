@@ -91,6 +91,9 @@ var importCmd = &cobra.Command{
 				return err
 			}
 			film.FCGTitle = fcgTitle
+			if film.Title == "" {
+				film.Title = film.Name
+			}
 
 			fName := fmt.Sprintf("%x.json", md5.Sum([]byte(fcgTitle)))
 			oFileName := filepath.Join(outPath, fName)

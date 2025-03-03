@@ -22,8 +22,12 @@ func (m *Model) Save(f tmdb.FilmWithCredits, showType string) error {
 				?, NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), ?, NULLIF(?, ''), NULLIF(?, ''), ?, ?, NULLIF(?, '')
 			)`
 
+	title := f.Title
+	if title == "" {
+		title = f.Name
+	}
 	result, err := tx.Exec(qry,
-		iTMDBID, f.Title, f.FCGTitle, f.OriginalTitle, showType, f.Overview, f.OriginalLanguage, f.BackdropPath, f.PosterPath, f.ReleaseDate,
+		iTMDBID, title, f.FCGTitle, f.OriginalTitle, showType, f.Overview, f.OriginalLanguage, f.BackdropPath, f.PosterPath, f.ReleaseDate,
 	)
 	if err != nil {
 		return fmt.Errorf("error inserting film: %w", err)
