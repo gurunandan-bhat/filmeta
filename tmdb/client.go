@@ -32,7 +32,7 @@ func NewClient(apiKey string) *Client {
 
 var encoder = schema.NewEncoder()
 
-func (c *Client) sendRequest(req *http.Request, v interface{}) error {
+func (c *Client) sendRequest(req *http.Request, v any) error {
 
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	req.Header.Set("Accept", "application/json; charset=utf-8")
@@ -51,7 +51,16 @@ func (c *Client) sendRequest(req *http.Request, v interface{}) error {
 		if err != nil {
 			errStr = err.Error()
 		}
-		return fmt.Errorf("error with status %s: %s", res.Status, errStr)
+		return fmt.Errorf("error with status %s for URL %s: %s", res.Status, req.URL.String(), errStr)
+	}
+
+	f, isWriter := v.(io.Writer)
+	if isWriter {
+		_, err = io.Copy(f, res.Body)
+		if err != nil {
+			return fmt.Errorf("error copying image: %w", err)
+		}
+		return nil
 	}
 
 	if err = json.NewDecoder(res.Body).Decode(v); err != nil {

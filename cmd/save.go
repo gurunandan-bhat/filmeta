@@ -92,6 +92,15 @@ var saveCmd = &cobra.Command{
 			return fmt.Errorf("error saving data to db: %w", err)
 		}
 
+		imgOutPath := filepath.Join(outPath, "posters")
+		if err := os.Mkdir(imgOutPath, 0755); err != nil && !os.IsExist(err) {
+			return fmt.Errorf("error creating directory %s: %w", imgOutPath, err)
+		}
+
+		if err := client.Poster(context.Background(), film.PosterPath, imgOutPath); err != nil {
+			return fmt.Errorf("error fetching image: %w", err)
+		}
+
 		return nil
 	},
 }
@@ -123,7 +132,7 @@ func mkAbsPath(path string) (string, error) {
 
 	if _, err := os.Stat(path); err != nil {
 		if os.IsNotExist(err) {
-			if err := os.Mkdir(path, 0755); err != nil {
+			if err := os.MkdirAll(path, 0755); err != nil {
 				return "", fmt.Errorf("error creating output directory %s: %w", path, err)
 			}
 		} else {
