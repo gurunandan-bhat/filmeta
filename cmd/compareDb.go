@@ -58,7 +58,10 @@ var compareDbCmd = &cobra.Command{
 				notFound = append(notFound, film)
 			}
 		}
-		jsonBytes, err := json.MarshalIndent(notFound, "", "\t")
+
+		var data Data
+		data.Metadata = notFound
+		jsonBytes, err := json.MarshalIndent(data, "", "\t")
 		if err != nil {
 			return fmt.Errorf("error marshaling films not found: %w", err)
 		}
