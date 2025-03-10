@@ -9,20 +9,20 @@ import (
 	"path/filepath"
 )
 
-func (c *Client) Poster(ctx context.Context, posterPath, outDir string) error {
+func (c *Client) TMDBImage(ctx context.Context, imgPath, outDir string) error {
 
 	cfg, err := config.Configuration()
 	if err != nil {
 		return fmt.Errorf("error fetching configuration: %w", err)
 	}
 	imgBase := cfg.TMDB.ImgBase
-	imgURL := fmt.Sprintf("%s%s", imgBase, posterPath)
+	imgURL := fmt.Sprintf("%s%s", imgBase, imgPath)
 	req, err := http.NewRequestWithContext(ctx, "GET", imgURL, nil)
 	if err != nil {
 		return fmt.Errorf("error initializing request: %w", err)
 	}
 
-	fPath := filepath.Join(outDir, filepath.Base(posterPath))
+	fPath := filepath.Join(outDir, filepath.Base(imgPath))
 	file, err := os.Create(fPath)
 	if err != nil {
 		return fmt.Errorf("error opening file %s: %w", fPath, err)

@@ -92,13 +92,23 @@ var saveCmd = &cobra.Command{
 			return fmt.Errorf("error saving data to db: %w", err)
 		}
 
-		imgOutPath := filepath.Join(outPath, "posters")
-		if err := os.Mkdir(imgOutPath, 0755); err != nil && !os.IsExist(err) {
-			return fmt.Errorf("error creating directory %s: %w", imgOutPath, err)
+		posterOutPath := filepath.Join(outPath, "posters")
+		if err := os.Mkdir(posterOutPath, 0755); err != nil && !os.IsExist(err) {
+			return fmt.Errorf("error creating directory %s: %w", posterOutPath, err)
+		}
+		bdropOutPath := filepath.Join(outPath, "backdrops")
+		if err := os.Mkdir(bdropOutPath, 0755); err != nil && !os.IsExist(err) {
+			return fmt.Errorf("error creating directory %s: %w", bdropOutPath, err)
 		}
 
 		if film.PosterPath != "" {
-			if err := client.Poster(context.Background(), film.PosterPath, imgOutPath); err != nil {
+			if err := client.TMDBImage(context.Background(), film.PosterPath, posterOutPath); err != nil {
+				return fmt.Errorf("error fetching image: %w", err)
+			}
+		}
+
+		if film.BackdropPath != "" {
+			if err := client.TMDBImage(context.Background(), film.BackdropPath, bdropOutPath); err != nil {
 				return fmt.Errorf("error fetching image: %w", err)
 			}
 		}
