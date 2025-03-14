@@ -117,13 +117,18 @@ var importCmd = &cobra.Command{
 				return fmt.Errorf("error saving data to db: %w", err)
 			}
 
+			cfg, err := config.Configuration()
+			if err != nil {
+				return fmt.Errorf("error fetching configuration: %w", err)
+			}
+
 			if film.PosterPath != "" {
-				if err := client.TMDBImage(context.Background(), film.PosterPath, posterOutPath); err != nil {
+				if err := client.TMDBImage(context.Background(), cfg.TMDB.PosterBase, film.PosterPath, posterOutPath); err != nil {
 					fmt.Printf("error fetching poster: %q", err)
 				}
 			}
 			if film.BackdropPath != "" {
-				if err := client.TMDBImage(context.Background(), film.BackdropPath, bdropOutPath); err != nil {
+				if err := client.TMDBImage(context.Background(), cfg.TMDB.BackdropBase, film.BackdropPath, bdropOutPath); err != nil {
 					fmt.Printf("error fetching backdrop: %q", err)
 				}
 			}

@@ -102,13 +102,13 @@ var saveCmd = &cobra.Command{
 		}
 
 		if film.PosterPath != "" {
-			if err := client.TMDBImage(context.Background(), film.PosterPath, posterOutPath); err != nil {
+			if err := client.TMDBImage(context.Background(), cfg.TMDB.PosterBase, film.PosterPath, posterOutPath); err != nil {
 				return fmt.Errorf("error fetching image: %w", err)
 			}
 		}
 
 		if film.BackdropPath != "" {
-			if err := client.TMDBImage(context.Background(), film.BackdropPath, bdropOutPath); err != nil {
+			if err := client.TMDBImage(context.Background(), cfg.TMDB.BackdropBase, film.BackdropPath, bdropOutPath); err != nil {
 				return fmt.Errorf("error fetching image: %w", err)
 			}
 		}

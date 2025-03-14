@@ -2,21 +2,15 @@ package tmdb
 
 import (
 	"context"
-	"filmeta/config"
 	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
 )
 
-func (c *Client) TMDBImage(ctx context.Context, imgPath, outDir string) error {
+func (c *Client) TMDBImage(ctx context.Context, baseURL, imgPath, outDir string) error {
 
-	cfg, err := config.Configuration()
-	if err != nil {
-		return fmt.Errorf("error fetching configuration: %w", err)
-	}
-	imgBase := cfg.TMDB.ImgBase
-	imgURL := fmt.Sprintf("%s%s", imgBase, imgPath)
+	imgURL := fmt.Sprintf("%s%s", baseURL, imgPath)
 	req, err := http.NewRequestWithContext(ctx, "GET", imgURL, nil)
 	if err != nil {
 		return fmt.Errorf("error initializing request: %w", err)

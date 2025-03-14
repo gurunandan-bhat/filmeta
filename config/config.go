@@ -15,9 +15,10 @@ type Config struct {
 	InProduction bool   `json:"inProduction,omitempty"`
 	AppRoot      string `json:"appRoot,omitempty"`
 	TMDB         struct {
-		APIKey  string `json:"apiKey,omitempty"`
-		APIBase string `json:"apiBase,omitempty"`
-		ImgBase string `json:"imgBase,omitempty"`
+		APIKey       string `json:"apiKey,omitempty"`
+		APIBase      string `json:"apiBase,omitempty"`
+		PosterBase   string `json:"posterBase,omitempty"`
+		BackdropBase string `json:"backdropBase,omitempty"`
 	} `json:"tmdb,omitempty"`
 	Db struct {
 		User                 string `json:"user,omitempty"`

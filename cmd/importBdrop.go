@@ -55,9 +55,10 @@ to quickly create a Cobra application.`,
 		}
 
 		client := tmdb.NewClient(cfg.TMDB.APIKey)
+		baseURL := cfg.TMDB.BackdropBase
 		for _, bPath := range data {
 			if bPath != "" {
-				if err := client.TMDBImage(context.Background(), bPath, bdropOutPath); err != nil {
+				if err := client.TMDBImage(context.Background(), baseURL, bPath, bdropOutPath); err != nil {
 					fmt.Println(err.Error())
 				}
 			}
