@@ -97,9 +97,9 @@ var importCmd = &cobra.Command{
 
 			fName := fmt.Sprintf("%x.json", md5.Sum([]byte(film.LinkTitle)))
 			oFileName := filepath.Join(outPath, fName)
-			jsonBytes, err := json.MarshalIndent(film, "", "\t")
+			jsonBytes, err := json.MarshalIndent(tmdbFilm, "", "\t")
 			if err != nil {
-				return fmt.Errorf("error marshaling film: %w", err)
+				return fmt.Errorf("error marshaling film %s: %w", film.LinkTitle, err)
 			}
 			if err := os.WriteFile(oFileName, jsonBytes, 0644); err != nil {
 				return fmt.Errorf("error writing json to file %s: %w", oFileName, err)
