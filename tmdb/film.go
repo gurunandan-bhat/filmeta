@@ -54,7 +54,7 @@ type FilmWithCredits struct {
 	Credits struct {
 		Cast []CastMember `json:"cast,omitempty"`
 		Crew []CrewMember `json:"crew,omitempty"`
-	} `json:"credits,omitempty"`
+	} `json:"credits"`
 }
 
 func (client *Client) Film(ctx context.Context, showType string, filmID int) (FilmWithCredits, error) {

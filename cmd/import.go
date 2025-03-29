@@ -54,7 +54,7 @@ var importCmd = &cobra.Command{
 			return fmt.Errorf("error reading data file %s: %w", dataFile, err)
 		}
 
-		var inData Data
+		var inData []FilmOut
 		if err := json.Unmarshal(jsonBytes, &inData); err != nil {
 			return fmt.Errorf("error un-marshaling fcg data: %w", err)
 		}
@@ -78,28 +78,24 @@ var importCmd = &cobra.Command{
 			return fmt.Errorf("error creating directory %s: %w", bdropOutPath, err)
 		}
 
-		for _, fcgFilm := range inData.Metadata {
+		for _, film := range inData {
 
-			filmID := fcgFilm.TMDBID
+			filmID := film.ID
 			if filmID == 0 {
 				continue
 			}
 			showType := "movie"
-			if fcgFilm.ShowType == "tv" {
+			if film.ShowType == "tv" {
 				showType = "tv"
 			}
-			fcgTitle := fcgFilm.Title
 
-			film, err := client.Film(context.Background(), showType, filmID)
+			tmdbFilm, err := client.Film(context.Background(), showType, filmID)
 			if err != nil {
 				return err
 			}
-			film.FCGTitle = fcgTitle
-			if film.Title == "" {
-				film.Title = film.Name
-			}
+			tmdbFilm.FCGTitle = film.LinkTitle
 
-			fName := fmt.Sprintf("%x.json", md5.Sum([]byte(fcgTitle)))
+			fName := fmt.Sprintf("%x.json", md5.Sum([]byte(film.LinkTitle)))
 			oFileName := filepath.Join(outPath, fName)
 			jsonBytes, err := json.MarshalIndent(film, "", "\t")
 			if err != nil {
@@ -109,7 +105,7 @@ var importCmd = &cobra.Command{
 				return fmt.Errorf("error writing json to file %s: %w", oFileName, err)
 			}
 
-			if err := model.Save(film, showType); err != nil {
+			if err := model.Save(tmdbFilm, showType); err != nil {
 				// Transaction Failed - delete file
 				if errDel := os.Remove(oFileName); errDel != nil {
 					return fmt.Errorf("error deleting file %s after transaction rolled back with error %s: %w", oFileName, err, errDel)
@@ -122,13 +118,13 @@ var importCmd = &cobra.Command{
 				return fmt.Errorf("error fetching configuration: %w", err)
 			}
 
-			if film.PosterPath != "" {
-				if err := client.TMDBImage(context.Background(), cfg.TMDB.PosterBase, film.PosterPath, posterOutPath); err != nil {
+			if tmdbFilm.PosterPath != "" {
+				if err := client.TMDBImage(context.Background(), cfg.TMDB.PosterBase, tmdbFilm.PosterPath, posterOutPath); err != nil {
 					fmt.Printf("error fetching poster: %q", err)
 				}
 			}
-			if film.BackdropPath != "" {
-				if err := client.TMDBImage(context.Background(), cfg.TMDB.BackdropBase, film.BackdropPath, bdropOutPath); err != nil {
+			if tmdbFilm.BackdropPath != "" {
+				if err := client.TMDBImage(context.Background(), cfg.TMDB.BackdropBase, tmdbFilm.BackdropPath, bdropOutPath); err != nil {
 					fmt.Printf("error fetching backdrop: %q", err)
 				}
 			}
