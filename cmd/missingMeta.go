@@ -17,6 +17,7 @@ type FilmOut struct {
 	LinkTitle string
 	ID        int
 	ShowType  string
+	Overview  string
 }
 
 // missingMetaCmd represents the missingMeta command
