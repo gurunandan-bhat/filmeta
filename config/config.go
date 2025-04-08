@@ -14,12 +14,13 @@ const (
 type Config struct {
 	InProduction bool   `json:"inProduction,omitempty"`
 	AppRoot      string `json:"appRoot,omitempty"`
+	HugoRoot     string `json:"hugoRoot,omitempty"`
 	TMDB         struct {
 		APIKey       string `json:"apiKey,omitempty"`
 		APIBase      string `json:"apiBase,omitempty"`
 		PosterBase   string `json:"posterBase,omitempty"`
 		BackdropBase string `json:"backdropBase,omitempty"`
-	} `json:"tmdb,omitempty"`
+	} `json:"tmdb"`
 	Db struct {
 		User                 string `json:"user,omitempty"`
 		Passwd               string `json:"passwd,omitempty"`
@@ -29,10 +30,10 @@ type Config struct {
 		ParseTime            bool   `json:"parseTime,omitempty"`
 		Loc                  string `json:"loc,omitempty"`
 		AllowNativePasswords bool   `json:"allowNativePasswords,omitempty"`
-	} `json:"db,omitempty"`
+	} `json:"db"`
 	Security struct {
 		CSRFKey string `json:"csrfKey,omitempty"`
-	} `json:"security,omitempty"`
+	} `json:"security"`
 	Session struct {
 		Name              string `json:"name,omitempty"`
 		Path              string `json:"path,omitempty"`
@@ -40,7 +41,7 @@ type Config struct {
 		MaxAgeHours       int    `json:"maxAgeHours,omitempty"`
 		AuthenticationKey string `json:"authenticationKey,omitempty"`
 		EncryptionKey     string `json:"encryptionKey,omitempty"`
-	} `json:"session,omitempty"`
+	} `json:"session"`
 }
 
 var c = Config{}
