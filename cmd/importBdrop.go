@@ -5,7 +5,6 @@ package cmd
 
 import (
 	"context"
-	"filmeta/model"
 	"filmeta/tmdb"
 	"fmt"
 	"path/filepath"
@@ -38,14 +37,9 @@ to quickly create a Cobra application.`,
 			return err
 		}
 
-		model, err := model.NewModel(metaCfg)
-		if err != nil {
-			return fmt.Errorf("error connecting to database: %w", err)
-		}
-
 		qry := `SELECT IFNULL(vBackdropPath, "") FROM film where vBackdropPath is not null`
 		var data []string
-		if err := model.DbHandle.Select(&data, qry); err != nil {
+		if err := metaModel.DbHandle.Select(&data, qry); err != nil {
 			return fmt.Errorf("error fetching from database: %w", err)
 		}
 

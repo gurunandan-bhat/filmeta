@@ -20,19 +20,9 @@ var scoreCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	PreRunE: func(cmd *cobra.Command, args []string) error {
 
-		author, err := cmd.Flags().GetString("author")
-		if err != nil {
-			return fmt.Errorf("author not supplied: %w", err)
-		}
-		if err := entityExists(author, "critics"); err != nil {
-			return err
-		}
-
-		film, err := cmd.Flags().GetString("film")
-		if err != nil {
-			return fmt.Errorf("film not supplied: %w", err)
-		}
-		if err := entityExists(film, "mreviews"); err != nil {
+		critic, _ := cmd.Flags().GetString("critic")
+		film, _ := cmd.Flags().GetString("film")
+		if err := validate(critic, film); err != nil {
 			return err
 		}
 
@@ -64,10 +54,10 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// scoreCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	scoreCmd.Flags().StringP("author", "a", "", "reviewer assigning score")
+	scoreCmd.Flags().StringP("critic", "c", "", "reviewer assigning score")
 	scoreCmd.Flags().StringP("film", "f", "", "film to assign score")
 
-	cobra.MarkFlagRequired(scoreCmd.Flags(), "author")
+	cobra.MarkFlagRequired(scoreCmd.Flags(), "critic")
 	cobra.MarkFlagRequired(scoreCmd.Flags(), "film")
 }
 
@@ -76,27 +66,46 @@ type Entity struct {
 	Path      string `json:"Path,omitempty"`
 }
 
-func entityExists(e, kind string) error {
+func validate(critic, film string) error {
 
-	jsonBytes, err := os.ReadFile(fmt.Sprintf("%s/%s/index.json", metaCfg.HugoRoot, kind))
-	if err != nil {
-		return fmt.Errorf("error reading critics json: %w", err)
+	// 1. Check if author exists
+	// 2. Check that we have at least one review
+	// 3. Check that author has not reviewed film
+	criticPath := entityExists(critic, "/critics")
+	if criticPath == "" {
+		return fmt.Errorf("no author matched %s", critic)
 	}
-	entities := []Entity{}
-	if err := json.Unmarshal(jsonBytes, &entities); err != nil {
-		return fmt.Errorf("error unmarshaling authors: %w", err)
+	filmPath := entityExists(film, "/mreviews")
+	if filmPath == "" {
+		return fmt.Errorf("no film matched %s", film)
 	}
 
-	matched := false
-	for _, a := range entities {
-		if e == a.LinkTitle {
-			matched = true
-			break
-		}
-	}
-	if !matched {
-		return fmt.Errorf("%s not found in list of %s", e, kind)
+	reviewPath := entityExists(film, criticPath)
+	if reviewPath != "" {
+		return fmt.Errorf("%s has reviewed %s", critic, film)
 	}
 
 	return nil
+}
+
+func entityExists(e, path string) string {
+
+	var ePath string
+	jsonBytes, err := os.ReadFile(fmt.Sprintf("%s%s/index.json", metaCfg.HugoRoot, path))
+	if err != nil {
+		return ePath
+	}
+	entities := []Entity{}
+	if err := json.Unmarshal(jsonBytes, &entities); err != nil {
+		return ePath
+	}
+
+	for _, a := range entities {
+		if e == a.LinkTitle {
+			ePath = a.Path
+			break
+		}
+	}
+
+	return ePath
 }
