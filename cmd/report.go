@@ -6,7 +6,6 @@ package cmd
 import (
 	"encoding/csv"
 	"encoding/json"
-	"filmeta/config"
 	"filmeta/guild"
 	"fmt"
 	"math"
@@ -25,11 +24,7 @@ var reportCmd = &cobra.Command{
 	Short: "A brief description of your command",
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		cfg, err := config.Configuration()
-		if err != nil {
-			return fmt.Errorf("error reading configuration: %w", err)
-		}
-		mFName := cfg.HugoRoot + mreviews + "/index.json"
+		mFName := metaCfg.HugoRoot + mreviews + "/index.json"
 		filmJSONBytes, err := os.ReadFile(mFName)
 		if err != nil {
 			return fmt.Errorf("error reading %s: %w", mFName, err)
@@ -47,7 +42,7 @@ var reportCmd = &cobra.Command{
 			scoreCount := 0
 			var score float64 = 0.0
 
-			fName := illegal.ReplaceAllString(cfg.HugoRoot+film.Path+"/index.json", "")
+			fName := illegal.ReplaceAllString(metaCfg.HugoRoot+film.Path+"/index.json", "")
 			revJSONBytes, err := os.ReadFile(fName)
 			if err != nil {
 				return fmt.Errorf("error reading file %s: %w", fName, err)

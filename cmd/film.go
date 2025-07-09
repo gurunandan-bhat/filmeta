@@ -6,7 +6,6 @@ package cmd
 import (
 	"context"
 	"encoding/json"
-	"filmeta/config"
 	"filmeta/tmdb"
 	"fmt"
 	"strconv"
@@ -35,11 +34,7 @@ var filmCmd = &cobra.Command{
 		if tv {
 			showType = "tv"
 		}
-		cfg, err := config.Configuration()
-		if err != nil {
-			return err
-		}
-		client := tmdb.NewClient(cfg.TMDB.APIKey)
+		client := tmdb.NewClient(metaCfg.TMDB.APIKey)
 		film, err := client.Film(context.Background(), showType, filmID)
 		if err != nil {
 			return err

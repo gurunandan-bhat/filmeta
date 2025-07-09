@@ -7,8 +7,6 @@ import (
 	"context"
 	"crypto/md5"
 	"encoding/json"
-	"filmeta/config"
-	"filmeta/model"
 	"filmeta/tmdb"
 	"fmt"
 	"os"
@@ -59,16 +57,7 @@ var importCmd = &cobra.Command{
 			return fmt.Errorf("error un-marshaling fcg data: %w", err)
 		}
 
-		cfg, err := config.Configuration()
-		if err != nil {
-			return err
-		}
-		client := tmdb.NewClient(cfg.TMDB.APIKey)
-		model, err := model.NewModel(cfg)
-		if err != nil {
-			return err
-		}
-
+		client := tmdb.NewClient(metaCfg.TMDB.APIKey)
 		posterOutPath := filepath.Join(outPath, "posters")
 		if err := os.Mkdir(posterOutPath, 0755); err != nil && !os.IsExist(err) {
 			return fmt.Errorf("error creating directory %s: %w", posterOutPath, err)
@@ -108,7 +97,7 @@ var importCmd = &cobra.Command{
 				return fmt.Errorf("error writing json to file %s: %w", oFileName, err)
 			}
 
-			if err := model.Save(tmdbFilm, showType); err != nil {
+			if err := metaModel.Save(tmdbFilm, showType); err != nil {
 				// Transaction Failed - delete file
 				if errDel := os.Remove(oFileName); errDel != nil {
 					return fmt.Errorf("error deleting file %s after transaction rolled back with error %s: %w", oFileName, err, errDel)
@@ -116,18 +105,13 @@ var importCmd = &cobra.Command{
 				return fmt.Errorf("error saving data to db: %w", err)
 			}
 
-			cfg, err := config.Configuration()
-			if err != nil {
-				return fmt.Errorf("error fetching configuration: %w", err)
-			}
-
 			if tmdbFilm.PosterPath != "" {
-				if err := client.TMDBImage(context.Background(), cfg.TMDB.PosterBase, tmdbFilm.PosterPath, posterOutPath); err != nil {
+				if err := client.TMDBImage(context.Background(), metaCfg.TMDB.PosterBase, tmdbFilm.PosterPath, posterOutPath); err != nil {
 					fmt.Printf("error fetching poster: %q", err)
 				}
 			}
 			if tmdbFilm.BackdropPath != "" {
-				if err := client.TMDBImage(context.Background(), cfg.TMDB.BackdropBase, tmdbFilm.BackdropPath, bdropOutPath); err != nil {
+				if err := client.TMDBImage(context.Background(), metaCfg.TMDB.BackdropBase, tmdbFilm.BackdropPath, bdropOutPath); err != nil {
 					fmt.Printf("error fetching backdrop: %q", err)
 				}
 			}

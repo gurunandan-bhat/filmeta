@@ -5,7 +5,6 @@ package cmd
 
 import (
 	"context"
-	"filmeta/config"
 	"filmeta/model"
 	"filmeta/tmdb"
 	"fmt"
@@ -39,11 +38,7 @@ to quickly create a Cobra application.`,
 			return err
 		}
 
-		cfg, err := config.Configuration()
-		if err != nil {
-			return fmt.Errorf("error fetching configuration: %w", err)
-		}
-		model, err := model.NewModel(cfg)
+		model, err := model.NewModel(metaCfg)
 		if err != nil {
 			return fmt.Errorf("error connecting to database: %w", err)
 		}
@@ -54,8 +49,8 @@ to quickly create a Cobra application.`,
 			return fmt.Errorf("error fetching from database: %w", err)
 		}
 
-		client := tmdb.NewClient(cfg.TMDB.APIKey)
-		baseURL := cfg.TMDB.BackdropBase
+		client := tmdb.NewClient(metaCfg.TMDB.APIKey)
+		baseURL := metaCfg.TMDB.BackdropBase
 		for _, bPath := range data {
 			if bPath != "" {
 				if err := client.TMDBImage(context.Background(), baseURL, bPath, bdropOutPath); err != nil {

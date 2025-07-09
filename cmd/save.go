@@ -7,8 +7,6 @@ import (
 	"context"
 	"crypto/md5"
 	"encoding/json"
-	"filmeta/config"
-	"filmeta/model"
 	"filmeta/tmdb"
 	"fmt"
 	"os"
@@ -49,12 +47,7 @@ var saveCmd = &cobra.Command{
 			return err
 		}
 
-		cfg, err := config.Configuration()
-		if err != nil {
-			return err
-		}
-
-		client := tmdb.NewClient(cfg.TMDB.APIKey)
+		client := tmdb.NewClient(metaCfg.TMDB.APIKey)
 		film, err := client.Film(context.Background(), showType, filmID)
 		if err != nil {
 			return err
@@ -79,12 +72,7 @@ var saveCmd = &cobra.Command{
 			return fmt.Errorf("error writing json to file %s: %w", oFile, err)
 		}
 
-		model, err := model.NewModel(cfg)
-		if err != nil {
-			return err
-		}
-
-		if err := model.Save(film, showType); err != nil {
+		if err := metaModel.Save(film, showType); err != nil {
 			// Transaction Failed - delete file
 			if errDel := os.Remove(oFile); errDel != nil {
 				return fmt.Errorf("error deleting file %s after transaction rolled back with error %s: %w", oFile, err, errDel)
@@ -102,13 +90,13 @@ var saveCmd = &cobra.Command{
 		}
 
 		if film.PosterPath != "" {
-			if err := client.TMDBImage(context.Background(), cfg.TMDB.PosterBase, film.PosterPath, posterOutPath); err != nil {
+			if err := client.TMDBImage(context.Background(), metaCfg.TMDB.PosterBase, film.PosterPath, posterOutPath); err != nil {
 				return fmt.Errorf("error fetching image: %w", err)
 			}
 		}
 
 		if film.BackdropPath != "" {
-			if err := client.TMDBImage(context.Background(), cfg.TMDB.BackdropBase, film.BackdropPath, bdropOutPath); err != nil {
+			if err := client.TMDBImage(context.Background(), metaCfg.TMDB.BackdropBase, film.BackdropPath, bdropOutPath); err != nil {
 				return fmt.Errorf("error fetching image: %w", err)
 			}
 		}

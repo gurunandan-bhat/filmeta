@@ -6,7 +6,6 @@ package cmd
 import (
 	"context"
 	"encoding/json"
-	"filmeta/config"
 	"filmeta/tmdb"
 	"fmt"
 	"strconv"
@@ -38,12 +37,8 @@ var searchCmd = &cobra.Command{
 		if tv {
 			showType = "tv"
 		}
-		cfg, err := config.Configuration()
-		if err != nil {
-			return err
-		}
 
-		client := tmdb.NewClient(cfg.TMDB.APIKey)
+		client := tmdb.NewClient(metaCfg.TMDB.APIKey)
 		opts := tmdb.SearchOptions{
 			Query:        query,
 			IncludeAdult: false,
