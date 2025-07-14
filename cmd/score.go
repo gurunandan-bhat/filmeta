@@ -4,14 +4,25 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"crypto/md5"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
 	"github.com/spf13/cobra"
 )
+
+var film, critic string
+var defaultOutDir = "/../data/freescores/"
+
+type FilmScore struct {
+	Critic string
+	Score  float64
+}
 
 // scoreCmd represents the score command
 var scoreCmd = &cobra.Command{
@@ -20,13 +31,11 @@ var scoreCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	PreRunE: func(cmd *cobra.Command, args []string) error {
 
-		critic, _ := cmd.Flags().GetString("critic")
-		film, _ := cmd.Flags().GetString("film")
+		critic, _ = cmd.Flags().GetString("critic")
+		film, _ = cmd.Flags().GetString("film")
 		if err := validate(critic, film); err != nil {
 			return err
 		}
-
-		// We need to chack that athe film has not been reviewed by author
 
 		return nil
 	},
@@ -36,8 +45,54 @@ var scoreCmd = &cobra.Command{
 		if err != nil || score == 0.0 {
 			return fmt.Errorf("score must be a non-zero float: got %s instead", args[0])
 		}
-		fmt.Println("score called with ", score)
 
+		h := md5.New()
+		io.WriteString(h, film)
+		outDir, _ := cmd.Flags().GetString("outDir")
+		if outDir == "" {
+			outDir = defaultOutDir
+		}
+
+		outDir = filepath.Clean(metaCfg.HugoRoot + outDir)
+		scoreFName := filepath.Join(outDir, fmt.Sprintf("%x.json", h.Sum(nil)))
+		scores := make(map[string]float64)
+
+		scoreFile, err := os.OpenFile(scoreFName, os.O_RDWR|os.O_CREATE, 0644)
+		if err != nil {
+			return err
+		}
+		defer scoreFile.Close()
+
+		jsonBytes, err := io.ReadAll(scoreFile)
+		if err != nil {
+			return err
+		}
+		if len(jsonBytes) > 0 {
+			if err := json.Unmarshal(jsonBytes, &scores); err != nil {
+				return err
+			}
+		}
+
+		scores[critic] = score
+		jsonBytes, err = json.MarshalIndent(&scores, "", "\t")
+		if err != nil {
+			return err
+		}
+		fmt.Println(scores)
+
+		if err := scoreFile.Truncate(0); err != nil {
+			return fmt.Errorf("error truncating file: %w", err)
+		}
+		if _, err := scoreFile.Seek(0, 0); err != nil {
+			return err
+		}
+
+		_, err = scoreFile.WriteString(string(jsonBytes))
+		if err != nil {
+			return err
+		}
+
+		fmt.Println("Filepath:", scoreFName)
 		return nil
 	},
 }
@@ -56,6 +111,7 @@ func init() {
 	// scoreCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	scoreCmd.Flags().StringP("critic", "c", "", "reviewer assigning score")
 	scoreCmd.Flags().StringP("film", "f", "", "film to assign score")
+	scoreCmd.Flags().StringP("outDir", "o", "", "score data dir")
 
 	cobra.MarkFlagRequired(scoreCmd.Flags(), "critic")
 	cobra.MarkFlagRequired(scoreCmd.Flags(), "film")
