@@ -4,7 +4,6 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"crypto/md5"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -17,12 +16,10 @@ import (
 )
 
 var film, critic string
-var defaultOutDir = "/../data/freescores/"
+var defaultScoreFile = "/../data/freescores.json"
 
-type FilmScore struct {
-	Critic string
-	Score  float64
-}
+type Scores map[string]float64
+type FreeScores map[string]Scores
 
 // scoreCmd represents the score command
 var scoreCmd = &cobra.Command{
@@ -46,18 +43,15 @@ var scoreCmd = &cobra.Command{
 			return fmt.Errorf("score must be a non-zero float: got %s instead", args[0])
 		}
 
-		h := md5.New()
-		io.WriteString(h, film)
-		outDir, _ := cmd.Flags().GetString("outDir")
-		if outDir == "" {
-			outDir = defaultOutDir
+		outPath, _ := cmd.Flags().GetString("outDir")
+		if outPath == "" {
+			outPath = defaultScoreFile
 		}
 
-		outDir = filepath.Clean(metaCfg.HugoRoot + outDir)
-		scoreFName := filepath.Join(outDir, fmt.Sprintf("%x.json", h.Sum(nil)))
-		scores := make(map[string]float64)
+		outPath = filepath.Clean(metaCfg.HugoRoot + outPath)
+		filmScores := FreeScores(make(map[string]Scores))
 
-		scoreFile, err := os.OpenFile(scoreFName, os.O_RDWR|os.O_CREATE, 0644)
+		scoreFile, err := os.OpenFile(outPath, os.O_RDWR|os.O_CREATE, 0644)
 		if err != nil {
 			return err
 		}
@@ -67,32 +61,25 @@ var scoreCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		if len(jsonBytes) > 0 {
-			if err := json.Unmarshal(jsonBytes, &scores); err != nil {
-				return err
-			}
+		// Handle empty file
+		if len(jsonBytes) == 0 {
+			jsonBytes = []byte("{}")
 		}
 
-		scores[critic] = score
-		jsonBytes, err = json.MarshalIndent(&scores, "", "\t")
+		if err := json.Unmarshal(jsonBytes, &filmScores); err != nil {
+			return err
+		}
+		filmScores.update(film, critic, score)
+		jsonBytes, err = json.MarshalIndent(filmScores, "", "\t")
 		if err != nil {
 			return err
 		}
-		fmt.Println(scores)
+		scoreFile.Truncate(0)
+		scoreFile.Seek(0, 0)
 
-		if err := scoreFile.Truncate(0); err != nil {
-			return fmt.Errorf("error truncating file: %w", err)
-		}
-		if _, err := scoreFile.Seek(0, 0); err != nil {
-			return err
-		}
+		scoreFile.WriteString(string(jsonBytes))
 
-		_, err = scoreFile.WriteString(string(jsonBytes))
-		if err != nil {
-			return err
-		}
-
-		fmt.Println("Filepath:", scoreFName)
+		fmt.Println("data:", filmScores)
 		return nil
 	},
 }
@@ -111,7 +98,7 @@ func init() {
 	// scoreCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	scoreCmd.Flags().StringP("critic", "c", "", "reviewer assigning score")
 	scoreCmd.Flags().StringP("film", "f", "", "film to assign score")
-	scoreCmd.Flags().StringP("outDir", "o", "", "score data dir")
+	scoreCmd.Flags().StringP("outPath", "o", "", "score data file")
 
 	cobra.MarkFlagRequired(scoreCmd.Flags(), "critic")
 	cobra.MarkFlagRequired(scoreCmd.Flags(), "film")
@@ -164,4 +151,17 @@ func entityExists(e, path string) string {
 	}
 
 	return ePath
+}
+
+func (s FreeScores) update(film, critic string, score float64) error {
+
+	scores, ok := s[film]
+	if !ok {
+		s[film] = Scores{critic: score}
+		return nil
+	}
+	scores[critic] = score
+	s[film] = scores
+
+	return nil
 }
