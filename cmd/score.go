@@ -76,10 +76,8 @@ var scoreCmd = &cobra.Command{
 		}
 		scoreFile.Truncate(0)
 		scoreFile.Seek(0, 0)
-
 		scoreFile.WriteString(string(jsonBytes))
 
-		fmt.Println("data:", filmScores)
 		return nil
 	},
 }
