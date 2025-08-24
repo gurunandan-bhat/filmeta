@@ -50,7 +50,7 @@ var mkcfgCmd = &cobra.Command{
 		}
 
 		// Decrypts secret using the associated KMS key.
-		var secretString string = *result.SecretString
+		var secretString = *result.SecretString
 		isPlainText, err := cmd.Flags().GetBool("plain-text")
 		if err != nil {
 			return err

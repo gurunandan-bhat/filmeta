@@ -7,6 +7,7 @@ import (
 	"context"
 	"filmeta/tmdb"
 	"fmt"
+	"log"
 	"path/filepath"
 	"time"
 
@@ -72,6 +73,8 @@ func init() {
 	// is called directly, e.g.:
 	// importBdropCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	importBdropCmd.Flags().StringP("output-dir", "o", "", "Output directory to save JSON")
-	cobra.MarkFlagRequired(importBdropCmd.Flags(), "output-dir")
+	if err := cobra.MarkFlagRequired(importBdropCmd.Flags(), "output-dir"); err != nil {
+		log.Fatalf("error requiring mandatory flag %s", "output-dir")
+	}
 
 }

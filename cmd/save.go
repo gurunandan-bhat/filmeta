@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"filmeta/tmdb"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -121,7 +122,9 @@ func init() {
 	saveCmd.Flags().StringP("output-dir", "o", "", "Output directory to save JSON")
 	saveCmd.Flags().StringP("fcg-name", "f", "", "Name of film in FCG to save JSON (uses md5(Title).json if none supplied)")
 
-	cobra.MarkFlagRequired(saveCmd.Flags(), "output-dir")
+	if err := cobra.MarkFlagRequired(saveCmd.Flags(), "output-dir"); err != nil {
+		log.Fatalf("error requiring mandatory flag %s", "output-dir")
+	}
 }
 
 func mkAbsPath(path string) (string, error) {

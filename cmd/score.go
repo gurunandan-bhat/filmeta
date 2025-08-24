@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -55,7 +56,11 @@ var scoreCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		defer scoreFile.Close()
+		defer func() {
+			if err := scoreFile.Close(); err != nil {
+				log.Fatal(err)
+			}
+		}()
 
 		jsonBytes, err := io.ReadAll(scoreFile)
 		if err != nil {
@@ -69,14 +74,27 @@ var scoreCmd = &cobra.Command{
 		if err := json.Unmarshal(jsonBytes, &filmScores); err != nil {
 			return err
 		}
-		filmScores.update(film, critic, score)
+
+		if err := filmScores.update(film, critic, score); err != nil {
+			return err
+		}
+
 		jsonBytes, err = json.MarshalIndent(filmScores, "", "\t")
 		if err != nil {
 			return err
 		}
-		scoreFile.Truncate(0)
-		scoreFile.Seek(0, 0)
-		scoreFile.WriteString(string(jsonBytes))
+		if err := scoreFile.Truncate(0); err != nil {
+			return err
+		}
+
+		_, err = scoreFile.Seek(0, 0)
+		if err != nil {
+			return err
+		}
+		_, err = scoreFile.WriteString(string(jsonBytes))
+		if err != nil {
+			return err
+		}
 
 		return nil
 	},
@@ -98,8 +116,12 @@ func init() {
 	scoreCmd.Flags().StringP("film", "f", "", "film to assign score")
 	scoreCmd.Flags().StringP("outPath", "o", "", "score data file")
 
-	cobra.MarkFlagRequired(scoreCmd.Flags(), "critic")
-	cobra.MarkFlagRequired(scoreCmd.Flags(), "film")
+	if err := cobra.MarkFlagRequired(scoreCmd.Flags(), "critic"); err != nil {
+		log.Fatalf("error requiring mandatory flag %s", "critic")
+	}
+	if err := cobra.MarkFlagRequired(scoreCmd.Flags(), "film"); err != nil {
+		log.Fatalf("error requiring mandatory flag %s", "film")
+	}
 }
 
 type Entity struct {

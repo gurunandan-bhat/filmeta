@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"filmeta/tmdb"
 	"fmt"
+	"log"
 	"strconv"
 
 	"github.com/spf13/cobra"
@@ -63,5 +64,7 @@ func init() {
 	// is called directly, e.g.:
 	// filmCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	filmCmd.Flags().BoolP("tv", "t", false, "this is a tv show")
-	cobra.MarkFlagRequired(filmCmd.Flags(), "film-id")
+	if err := cobra.MarkFlagRequired(filmCmd.Flags(), "film-id"); err != nil {
+		log.Fatalf("error marking requiring mandatory flag %s", "film-id")
+	}
 }

@@ -6,6 +6,7 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -68,5 +69,7 @@ func init() {
 	// is called directly, e.g.:
 	// remapJsonCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	remapJsonCmd.Flags().StringP("input-file", "i", "", "Input file with languages")
-	cobra.MarkFlagRequired(remapJsonCmd.Flags(), "input-file")
+	if err := cobra.MarkFlagRequired(remapJsonCmd.Flags(), "input-file"); err != nil {
+		log.Fatalf("error requiring mandatory flag %s", "input-file")
+	}
 }

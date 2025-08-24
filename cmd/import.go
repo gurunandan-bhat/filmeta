@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"filmeta/tmdb"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"time"
@@ -135,7 +136,9 @@ func init() {
 	// importCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	importCmd.Flags().StringP("output-dir", "o", "", "Output directory to save JSON")
 
-	cobra.MarkFlagRequired(importCmd.Flags(), "output-dir")
+	if err := cobra.MarkFlagRequired(importCmd.Flags(), "output-dir"); err != nil {
+		log.Fatalf("error requiring mandatory flag %s", "output-dir")
+	}
 }
 
 func dataIsAvailable(cmd *cobra.Command, args []string) error {

@@ -40,7 +40,7 @@ var reportCmd = &cobra.Command{
 		for _, film := range films {
 
 			scoreCount := 0
-			var score float64 = 0.0
+			var score = 0.0
 
 			fName := illegal.ReplaceAllString(metaCfg.HugoRoot+film.Path+"/index.json", "")
 			revJSONBytes, err := os.ReadFile(fName)
@@ -71,8 +71,7 @@ var reportCmd = &cobra.Command{
 		}
 
 		w := csv.NewWriter(os.Stdout)
-		w.WriteAll(scores)
-		if err := w.Error(); err != nil {
+		if err := w.WriteAll(scores); err != nil {
 			return fmt.Errorf("error writing csv file: %w", err)
 		}
 
