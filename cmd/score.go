@@ -134,7 +134,7 @@ func validate(critic, film string) error {
 	// 1. Check if author exists
 	// 2. Check that we have at least one review
 	// 3. Check that author has not reviewed film
-	criticPath := entityExists(critic, "/critics")
+	criticPath := entityExists(critic, "/guild")
 	if criticPath == "" {
 		return fmt.Errorf("no author matched %s", critic)
 	}
