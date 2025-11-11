@@ -22,7 +22,7 @@ type Review struct {
 	Path   string    `json:"path,omitempty"`
 }
 
-type Film struct {
+type FilmOld struct {
 	Film    string   `json:"film,omitempty"`
 	Reviews []Review `json:"reviews,omitempty"`
 }
@@ -43,7 +43,7 @@ var filmListCmd = &cobra.Command{
 		if err != nil {
 			return fmt.Errorf("error reading file %s: %w", source, err)
 		}
-		var films []Film
+		var films []FilmOld
 		if err := json.Unmarshal(jsonBytes, &films); err != nil {
 			return fmt.Errorf("error un-marshaling films: %w", err)
 		}
