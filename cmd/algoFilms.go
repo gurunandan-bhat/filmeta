@@ -4,7 +4,9 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"crypto/md5"
 	"encoding/json"
+	"filmeta/config"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -13,24 +15,37 @@ import (
 )
 
 type Film struct {
+	ObjectID     string `json:"objectID"`
 	LinkTitle    string
-	LastMod      string
-	AverageScore float64
+	AverageScore float64 `json:"AverageScore,omitempty,omitzero"`
 	Path         string
+	Genres       []string
+	Language     string
+	Overview     string
+	Cast         []string
+	Director     []string
+	Poster       string
+}
+type Genre struct {
+	ID   int `json:"id"`
+	Name string
 }
 
-type FilmReview struct {
-	Critic   string
-	Media    string
-	Source   string
-	SubTitle string
-	Content  string
-	Path     string
+type Person struct {
+	Name string `json:"name"`
+	Job  string `json:"job"`
 }
 
-type AlgoFilm struct {
-	Film
-	Reviews []FilmReview
+type Credits struct {
+	Cast []Person `json:"cast"`
+	Crew []Person `json:"crew"`
+}
+type Meta struct {
+	Language   string  `json:"original_language"`
+	Overview   string  `json:"overview"`
+	PosterPath string  `json:"poster_path"`
+	Genres     []Genre `json:"genres"`
+	Credits    Credits `json:"credits"`
 }
 
 // algoliaFilmsCmd represents the algoliaFilms command
@@ -40,7 +55,6 @@ var algoFilmsCmd = &cobra.Command{
 	Short:   "Bulk creation of films for input to algolia",
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		fmt.Println("algo-films called")
 		filmsFName := filepath.Join(metaCfg.HugoRoot, "mreviews/index.json")
 		filmsF, err := os.Open(filmsFName)
 		if err != nil {
@@ -58,32 +72,63 @@ var algoFilmsCmd = &cobra.Command{
 			}
 		}()
 
-		algoFilms := []AlgoFilm{}
-		fmt.Println(films)
+		algoFilms := []Film{}
 		for _, f := range films {
-			reviewsFName := filepath.Join(metaCfg.HugoRoot, f.Path, "index.json")
-			reviewsF, err := os.Open(reviewsFName)
+
+			objectID := fmt.Sprintf("%x", md5.Sum([]byte(f.LinkTitle)))
+			assetFName := filepath.Clean(fmt.Sprintf("%s/../assets/meta/%s.json", metaCfg.HugoRoot, objectID))
+			assetF, err := os.Open(assetFName)
 			if err != nil {
-				return fmt.Errorf("error opening file %s: %w", reviewsFName, err)
+				//				fmt.Printf("error opening asset file %s film %s: %s", assetFName, f.LinkTitle, err)
+				continue
 			}
 
-			reviews := []FilmReview{}
-			decoder := json.NewDecoder(reviewsF)
-			if err := decoder.Decode(&reviews); err != nil {
-				return fmt.Errorf("error decoding json at %s: %w", f.Path, err)
+			meta := Meta{}
+			asstDecoder := json.NewDecoder(assetF)
+			if err := asstDecoder.Decode(&meta); err != nil {
+				return fmt.Errorf("error unmarshaling meta data: %w", err)
+			}
+			castList := make([]string, len(meta.Credits.Cast))
+			for i, p := range meta.Credits.Cast {
+				castList[i] = p.Name
+			}
+			crewList := []string{}
+			for _, p := range meta.Credits.Crew {
+				if p.Job == "Director" {
+					crewList = append(crewList, p.Name)
+				}
+			}
+			genreList := make([]string, len(meta.Genres))
+			for i, g := range meta.Genres {
+				genreList[i] = g.Name
 			}
 
-			algoFilms = append(algoFilms, AlgoFilm{
-				Film:    f,
-				Reviews: reviews,
-			})
-
-			if err := reviewsF.Close(); err != nil {
-				fmt.Printf("error closing reviews file %s: %s", reviewsFName, err)
+			lang, err := config.ISOLanguage(meta.Language)
+			if err != nil {
+				return err
 			}
+			f.ObjectID = objectID
+			f.Language = lang
+			f.Overview = meta.Overview
+			f.Cast = castList
+			f.Director = crewList
+			f.Poster = meta.PosterPath
+			f.Genres = genreList
+
+			algoFilms = append(algoFilms, f)
+
+			if err := assetF.Close(); err != nil {
+				fmt.Printf("error closing metadata file %s: %s", assetFName, err)
+			}
+
 		}
 
-		fmt.Println(algoFilms)
+		jsonBytes, err := json.Marshal(algoFilms)
+		if err != nil {
+			return fmt.Errorf("error marshaling json: %w", err)
+		}
+		fmt.Println(string(jsonBytes))
+
 		return nil
 	},
 }

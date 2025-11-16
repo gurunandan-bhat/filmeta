@@ -1,16 +1,25 @@
 package config
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"os"
+	"path/filepath"
 
 	"github.com/spf13/viper"
 )
 
 const (
 	defaultConfigFileName = ".filmeta.json"
+	langFName             = "./languages.json"
 )
 
+type Language struct {
+	Name        string `json:"name,omitempty"`
+	EnglishName string `json:"english_name,omitempty"`
+	ISO639_1    string `json:"iso_639_1,omitempty"`
+}
 type Config struct {
 	InProduction bool   `json:"inProduction,omitempty"`
 	AppRoot      string `json:"appRoot,omitempty"`
@@ -42,9 +51,15 @@ type Config struct {
 		AuthenticationKey string `json:"authenticationKey,omitempty"`
 		EncryptionKey     string `json:"encryptionKey,omitempty"`
 	} `json:"session"`
+	Algolia struct {
+		AppID     string `json:"appID"`
+		SearchKey string `json:"searchKey"`
+		WriteKey  string `json:"writeKey"`
+	} `json:"algolia"`
 }
 
 var c = Config{}
+var iso2lang = make(map[string]string, 0)
 
 func Configuration(configFileName ...string) (*Config, error) {
 
@@ -75,4 +90,43 @@ func Configuration(configFileName ...string) (*Config, error) {
 	}
 
 	return &c, nil
+}
+
+func initLang() error {
+
+	cfg, err := Configuration()
+	if err != nil {
+		return fmt.Errorf("error reading configuration: %w", err)
+	}
+
+	langF, err := os.Open(filepath.Join(cfg.AppRoot, "config", "languages.json"))
+	if err != nil {
+		return fmt.Errorf("error opening file %s: %w", langFName, err)
+	}
+	jsonBytes, err := io.ReadAll(langF)
+	if err != nil {
+		return fmt.Errorf("error reading %s: %w", langFName, err)
+	}
+
+	langData := make(map[string]Language, 0)
+	if err := json.Unmarshal(jsonBytes, &langData); err != nil {
+		return fmt.Errorf("error unmarshaling language: %w", err)
+	}
+
+	for key, value := range langData {
+		iso2lang[key] = value.EnglishName
+	}
+
+	return nil
+}
+
+func ISOLanguage(iso2 string) (string, error) {
+
+	if len(iso2lang) == 0 {
+		if err := initLang(); err != nil {
+			return "", fmt.Errorf("error initializing language map: %w", err)
+		}
+	}
+
+	return iso2lang[iso2], nil
 }
