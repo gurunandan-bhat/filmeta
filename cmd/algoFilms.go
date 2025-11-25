@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -17,14 +18,19 @@ import (
 type Film struct {
 	ObjectID     string `json:"objectID"`
 	LinkTitle    string
-	AverageScore float64 `json:"AverageScore,omitempty,omitzero"`
-	Path         string
-	Genres       []string
+	AverageScore float64 `json:"AverageScore"`
+	URLPath      string
+	Genres       string
 	Language     string
 	Overview     string
-	Cast         []string
-	Director     []string
+	Cast         string
+	Director     string
 	Poster       string
+	Reviewers    string
+}
+
+type FilmReview struct {
+	Critic string
 }
 type Genre struct {
 	ID   int `json:"id"`
@@ -107,13 +113,31 @@ var algoFilmsCmd = &cobra.Command{
 			if err != nil {
 				return err
 			}
+
 			f.ObjectID = objectID
 			f.Language = lang
 			f.Overview = meta.Overview
-			f.Cast = castList
-			f.Director = crewList
+			f.Cast = strings.Join(castList, ", ")
+			f.Director = strings.Join(crewList, ", ")
 			f.Poster = meta.PosterPath
-			f.Genres = genreList
+			f.Genres = strings.Join(genreList, ", ")
+
+			revFName := filepath.Join(metaCfg.HugoRoot, f.URLPath, "index.json")
+			revF, err := os.Open(revFName)
+			if err != nil {
+				return fmt.Errorf("error opening reviews file %s: %w", revFName, err)
+			}
+
+			revs := []FilmReview{}
+			revDecoder := json.NewDecoder(revF)
+			if err := revDecoder.Decode(&revs); err != nil {
+				return fmt.Errorf("error decoding %s: %w", revFName, err)
+			}
+			critics := make([]string, len(revs))
+			for i, r := range revs {
+				critics[i] = r.Critic
+			}
+			f.Reviewers = strings.Join(critics, ", ")
 
 			algoFilms = append(algoFilms, f)
 
