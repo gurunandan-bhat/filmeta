@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -137,6 +138,7 @@ var algoFilmsCmd = &cobra.Command{
 			for i, r := range revs {
 				critics[i] = r.Critic
 			}
+			slices.Sort(critics)
 			f.Reviewers = strings.Join(critics, ", ")
 
 			algoFilms = append(algoFilms, f)
