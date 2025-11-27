@@ -8,10 +8,8 @@ import (
 	"encoding/json"
 	"filmeta/guild"
 	"fmt"
-	"math"
 	"os"
 	"regexp"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -40,9 +38,9 @@ var reportCmd = &cobra.Command{
 		for _, film := range films {
 
 			scoreCount := 0
-			var score = 0.0
+			var score float64 = 0.0
 
-			fName := illegal.ReplaceAllString(metaCfg.HugoRoot+film.Path+"/index.json", "")
+			fName := illegal.ReplaceAllString(metaCfg.HugoRoot+film.URLPath+"/index.json", "")
 			revJSONBytes, err := os.ReadFile(fName)
 			if err != nil {
 				return fmt.Errorf("error reading file %s: %w", fName, err)
@@ -64,8 +62,7 @@ var reportCmd = &cobra.Command{
 
 				scores = append(scores, []string{
 					film.LinkTitle,
-					strconv.Itoa(scoreCount),
-					strconv.Itoa((int(math.Round(score / float64(scoreCount))))),
+					fmt.Sprintf("%.1f", score/float64(scoreCount)),
 				})
 			}
 		}

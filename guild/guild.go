@@ -5,7 +5,7 @@ import "time"
 type Film struct {
 	LinkTitle  string    `json:"LinkTitle,omitempty"`
 	Lastmod    time.Time `json:"Lastmod,omitempty"`
-	Path       string    `json:"Path,omitempty"`
+	URLPath    string    `json:"URLPath,omitempty"`
 	PosterPath string    `json:"PosterPath,omitempty"`
 }
 
