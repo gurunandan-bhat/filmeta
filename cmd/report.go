@@ -9,7 +9,7 @@ import (
 	"filmeta/guild"
 	"fmt"
 	"os"
-	"regexp"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -34,37 +34,11 @@ var reportCmd = &cobra.Command{
 		}
 
 		scores := [][]string{}
-		illegal := regexp.MustCompile("[:&',*!]")
 		for _, film := range films {
-
-			scoreCount := 0
-			var score float64 = 0.0
-
-			fName := illegal.ReplaceAllString(metaCfg.HugoRoot+film.URLPath+"/index.json", "")
-			revJSONBytes, err := os.ReadFile(fName)
-			if err != nil {
-				return fmt.Errorf("error reading file %s: %w", fName, err)
-			}
-
-			reviews := []guild.Review{}
-			if err := json.Unmarshal(revJSONBytes, &reviews); err != nil {
-				return fmt.Errorf("error unmarshaloling data in %s: %w", fName, err)
-			}
-
-			for _, review := range reviews {
-				if review.Params.Score == 0 {
-					continue
-				}
-				score = score + review.Params.Score
-				scoreCount = scoreCount + 1
-			}
-			if scoreCount >= 3 {
-
-				scores = append(scores, []string{
-					film.LinkTitle,
-					fmt.Sprintf("%.1f", score/float64(scoreCount)),
-				})
-			}
+			scores = append(scores, []string{
+				film.LinkTitle,
+				strconv.FormatFloat(film.AverageScore, 'f', 1, 64),
+			})
 		}
 
 		w := csv.NewWriter(os.Stdout)

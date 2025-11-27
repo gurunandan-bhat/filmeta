@@ -3,10 +3,11 @@ package guild
 import "time"
 
 type Film struct {
-	LinkTitle  string    `json:"LinkTitle,omitempty"`
-	Lastmod    time.Time `json:"Lastmod,omitempty"`
-	URLPath    string    `json:"URLPath,omitempty"`
-	PosterPath string    `json:"PosterPath,omitempty"`
+	LinkTitle    string    `json:"LinkTitle,omitempty"`
+	Lastmod      time.Time `json:"Lastmod,omitempty"`
+	URLPath      string    `json:"URLPath,omitempty"`
+	PosterPath   string    `json:"PosterPath,omitempty"`
+	AverageScore float64   `json:"AverageScore,omitempty"`
 }
 
 type ReviewParams struct {
