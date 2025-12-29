@@ -4,11 +4,15 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"crypto/md5"
 	"encoding/csv"
+	"encoding/hex"
 	"encoding/json"
 	"filmeta/guild"
 	"fmt"
+	"log"
 	"os"
+	"path/filepath"
 	"strconv"
 
 	"github.com/spf13/cobra"
@@ -35,9 +39,29 @@ var reportCmd = &cobra.Command{
 
 		scores := [][]string{}
 		for _, film := range films {
+			hashInBytes := md5.Sum([]byte(film.LinkTitle))
+			fName := filepath.Join(metaCfg.HugoRoot, "/../assets/meta", hex.EncodeToString(hashInBytes[:])) + ".json"
+
+			filmMetaB, err := os.ReadFile(fName)
+			if err != nil {
+				log.Fatalf("Error opening meta %s for film %s: %s", fName, film.LinkTitle, err)
+			}
+			filmMeta := Meta{}
+			if err := json.Unmarshal(filmMetaB, &filmMeta); err != nil {
+				log.Fatalf("error unmarshaling meta %s for film %s: %s", fName, film.LinkTitle, err)
+			}
+			director := ""
+			for _, person := range filmMeta.Credits.Crew {
+				if person.Job == "Director" {
+					director = person.Name
+				}
+			}
+
 			scores = append(scores, []string{
 				film.LinkTitle,
 				strconv.FormatFloat(film.AverageScore, 'f', 1, 64),
+				filmMeta.Language,
+				director,
 			})
 		}
 
