@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/spf13/cobra"
 )
@@ -28,7 +29,8 @@ var missingMetaCmd = &cobra.Command{
 	Args:    cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		inputPath := "/Users/nandan/repos/guild/public/mreviews/index.json"
+		inputPath := filepath.Join(metaCfg.HugoRoot, "mreviews/index.json")
+
 		if len(args) > 0 {
 			if args[0] != "" {
 				inputPath = args[0]
@@ -93,5 +95,5 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// missingMetaCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	missingMetaCmd.Flags().StringP("meta-dir", "d", "/Users/nandan/repos/guild/assets/meta", "Metadata directory for json files")
+	missingMetaCmd.Flags().StringP("meta-dir", "d", "/home/nandan/repos/guild/assets/meta", "Metadata directory for json files")
 }
