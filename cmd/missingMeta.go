@@ -95,5 +95,5 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// missingMetaCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	missingMetaCmd.Flags().StringP("meta-dir", "d", "/home/nandan/repos/guild/assets/meta", "Metadata directory for json files")
+	missingMetaCmd.Flags().StringP("meta-dir", "d", "/Users/nandan/repos/guild/assets/meta", "Metadata directory for json files")
 }
