@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"filmeta/config"
 	"fmt"
+	"math"
 	"os"
 	"path/filepath"
 	"slices"
@@ -17,17 +18,18 @@ import (
 )
 
 type Film struct {
-	ObjectID     string `json:"objectID"`
-	LinkTitle    string
-	AverageScore float64 `json:"AverageScore"`
-	URLPath      string
-	Genres       string
-	Language     string
-	Overview     string
-	Cast         string
-	Director     string
-	Poster       string
-	Reviewers    string
+	ObjectID        string `json:"objectID"`
+	LinkTitle       string
+	AverageScore    float64 `json:"AverageScore"`
+	URLPath         string
+	Genres          string
+	Language        string
+	Overview        string
+	Cast            string
+	Director        string
+	Poster          string
+	LocalPosterPath string `json:"LocalPosterPath"`
+	Reviewers       string
 }
 
 type FilmReview struct {
@@ -54,6 +56,8 @@ type Meta struct {
 	Genres     []Genre `json:"genres"`
 	Credits    Credits `json:"credits"`
 }
+
+const MAX_CAST_LENGTH = 10
 
 // algoliaFilmsCmd represents the algoliaFilms command
 var algoFilmsCmd = &cobra.Command{
@@ -95,8 +99,10 @@ var algoFilmsCmd = &cobra.Command{
 			if err := asstDecoder.Decode(&meta); err != nil {
 				return fmt.Errorf("error unmarshaling meta data: %w", err)
 			}
-			castList := make([]string, len(meta.Credits.Cast))
-			for i, p := range meta.Credits.Cast {
+
+			castLength := int(math.Min(float64(MAX_CAST_LENGTH), float64(len(meta.Credits.Cast))))
+			castList := make([]string, castLength)
+			for i, p := range meta.Credits.Cast[:castLength] {
 				castList[i] = p.Name
 			}
 			crewList := []string{}
