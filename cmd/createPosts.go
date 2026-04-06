@@ -5,6 +5,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/spf13/cobra"
 )
@@ -14,8 +15,15 @@ var createPostsCmd = &cobra.Command{
 	Use:     "createPosts",
 	Short:   "Create test posts from IMDB IDs",
 	Aliases: []string{"create-posts"},
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("createPosts called")
+	RunE: func(cmd *cobra.Command, args []string) error {
+
+		idsFile, err := cmd.Flags().GetString("ids-file")
+		if err != nil {
+			return fmt.Errorf("error fetching file with TMDB IDs: %w", err)
+		}
+		fmt.Println("createPosts called with", idsFile)
+
+		return nil
 	},
 }
 
@@ -30,5 +38,9 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// createPostsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	createPostsCmd.Flags().StringP("ids-file", "i", "", "File listing TMDB IDs one per line")
+	if err := cobra.MarkFlagRequired(createPostsCmd.Flags(), "ids-file"); err != nil {
+		log.Fatalf("error requiring mandatory flag %s", "ids-file")
+	}
+
 }
