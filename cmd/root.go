@@ -7,6 +7,7 @@ import (
 	"filmeta/config"
 	"filmeta/model"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -23,8 +24,12 @@ var rootCmd = &cobra.Command{
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
-		var err error
-		metaCfg, err = config.Configuration()
+
+		cfgName, err := cmd.Flags().GetString("config-file")
+		if err != nil {
+			return fmt.Errorf("error reading config-file flag: %w", err)
+		}
+		metaCfg, err = config.Configuration(cfgName)
 		if err != nil {
 			return fmt.Errorf("error reading config: %w", err)
 		}
@@ -56,5 +61,10 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		log.Fatalf("error fetching HOME diectory for user: %+v", err)
+	}
+	cfgName := fmt.Sprintf("%s/%s", homeDir, ".filmeta.json")
+	rootCmd.PersistentFlags().StringP("config-file", "c", cfgName, "Help message for toggle")
 }
