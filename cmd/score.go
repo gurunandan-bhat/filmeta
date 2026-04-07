@@ -112,7 +112,7 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// scoreCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	scoreCmd.Flags().StringP("critic", "c", "", "reviewer assigning score")
+	scoreCmd.Flags().StringP("critic", "a", "", "reviewer assigning score")
 	scoreCmd.Flags().StringP("film", "f", "", "film to assign score")
 	scoreCmd.Flags().StringP("outPath", "o", "", "score data file")
 
