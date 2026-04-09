@@ -71,3 +71,35 @@ func (client *Client) Film(ctx context.Context, showType string, filmID int) (Fi
 
 	return film, nil
 }
+
+func (f *FilmWithCredits) Cast() []string {
+
+	cast := []string{}
+	for _, c := range f.Credits.Cast {
+		cast = append(cast, c.Name)
+	}
+
+	return cast
+}
+
+func (f *FilmWithCredits) Genres() []string {
+
+	genres := []string{}
+	for _, g := range f.Film.Genres {
+		genres = append(genres, g.Name)
+	}
+
+	return genres
+}
+
+func (f *FilmWithCredits) Director() []string {
+
+	director := []string{}
+	for _, d := range f.Credits.Crew {
+		if d.Job == "Director" {
+			director = append(director, d.Name)
+		}
+	}
+
+	return director
+}

@@ -11,12 +11,14 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/spf13/cobra"
 )
 
 type CriticReview struct {
+	Publication string
 	PublishDate time.Time
 }
 
@@ -51,26 +53,40 @@ var criticReviewsCmd = &cobra.Command{
 
 		// result := make([]map[string]int, len(guildmembers))
 		critics := make([][]string, 0)
-		for _, guild := range guildmembers {
-			criticPath := filepath.Join(metaCfg.HugoRoot, "critics", guild.ReviewURL, "index.json")
+		for _, member := range guildmembers {
+
+			orgMap := make(map[string]int)
+			for _, org := range member.Organizations {
+				orgMap[strings.Trim(org, " ")] = 1
+			}
+
+			criticPath := filepath.Join(metaCfg.HugoRoot, "critics", member.ReviewURL, "index.json")
 			fh, err := os.Open(criticPath)
 			var reviewCount int
 			if err != nil {
 				if !errors.Is(err, os.ErrNotExist) {
-					return fmt.Errorf("error opening file for %s: %w", guild.Name, err)
+					return fmt.Errorf("error opening file for %s: %w", member.Name, err)
 				}
-				critics = append(critics, []string{guild.Name, strconv.Itoa(reviewCount)})
+				critics = append(critics, []string{member.Name, member.Organizations[0], strconv.Itoa(reviewCount)})
 				continue
 			}
-			reviewCount, err = processCritic(fh, fromDate, toDate)
+			reviewCount, err = processCritic(fh, orgMap, fromDate, toDate)
 			if err != nil {
-				return fmt.Errorf("error copunting reviews for %s: %w", guild.Name, err)
+				return fmt.Errorf("error copunting reviews for %s: %w", member.Name, err)
 			}
 			if err := fh.Close(); err != nil {
 				return fmt.Errorf("error closing %s: %w", criticPath, err)
 			}
 
-			critics = append(critics, []string{guild.Name, strconv.Itoa(reviewCount)})
+			orgs := make([]string, len(orgMap))
+			i := 0
+			for key := range orgMap {
+				{
+					orgs[i] = key
+					i++
+				}
+			}
+			critics = append(critics, []string{member.Name, strings.Join(orgs, ", "), strconv.Itoa(reviewCount)})
 		}
 
 		w := csv.NewWriter(os.Stdout)
@@ -100,7 +116,7 @@ func init() {
 	criticReviewsCmd.Flags().TimeP("to-date", "t", now, []string{"2006-01-02"}, "End Date")
 }
 
-func processCritic(fh *os.File, fromDate, toDate time.Time) (int, error) {
+func processCritic(fh *os.File, orgMap map[string]int, fromDate, toDate time.Time) (int, error) {
 
 	reviews := []CriticReview{}
 	if err := json.NewDecoder(fh).Decode(&reviews); err != nil {
@@ -111,6 +127,9 @@ func processCritic(fh *os.File, fromDate, toDate time.Time) (int, error) {
 	for _, review := range reviews {
 		if fromDate.Before(review.PublishDate) && toDate.After(review.PublishDate) {
 			reviewCount = reviewCount + 1
+			if review.Publication != "" {
+				orgMap[strings.Trim(review.Publication, " ")] = 1
+			}
 		}
 	}
 

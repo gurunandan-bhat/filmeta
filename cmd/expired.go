@@ -13,8 +13,9 @@ import (
 )
 
 type Guild struct {
-	Name      string `json:"LinkTitle,omitempty"`
-	ReviewURL string `json:"ReviewURL,omitempty"`
+	Name          string   `json:"LinkTitle,omitempty"`
+	ReviewURL     string   `json:"ReviewURL,omitempty"`
+	Organizations []string `json:"Organizations,omitempty"`
 }
 
 type Critic struct {

@@ -107,11 +107,13 @@ var importCmd = &cobra.Command{
 			}
 
 			if tmdbFilm.PosterPath != "" {
+				posterOutPath = filepath.Join(posterOutPath, tmdbFilm.PosterPath)
 				if err := client.TMDBImage(context.Background(), metaCfg.TMDB.PosterBase, tmdbFilm.PosterPath, posterOutPath); err != nil {
 					fmt.Printf("error fetching poster: %q", err)
 				}
 			}
 			if tmdbFilm.BackdropPath != "" {
+				bdropOutPath = filepath.Join(bdropOutPath, tmdbFilm.BackdropPath)
 				if err := client.TMDBImage(context.Background(), metaCfg.TMDB.BackdropBase, tmdbFilm.BackdropPath, bdropOutPath); err != nil {
 					fmt.Printf("error fetching backdrop: %q", err)
 				}

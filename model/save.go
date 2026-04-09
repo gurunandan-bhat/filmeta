@@ -16,7 +16,7 @@ func (m *Model) Save(f tmdb.FilmWithCredits, showType string) error {
 	}
 	defer tx.Rollback()
 
-	qry := `REPLACE INTO film 
+	qry := `REPLACE INTO film
 				(iTMDBID, vTitle, vFCGTitle, vOriginalTitle, vType, vOverView, vLanguage, vBackdropPath, vPosterPath, dtReleaseDate)
 			VALUES (
 				?, NULLIF(?, ''), NULLIF(?, ''), NULLIF(?, ''), ?, NULLIF(?, ''), NULLIF(?, ''), ?, ?, NULLIF(?, '')
@@ -38,22 +38,22 @@ func (m *Model) Save(f tmdb.FilmWithCredits, showType string) error {
 		return fmt.Errorf("error fetching inserted id")
 	}
 
-	genreCount := len(f.Genres)
+	genreCount := len(f.Film.Genres)
 	if genreCount > 0 {
 		bindStr := `(?, ?, ?)`
 		bindArray := make([]string, genreCount)
 		bindValues := []any{}
 		for i := range genreCount {
 			bindArray[i] = bindStr
-			bindValues = append(bindValues, iFilmID, f.Genres[i].Id, f.Genres[i].Name)
+			bindValues = append(bindValues, iFilmID, f.Film.Genres[i].Id, f.Film.Genres[i].Name)
 		}
 
-		gQry := `INSERT INTO film_genre 
+		gQry := `INSERT INTO film_genre
 				(iFilmID, iGenreID, vGenreName)
-			VALUES 
+			VALUES
 			` + strings.Join(bindArray, ", ") + `
 			AS new
-			ON DUPLICATE KEY UPDATE 
+			ON DUPLICATE KEY UPDATE
 			vGenreName  = new.vGenreName`
 		_, err = tx.Exec(gQry, bindValues...)
 		if err != nil {
@@ -76,7 +76,7 @@ func (m *Model) Save(f tmdb.FilmWithCredits, showType string) error {
 			bindArray[i] = bindStr
 			bindValues = append(bindValues, iFilmID, "cast", cast[i].Name, cast[i].Character, cast[i].ProfilePath, cast[i].Order)
 		}
-		castQry := `INSERT INTO film_credit 
+		castQry := `INSERT INTO film_credit
 					(iFilmID, eCreditType, vName, vRole, vProfilePath, iOrderID)
 				VALUES
 				` + strings.Join(bindArray, ", ")
@@ -96,7 +96,7 @@ func (m *Model) Save(f tmdb.FilmWithCredits, showType string) error {
 			bindArray = append(bindArray, bindStr)
 			bindValues = append(bindValues, iFilmID, "crew", crew[i].Name, crew[i].Job, crew[i].ProfilePath)
 		}
-		crewQry := `INSERT INTO film_credit 
+		crewQry := `INSERT INTO film_credit
 					(iFilmID, eCreditType, vName, vRole, vProfilePath)
 				VALUES
 				` + strings.Join(bindArray, ", ")
