@@ -17,11 +17,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type CriticReview struct {
-	Publication string
-	PublishDate time.Time
-}
-
 // criticReviewsCmd represents the criticReviews command
 var criticReviewsCmd = &cobra.Command{
 	Use:     "criticReviews",

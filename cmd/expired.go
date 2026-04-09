@@ -12,20 +12,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type Guild struct {
-	Name          string   `json:"LinkTitle,omitempty"`
-	ReviewURL     string   `json:"ReviewURL,omitempty"`
-	Organizations []string `json:"Organizations,omitempty"`
-}
-
-type Critic struct {
-	Name        string `json:"LinkTitle,omitempty"`
-	ReviewCount int    `json:"ReviewCount,omitempty"`
-	Lastmod     string `json:"Lastmod,omitempty"`
-}
-
-type CriticMap map[string]Critic
-
 // expiredCmd represents the expired command
 var expiredCmd = &cobra.Command{
 	Use:   "expired",

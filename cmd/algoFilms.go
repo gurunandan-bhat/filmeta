@@ -17,46 +17,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type Film struct {
-	ObjectID        string `json:"objectID"`
-	LinkTitle       string
-	AverageScore    float64 `json:"AverageScore"`
-	URLPath         string
-	Genres          string
-	Language        string
-	Overview        string
-	Cast            string
-	Director        string
-	Poster          string
-	LocalPosterPath string `json:"LocalPosterPath"`
-	Reviewers       string
-}
-
-type FilmReview struct {
-	Critic string
-}
-type Genre struct {
-	ID   int `json:"id"`
-	Name string
-}
-
-type Person struct {
-	Name string `json:"name"`
-	Job  string `json:"job"`
-}
-
-type Credits struct {
-	Cast []Person `json:"cast"`
-	Crew []Person `json:"crew"`
-}
-type Meta struct {
-	Language   string  `json:"original_language"`
-	Overview   string  `json:"overview"`
-	PosterPath string  `json:"poster_path"`
-	Genres     []Genre `json:"genres"`
-	Credits    Credits `json:"credits"`
-}
-
 const MAX_CAST_LENGTH = 10
 
 // algoliaFilmsCmd represents the algoliaFilms command
@@ -83,7 +43,7 @@ var algoFilmsCmd = &cobra.Command{
 			}
 		}()
 
-		algoFilms := []Film{}
+		algoFilms := []FilmIndex{}
 		for _, f := range films {
 
 			objectID := fmt.Sprintf("%x", md5.Sum([]byte(f.LinkTitle)))
@@ -121,15 +81,7 @@ var algoFilmsCmd = &cobra.Command{
 				return err
 			}
 
-			f.ObjectID = objectID
-			f.Language = lang
-			f.Overview = meta.Overview
-			f.Cast = strings.Join(castList, ", ")
-			f.Director = strings.Join(crewList, ", ")
-			f.Poster = meta.PosterPath
-			f.Genres = strings.Join(genreList, ", ")
-
-			revFName := filepath.Join(metaCfg.HugoRoot, f.URLPath, "index.json")
+			revFName := filepath.Join(metaCfg.HugoRoot, "mreviews", f.URLPath, "index.json")
 			revF, err := os.Open(revFName)
 			if err != nil {
 				return fmt.Errorf("error opening reviews file %s: %w", revFName, err)
@@ -145,9 +97,21 @@ var algoFilmsCmd = &cobra.Command{
 				critics[i] = r.Critic
 			}
 			slices.Sort(critics)
-			f.Reviewers = strings.Join(critics, ", ")
 
-			algoFilms = append(algoFilms, f)
+			algoFilms = append(algoFilms, FilmIndex{
+				ObjectID:        objectID,
+				LinkTitle:       f.LinkTitle,
+				AverageScore:    f.AverageScore,
+				URLPath:         f.URLPath,
+				LocalPosterPath: f.LocalPosterPath,
+				Language:        lang,
+				Overview:        meta.Overview,
+				Cast:            strings.Join(castList, ", "),
+				Director:        strings.Join(crewList, ", "),
+				Poster:          meta.PosterPath,
+				Genres:          strings.Join(genreList, ", "),
+				Reviewers:       strings.Join(critics, ", "),
+			})
 
 			if err := assetF.Close(); err != nil {
 				fmt.Printf("error closing metadata file %s: %s", assetFName, err)

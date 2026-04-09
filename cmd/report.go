@@ -8,7 +8,6 @@ import (
 	"encoding/csv"
 	"encoding/hex"
 	"encoding/json"
-	"filmeta/guild"
 	"fmt"
 	"log"
 	"os"
@@ -32,7 +31,7 @@ var reportCmd = &cobra.Command{
 			return fmt.Errorf("error reading %s: %w", mFName, err)
 		}
 
-		films := []guild.Film{}
+		films := []Film{}
 		if err := json.Unmarshal(filmJSONBytes, &films); err != nil {
 			return fmt.Errorf("error unmarshaling list of films: %w", err)
 		}

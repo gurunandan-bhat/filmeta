@@ -12,22 +12,9 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"time"
 
 	"github.com/spf13/cobra"
 )
-
-type FCGFilm struct {
-	ReviewCount int       `json:"count,omitempty"`
-	Title       string    `json:"title,omitempty"`
-	ShowType    string    `json:"show,omitempty"`
-	TMDBID      int       `json:"id,omitempty"`
-	ReviewDate  time.Time `json:"date,omitempty"`
-}
-
-type Data struct {
-	Metadata []FCGFilm `json:"metadata,omitempty"`
-}
 
 // importCmd represents the bulkAdd command
 var importCmd = &cobra.Command{

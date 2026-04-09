@@ -28,16 +28,6 @@ import (
 	"golang.org/x/text/unicode/norm"
 )
 
-type PostFormat struct {
-	Title    string    `toml:"title"`
-	Date     time.Time `toml:"date"`
-	Draft    bool      `toml:"draft"`
-	Cast     []string  `toml:"cast"`
-	Genres   []string  `toml:"genres"`
-	Director []string  `toml:"director"`
-	Language []string  `toml:"language"`
-}
-
 // Hardcoding the output directory so that this will
 // will not affect the guild system for which this was designed.
 var rootFolder = "/Users/nandan/test"
