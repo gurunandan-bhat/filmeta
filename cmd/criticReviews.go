@@ -67,7 +67,7 @@ var criticReviewsCmd = &cobra.Command{
 			}
 			reviewCount, err = processCritic(fh, orgMap, fromDate, toDate)
 			if err != nil {
-				return fmt.Errorf("error copunting reviews for %s: %w", member.Name, err)
+				return fmt.Errorf("error counting reviews for %s: %w", member.Name, err)
 			}
 			if err := fh.Close(); err != nil {
 				return fmt.Errorf("error closing %s: %w", criticPath, err)

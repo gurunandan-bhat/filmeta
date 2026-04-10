@@ -3,7 +3,6 @@ package config
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"os"
 	"path/filepath"
 
@@ -12,7 +11,6 @@ import (
 
 const (
 	defaultConfigFileName = ".filmeta.json"
-	langFName             = "./languages.json"
 )
 
 type Language struct {
@@ -99,13 +97,10 @@ func initLang() error {
 		return fmt.Errorf("error reading configuration: %w", err)
 	}
 
-	langF, err := os.Open(filepath.Join(cfg.AppRoot, "config", "languages.json"))
+	langPath := filepath.Join(cfg.AppRoot, "config", "languages.json")
+	jsonBytes, err := os.ReadFile(langPath)
 	if err != nil {
-		return fmt.Errorf("error opening file %s: %w", langFName, err)
-	}
-	jsonBytes, err := io.ReadAll(langF)
-	if err != nil {
-		return fmt.Errorf("error reading %s: %w", langFName, err)
+		return fmt.Errorf("error reading language file %s: %w", langPath, err)
 	}
 
 	langData := make(map[string]Language, 0)

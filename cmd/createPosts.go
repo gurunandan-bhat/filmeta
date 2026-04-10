@@ -113,7 +113,7 @@ var createPostsCmd = &cobra.Command{
 		}()
 
 		if _, err := metaFile.Write(filmBytes); err != nil {
-			return fmt.Errorf("error writing netadata for %s: %w", metaFName, err)
+			return fmt.Errorf("error writing metadata for %s: %w", metaFName, err)
 		}
 
 		return nil

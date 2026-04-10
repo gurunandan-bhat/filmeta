@@ -6,8 +6,6 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"log"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -26,8 +24,15 @@ var scoreCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	PreRunE: func(cmd *cobra.Command, args []string) error {
 
-		critic, _ = cmd.Flags().GetString("critic")
-		film, _ = cmd.Flags().GetString("film")
+		var err error
+		critic, err = cmd.Flags().GetString("critic")
+		if err != nil {
+			return fmt.Errorf("error reading critic flag: %w", err)
+		}
+		film, err = cmd.Flags().GetString("film")
+		if err != nil {
+			return fmt.Errorf("error reading film flag: %w", err)
+		}
 		if err := validate(critic, film); err != nil {
 			return err
 		}
@@ -36,40 +41,32 @@ var scoreCmd = &cobra.Command{
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		score, err := strconv.ParseFloat(strings.TrimSpace(args[0]), 64)
-		if err != nil || score == 0.0 {
+		score, parseErr := strconv.ParseFloat(strings.TrimSpace(args[0]), 64)
+		if parseErr != nil || score == 0.0 {
 			return fmt.Errorf("score must be a non-zero float: got %s instead", args[0])
 		}
 
-		outPath, _ := cmd.Flags().GetString("outDir")
+		outPath, err := cmd.Flags().GetString("outPath")
+		if err != nil {
+			return fmt.Errorf("error reading outPath flag: %w", err)
+		}
 		if outPath == "" {
 			outPath = defaultScoreFile
 		}
 
-		outPath = filepath.Clean(metaCfg.HugoRoot + outPath)
+		outPath = filepath.Join(metaCfg.HugoRoot, outPath)
 		filmScores := FreeScores(make(map[string]Scores))
 
-		scoreFile, err := os.OpenFile(outPath, os.O_RDWR|os.O_CREATE, 0644)
-		if err != nil {
-			return err
+		jsonBytes, err := os.ReadFile(outPath)
+		if err != nil && !os.IsNotExist(err) {
+			return fmt.Errorf("error reading score file: %w", err)
 		}
-		defer func() {
-			if err := scoreFile.Close(); err != nil {
-				log.Fatal(err)
-			}
-		}()
-
-		jsonBytes, err := io.ReadAll(scoreFile)
-		if err != nil {
-			return err
-		}
-		// Handle empty file
 		if len(jsonBytes) == 0 {
 			jsonBytes = []byte("{}")
 		}
 
 		if err := json.Unmarshal(jsonBytes, &filmScores); err != nil {
-			return err
+			return fmt.Errorf("error unmarshaling scores: %w", err)
 		}
 
 		if err := filmScores.update(film, critic, score); err != nil {
@@ -78,19 +75,11 @@ var scoreCmd = &cobra.Command{
 
 		jsonBytes, err = json.MarshalIndent(filmScores, "", "\t")
 		if err != nil {
-			return err
-		}
-		if err := scoreFile.Truncate(0); err != nil {
-			return err
+			return fmt.Errorf("error marshaling scores: %w", err)
 		}
 
-		_, err = scoreFile.Seek(0, 0)
-		if err != nil {
-			return err
-		}
-		_, err = scoreFile.WriteString(string(jsonBytes))
-		if err != nil {
-			return err
+		if err := os.WriteFile(outPath, jsonBytes, 0644); err != nil {
+			return fmt.Errorf("error writing score file: %w", err)
 		}
 
 		return nil
@@ -114,10 +103,10 @@ func init() {
 	scoreCmd.Flags().StringP("outPath", "o", "", "score data file")
 
 	if err := cobra.MarkFlagRequired(scoreCmd.Flags(), "critic"); err != nil {
-		log.Fatalf("error requiring mandatory flag %s", "critic")
+		panic(fmt.Sprintf("error requiring mandatory flag critic: %v", err))
 	}
 	if err := cobra.MarkFlagRequired(scoreCmd.Flags(), "film"); err != nil {
-		log.Fatalf("error requiring mandatory flag %s", "film")
+		panic(fmt.Sprintf("error requiring mandatory flag film: %v", err))
 	}
 }
 

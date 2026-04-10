@@ -3,13 +3,12 @@ package tmdb
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 )
 
-func (c *Client) TMDBImage(ctx context.Context, baseURL, imgPath, destPath string) error {
+func (c *Client) TMDBImage(ctx context.Context, baseURL, imgPath, destPath string) (err error) {
 
 	imgURL := fmt.Sprintf("%s%s", baseURL, imgPath)
 	req, err := http.NewRequestWithContext(ctx, "GET", imgURL, nil)
@@ -31,8 +30,8 @@ func (c *Client) TMDBImage(ctx context.Context, baseURL, imgPath, destPath strin
 		return fmt.Errorf("error opening file %s: %w", destPath, err)
 	}
 	defer func() {
-		if err := outFile.Close(); err != nil {
-			log.Fatalf("error closing file %s: %v", destPath, err)
+		if closeErr := outFile.Close(); closeErr != nil && err == nil {
+			err = fmt.Errorf("error closing file %s: %w", destPath, closeErr)
 		}
 	}()
 

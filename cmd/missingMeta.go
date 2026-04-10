@@ -6,7 +6,6 @@ package cmd
 import (
 	"crypto/md5"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -45,7 +44,7 @@ var missingMetaCmd = &cobra.Command{
 			return fmt.Errorf("error fetching metadata directory: %w", err)
 		}
 		if metaDir == "" {
-			return errors.New("metadata directory cannot be empty")
+			metaDir = filepath.Join(metaCfg.HugoRoot, "../assets", "meta")
 		}
 
 		missing := []Film{}
@@ -88,5 +87,5 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// missingMetaCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	missingMetaCmd.Flags().StringP("meta-dir", "d", "/Users/nandan/repos/guild/assets/meta", "Metadata directory for json files")
+	missingMetaCmd.Flags().StringP("meta-dir", "d", "", "Metadata directory for json files (default: <hugo-root>/assets/meta)")
 }

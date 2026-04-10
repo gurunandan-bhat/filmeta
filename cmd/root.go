@@ -63,7 +63,7 @@ func init() {
 	// when this action is called directly.
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		log.Fatalf("error fetching HOME diectory for user: %+v", err)
+		log.Fatalf("error fetching HOME directory for user: %+v", err)
 	}
 	cfgName := fmt.Sprintf("%s/%s", homeDir, ".filmeta.json")
 	rootCmd.PersistentFlags().StringP("config-file", "c", cfgName, "Help message for toggle")

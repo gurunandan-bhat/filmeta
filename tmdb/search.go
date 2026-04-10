@@ -3,7 +3,6 @@ package tmdb
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 )
@@ -32,9 +31,9 @@ func (c *Client) ShowSearch(ctx context.Context, showType string, opts *SearchOp
 
 	films := []Film{}
 	for {
-		results, err := c.search(context.Background(), showType, opts)
+		results, err := c.search(ctx, showType, opts)
 		if err != nil {
-			log.Fatalf("err calling search: %s", err)
+			return nil, fmt.Errorf("error searching for %s: %w", showType, err)
 		}
 		films = append(films, results.Results...)
 		if results.Page == results.TotalPages {

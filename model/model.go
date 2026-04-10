@@ -2,7 +2,7 @@ package model
 
 import (
 	"filmeta/config"
-	"log"
+	"fmt"
 	"time"
 
 	"github.com/go-sql-driver/mysql"
@@ -26,7 +26,7 @@ func NewModel(cfg *config.Config) (*Model, error) {
 
 	tz, err := time.LoadLocation(cfg.Db.Loc)
 	if err != nil {
-		log.Fatalf("Error fetching local timezone: %s", err)
+		return nil, fmt.Errorf("error loading timezone %s: %w", cfg.Db.Loc, err)
 	}
 	dbCfg.Loc = tz
 

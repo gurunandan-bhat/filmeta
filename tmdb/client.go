@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"time"
 
@@ -44,11 +43,7 @@ func (c *Client) sendRequest(req *http.Request, v any) error {
 		return fmt.Errorf("error executing request: %w", err)
 	}
 
-	defer func() {
-		if err := res.Body.Close(); err != nil {
-			log.Fatalf("error closing response body for request %s: %v", req.URL, err)
-		}
-	}()
+	defer func() { _ = res.Body.Close() }()
 
 	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {
 		body, err := io.ReadAll(res.Body)
