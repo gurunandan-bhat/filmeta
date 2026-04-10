@@ -19,9 +19,6 @@ import (
 var film, critic string
 var defaultScoreFile = "/../data/freescores.json"
 
-type Scores map[string]float64
-type FreeScores map[string]Scores
-
 // scoreCmd represents the score command
 var scoreCmd = &cobra.Command{
 	Use:   "score",
@@ -122,11 +119,6 @@ func init() {
 	if err := cobra.MarkFlagRequired(scoreCmd.Flags(), "film"); err != nil {
 		log.Fatalf("error requiring mandatory flag %s", "film")
 	}
-}
-
-type Entity struct {
-	LinkTitle string `json:"LinkTitle,omitempty"`
-	Path      string `json:"Path,omitempty"`
 }
 
 func validate(critic, film string) error {

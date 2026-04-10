@@ -14,13 +14,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type FilmOut struct {
-	LinkTitle string
-	ID        int
-	ShowType  string
-	Overview  string
-}
-
 // missingMetaCmd represents the missingMeta command
 var missingMetaCmd = &cobra.Command{
 	Use:     "missingMeta",
@@ -42,7 +35,7 @@ var missingMetaCmd = &cobra.Command{
 			return fmt.Errorf("error reading datafile: %s: %w", inputPath, err)
 		}
 
-		var films []FilmOut
+		var films []Film
 		if err := json.Unmarshal(dataBytes, &films); err != nil {
 			return fmt.Errorf("error unmarshaling films slice: %w", err)
 		}
@@ -55,7 +48,7 @@ var missingMetaCmd = &cobra.Command{
 			return errors.New("metadata directory cannot be empty")
 		}
 
-		missing := []FilmOut{}
+		missing := []Film{}
 		for _, film := range films {
 			title := film.LinkTitle
 			meta := fmt.Sprintf("%s/%x.json", metaDir, md5.Sum([]byte(title)))
@@ -63,7 +56,7 @@ var missingMetaCmd = &cobra.Command{
 			_, err := os.Stat(meta)
 			if err != nil {
 				if os.IsNotExist(err) {
-					missing = append(missing, FilmOut{LinkTitle: title})
+					missing = append(missing, Film{LinkTitle: title})
 					continue
 				}
 				return fmt.Errorf("error finding file %s for %s: %w", meta, title, err)
