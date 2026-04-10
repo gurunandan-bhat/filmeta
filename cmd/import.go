@@ -48,11 +48,11 @@ var importCmd = &cobra.Command{
 		client := tmdb.NewClient(metaCfg.TMDB.APIKey)
 		posterOutPath := filepath.Join(outPath, "posters")
 		if err := os.Mkdir(posterOutPath, 0755); err != nil && !os.IsExist(err) {
-			return fmt.Errorf("error creating directory %s: %w", posterOutPath, err)
+			return fmt.Errorf("error creating posters directory %s: %w", posterOutPath, err)
 		}
 		bdropOutPath := filepath.Join(outPath, "backdrops")
 		if err := os.Mkdir(bdropOutPath, 0755); err != nil && !os.IsExist(err) {
-			return fmt.Errorf("error creating directory %s: %w", bdropOutPath, err)
+			return fmt.Errorf("error creating backdrops directory %s: %w", bdropOutPath, err)
 		}
 
 		for _, film := range inData {
@@ -94,14 +94,14 @@ var importCmd = &cobra.Command{
 			}
 
 			if tmdbFilm.PosterPath != "" {
-				posterOutPath = filepath.Join(posterOutPath, tmdbFilm.PosterPath)
-				if err := client.TMDBImage(context.Background(), metaCfg.TMDB.PosterBase, tmdbFilm.PosterPath, posterOutPath); err != nil {
+				destPath := filepath.Join(posterOutPath, tmdbFilm.PosterPath)
+				if err := client.TMDBImage(context.Background(), metaCfg.TMDB.PosterBase, tmdbFilm.PosterPath, destPath); err != nil {
 					fmt.Printf("error fetching poster: %q", err)
 				}
 			}
 			if tmdbFilm.BackdropPath != "" {
-				bdropOutPath = filepath.Join(bdropOutPath, tmdbFilm.BackdropPath)
-				if err := client.TMDBImage(context.Background(), metaCfg.TMDB.BackdropBase, tmdbFilm.BackdropPath, bdropOutPath); err != nil {
+				destPath := filepath.Join(bdropOutPath, tmdbFilm.BackdropPath)
+				if err := client.TMDBImage(context.Background(), metaCfg.TMDB.BackdropBase, tmdbFilm.BackdropPath, destPath); err != nil {
 					fmt.Printf("error fetching backdrop: %q", err)
 				}
 			}

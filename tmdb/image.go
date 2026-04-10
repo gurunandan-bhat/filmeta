@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 )
 
-func (c *Client) TMDBImage(ctx context.Context, baseURL, imgPath, destPath string) (err error) {
+func (c *Client) TMDBImage(ctx context.Context, baseURL, imgURI, destPath string) (err error) {
 
-	imgURL := fmt.Sprintf("%s%s", baseURL, imgPath)
+	imgURL := fmt.Sprintf("%s%s", baseURL, imgURI)
 	req, err := http.NewRequestWithContext(ctx, "GET", imgURL, nil)
 	if err != nil {
 		return fmt.Errorf("error initializing request: %w", err)
@@ -22,7 +22,7 @@ func (c *Client) TMDBImage(ctx context.Context, baseURL, imgPath, destPath strin
 	// called from elsewhere
 	destDir := filepath.Dir(destPath)
 	if err := os.MkdirAll(destDir, 0755); err != nil {
-		return fmt.Errorf("error creating directory %s: %w", destDir, err)
+		return fmt.Errorf("tmdbImage: error creating directory %s: %w", destDir, err)
 	}
 
 	outFile, err := os.Create(destPath)

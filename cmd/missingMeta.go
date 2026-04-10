@@ -47,7 +47,7 @@ var missingMetaCmd = &cobra.Command{
 			metaDir = filepath.Join(metaCfg.HugoRoot, "../assets", "meta")
 		}
 
-		missing := []Film{}
+		missing := []FilmOut{}
 		for _, film := range films {
 			title := film.LinkTitle
 			meta := fmt.Sprintf("%s/%x.json", metaDir, md5.Sum([]byte(title)))
@@ -55,7 +55,7 @@ var missingMetaCmd = &cobra.Command{
 			_, err := os.Stat(meta)
 			if err != nil {
 				if os.IsNotExist(err) {
-					missing = append(missing, Film{LinkTitle: title})
+					missing = append(missing, FilmOut{LinkTitle: title})
 					continue
 				}
 				return fmt.Errorf("error finding file %s for %s: %w", meta, title, err)
