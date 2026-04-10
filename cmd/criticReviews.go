@@ -17,6 +17,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
+type Guild struct {
+	Name          string   `json:"LinkTitle,omitempty"`
+	ReviewURL     string   `json:"ReviewURL,omitempty"`
+	Organizations []string `json:"Organizations,omitempty"`
+}
 type CriticReview struct {
 	Publication string
 	PublishDate time.Time
