@@ -147,3 +147,28 @@ func dataIsAvailable(cmd *cobra.Command, args []string) error {
 
 	return nil
 }
+
+func mkAbsPath(path string) (string, error) {
+
+	if path == "" {
+		return path, nil
+	}
+
+	if _, err := os.Stat(path); err != nil {
+		if os.IsNotExist(err) {
+			if err := os.MkdirAll(path, 0755); err != nil {
+				return "", fmt.Errorf("error creating output directory %s: %w", path, err)
+			}
+		} else {
+			return "", err
+		}
+	}
+
+	path, err := filepath.Abs(path)
+	if err != nil {
+		return "", fmt.Errorf("error converting %s to absolute path: %w", path, err)
+	}
+
+	return path, nil
+
+}
