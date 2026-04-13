@@ -30,7 +30,7 @@ import (
 
 // Hardcoding the output directory so that this will
 // will not affect the guild system for which this was designed.
-var rootFolder = "/Users/nandan/test"
+var rootFolder = "/Users/nandan/mog"
 var sectionFolder = "content/films"
 
 // createPostsCmd represents the createPosts command
@@ -58,64 +58,68 @@ var createPostsCmd = &cobra.Command{
 
 		client := tmdb.NewClient(metaCfg.TMDB.APIKey)
 
-		tmdbFilm, err := client.Film(context.Background(), "movie", ids[0])
-		if err != nil {
-			return err
-		}
+		for _, id := range ids {
 
-		fm, err := toOutputString(tmdbFilm)
-		if err != nil {
-			return fmt.Errorf("error generating output: %w", err)
-		}
-
-		folder := filepath.Join(rootFolder, sectionFolder, sanitizeFilename(tmdbFilm.Title))
-		if err := os.MkdirAll(folder, 0755); err != nil {
-			return fmt.Errorf("error making folder %s: %w", folder, err)
-		}
-
-		pFileName := filepath.Join(folder, "index.md")
-		if err := os.WriteFile(pFileName, []byte(fm), 0644); err != nil {
-			return fmt.Errorf("error writing post to %s: %w", pFileName, err)
-		}
-
-		if tmdbFilm.PosterPath != "" {
-			posterExt := filepath.Ext(tmdbFilm.PosterPath)
-			posterOutPath := filepath.Join(folder, fmt.Sprintf("poster%s", posterExt))
-			if err := client.TMDBImage(context.Background(), metaCfg.TMDB.PosterBase, tmdbFilm.PosterPath, posterOutPath); err != nil {
-				return fmt.Errorf("error fetching poster for %s: %w", tmdbFilm.Title, err)
+			tmdbFilm, err := client.Film(context.Background(), "movie", id)
+			if err != nil {
+				return err
 			}
-		}
 
-		if tmdbFilm.BackdropPath != "" {
-			backdropExt := filepath.Ext(tmdbFilm.BackdropPath)
-			backdropOutPath := filepath.Join(folder, fmt.Sprintf("backdrop%s", backdropExt))
-			if err := client.TMDBImage(context.Background(), metaCfg.TMDB.BackdropBase, tmdbFilm.BackdropPath, backdropOutPath); err != nil {
-				return fmt.Errorf("error fetching backdrop for %s: %w", tmdbFilm.Title, err)
+			fm, err := toOutputString(tmdbFilm)
+			if err != nil {
+				return fmt.Errorf("error generating output: %w", err)
 			}
-		}
 
-		filmBytes, err := json.MarshalIndent(tmdbFilm, "", "\t")
-		if err != nil {
-			return fmt.Errorf("error marshaling data for %s: %w", tmdbFilm.Title, err)
-		}
-
-		hash := md5.Sum([]byte(tmdbFilm.Title))
-		metaFName := fmt.Sprintf("%s.json", hex.EncodeToString(hash[:]))
-
-		metaFile, err := os.Create(filepath.Join(rootFolder, "assets/metadata", metaFName))
-		if err != nil {
-			return fmt.Errorf("error writing to file %s: %w", metaFName, err)
-		}
-		defer func() {
-			if err := metaFile.Close(); err != nil {
-				log.Fatalf("error closing file %s: %v", metaFName, err)
+			folder := filepath.Join(rootFolder, sectionFolder, sanitizeFilename(tmdbFilm.Title))
+			if err := os.MkdirAll(folder, 0755); err != nil {
+				return fmt.Errorf("error making folder %s: %w", folder, err)
 			}
-		}()
 
-		if _, err := metaFile.Write(filmBytes); err != nil {
-			return fmt.Errorf("error writing metadata for %s: %w", metaFName, err)
+			pFileName := filepath.Join(folder, "index.md")
+			if err := os.WriteFile(pFileName, []byte(fm), 0644); err != nil {
+				return fmt.Errorf("error writing post to %s: %w", pFileName, err)
+			}
+
+			if tmdbFilm.PosterPath != "" {
+				posterExt := filepath.Ext(tmdbFilm.PosterPath)
+				posterOutPath := filepath.Join(folder, fmt.Sprintf("poster%s", posterExt))
+				if err := client.TMDBImage(context.Background(), metaCfg.TMDB.PosterBase, tmdbFilm.PosterPath, posterOutPath); err != nil {
+					return fmt.Errorf("error fetching poster for %s: %w", tmdbFilm.Title, err)
+				}
+			}
+
+			if tmdbFilm.BackdropPath != "" {
+				backdropExt := filepath.Ext(tmdbFilm.BackdropPath)
+				backdropOutPath := filepath.Join(folder, fmt.Sprintf("backdrop%s", backdropExt))
+				if err := client.TMDBImage(context.Background(), metaCfg.TMDB.BackdropBase, tmdbFilm.BackdropPath, backdropOutPath); err != nil {
+					return fmt.Errorf("error fetching backdrop for %s: %w", tmdbFilm.Title, err)
+				}
+			}
+
+			filmBytes, err := json.MarshalIndent(tmdbFilm, "", "\t")
+			if err != nil {
+				return fmt.Errorf("error marshaling data for %s: %w", tmdbFilm.Title, err)
+			}
+
+			hash := md5.Sum([]byte(tmdbFilm.Title))
+			metaFName := fmt.Sprintf("%s.json", hex.EncodeToString(hash[:]))
+
+			metaFile, err := os.Create(filepath.Join(rootFolder, "assets/metadata", metaFName))
+			if err != nil {
+				return fmt.Errorf("error writing to file %s: %w", metaFName, err)
+			}
+			defer func() {
+				if err := metaFile.Close(); err != nil {
+					log.Fatalf("error closing file %s: %v", metaFName, err)
+				}
+			}()
+
+			if _, err := metaFile.Write(filmBytes); err != nil {
+				return fmt.Errorf("error writing metadata for %s: %w", metaFName, err)
+			}
+
+			time.Sleep(2 * time.Second)
 		}
-
 		return nil
 	},
 }
