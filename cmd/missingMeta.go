@@ -34,7 +34,7 @@ var missingMetaCmd = &cobra.Command{
 			return fmt.Errorf("error reading datafile: %s: %w", inputPath, err)
 		}
 
-		var films []Film
+		var films map[string]Film
 		if err := json.Unmarshal(dataBytes, &films); err != nil {
 			return fmt.Errorf("error unmarshaling films slice: %w", err)
 		}
