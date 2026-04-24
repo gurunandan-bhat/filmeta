@@ -4,6 +4,8 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -115,7 +117,7 @@ func validate(critic, film string) error {
 	// 1. Check if author exists
 	// 2. Check that we have at least one review
 	// 3. Check that author has not reviewed film
-	criticPath := entityExists(critic, "/guild")
+	criticPath := entityExists(critic, "/critics")
 	if criticPath == "" {
 		return fmt.Errorf("no author matched %s", critic)
 	}
@@ -134,24 +136,25 @@ func validate(critic, film string) error {
 
 func entityExists(e, path string) string {
 
-	var ePath string
-	jsonBytes, err := os.ReadFile(fmt.Sprintf("%s%s/index.json", metaCfg.HugoRoot, path))
+	jsonPath := fmt.Sprintf("%s%s/index.json", metaCfg.HugoRoot, path)
+	jsonBytes, err := os.ReadFile(jsonPath)
 	if err != nil {
-		return ePath
+		fmt.Printf("Error reading %s: %v", jsonPath, err)
+		return ""
 	}
-	entities := []Entity{}
+	entities := map[string]Entity{}
 	if err := json.Unmarshal(jsonBytes, &entities); err != nil {
-		return ePath
+		fmt.Printf("Error unmarshaling %s: %v", jsonPath, err)
+		return ""
 	}
 
-	for _, a := range entities {
-		if e == a.LinkTitle {
-			ePath = a.Path
-			break
-		}
+	eHash := md5.Sum([]byte(e))
+	entity, ok := entities[hex.EncodeToString(eHash[:])]
+	if !ok {
+		return ""
 	}
 
-	return ePath
+	return entity.Path
 }
 
 func (s FreeScores) update(film, critic string, score float64) error {
