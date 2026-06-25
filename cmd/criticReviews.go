@@ -113,7 +113,7 @@ func init() {
 
 func processCritic(fh *os.File, orgMap map[string]int, fromDate, toDate time.Time) (int, error) {
 
-	reviews := []CriticReview{}
+	reviews := make(map[string]CriticReview, 0)
 	if err := json.NewDecoder(fh).Decode(&reviews); err != nil {
 		return 0, fmt.Errorf("error decoding review: %w", err)
 	}
