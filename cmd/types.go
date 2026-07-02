@@ -6,6 +6,7 @@ import "time"
 
 type Film struct {
 	LinkTitle       string    `json:"LinkTitle"`
+	Language        string    `json:"Language"`
 	AverageScore    float64   `json:"AverageScore"`
 	URLPath         string    `json:"URLPath"`
 	Path            string    `json:"Path"`
