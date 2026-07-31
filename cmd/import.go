@@ -12,6 +12,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -75,6 +76,22 @@ var importCmd = &cobra.Command{
 				tmdbFilm.Overview = film.Overview
 			}
 
+			// Whatever TMDB itself returned, captured before a local backdrop
+			// can overwrite it, so the fetch below only ever asks TMDB for a
+			// path TMDB actually gave us.
+			tmdbBackdrop := tmdbFilm.BackdropPath
+
+			// A film with no backdrop at TMDB can name a local image instead.
+			// It is copied in beside the fetched ones and recorded in the
+			// metadata, so this has to happen before the json is written.
+			if tmdbBackdrop == "" && film.BackdropPath != "" {
+				backdropPath, err := copyLocalBackdrop(film.BackdropPath, bdropOutPath)
+				if err != nil {
+					return fmt.Errorf("error using local backdrop for %s: %w", film.LinkTitle, err)
+				}
+				tmdbFilm.BackdropPath = backdropPath
+			}
+
 			fName := fmt.Sprintf("%x.json", md5.Sum([]byte(film.LinkTitle)))
 			oFileName := filepath.Join(outPath, fName)
 			jsonBytes, err := json.MarshalIndent(tmdbFilm, "", "\t")
@@ -91,9 +108,9 @@ var importCmd = &cobra.Command{
 					fmt.Printf("error fetching poster: %q", err)
 				}
 			}
-			if tmdbFilm.BackdropPath != "" {
-				destPath := filepath.Join(bdropOutPath, tmdbFilm.BackdropPath)
-				if err := client.TMDBImage(context.Background(), metaCfg.TMDB.BackdropBase, tmdbFilm.BackdropPath, destPath); err != nil {
+			if tmdbBackdrop != "" {
+				destPath := filepath.Join(bdropOutPath, tmdbBackdrop)
+				if err := client.TMDBImage(context.Background(), metaCfg.TMDB.BackdropBase, tmdbBackdrop, destPath); err != nil {
 					fmt.Printf("error fetching backdrop: %q", err)
 				}
 			}
@@ -173,4 +190,37 @@ func mkAbsPath(path string) (string, error) {
 
 	return path, nil
 
+}
+
+// copyLocalBackdrop copies an image from srcPath into destDir and returns the
+// value to record as backdrop_path.
+//
+// The copy is named for the md5 of its own contents, keeping the convention the
+// hand-added backdrops in the site already follow: content addressing means
+// re-importing the same film rewrites the same bytes to the same name rather
+// than accumulating copies, and it cannot collide with the paths TMDB hands out.
+// The returned path carries the leading slash that TMDB's own values have,
+// because Hugo resolves the asset as "meta/backdrops" + backdrop_path.
+func copyLocalBackdrop(srcPath, destDir string) (string, error) {
+
+	ext := strings.ToLower(filepath.Ext(srcPath))
+	if ext == "" {
+		return "", fmt.Errorf("backdrop %s has no file extension", srcPath)
+	}
+
+	imgBytes, err := os.ReadFile(srcPath)
+	if err != nil {
+		return "", fmt.Errorf("error reading backdrop %s: %w", srcPath, err)
+	}
+	if len(imgBytes) == 0 {
+		return "", fmt.Errorf("backdrop %s is empty", srcPath)
+	}
+
+	fName := fmt.Sprintf("%x%s", md5.Sum(imgBytes), ext)
+	destPath := filepath.Join(destDir, fName)
+	if err := os.WriteFile(destPath, imgBytes, 0644); err != nil {
+		return "", fmt.Errorf("error writing backdrop to %s: %w", destPath, err)
+	}
+
+	return "/" + fName, nil
 }

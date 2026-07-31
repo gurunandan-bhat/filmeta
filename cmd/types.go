@@ -15,11 +15,17 @@ type Film struct {
 	Lastmod         time.Time `json:"Lastmod"`
 }
 
+// FilmOut is both missingMeta's output and import's input. missingMeta emits a
+// blank BackdropPath for every gap it reports; filling it in with the path to an
+// image on disk tells import to use that image when TMDB has no backdrop of its
+// own. No json tags here, so the keys are the Go field names.
+
 type FilmOut struct {
-	LinkTitle string
-	ID        int
-	ShowType  string
-	Overview  string
+	LinkTitle    string
+	ID           int
+	ShowType     string
+	Overview     string
+	BackdropPath string
 }
 
 // Hugo content post
