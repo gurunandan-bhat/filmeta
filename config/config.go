@@ -28,16 +28,6 @@ type Config struct {
 		PosterBase   string `json:"posterBase,omitempty"`
 		BackdropBase string `json:"backdropBase,omitempty"`
 	} `json:"tmdb"`
-	Db struct {
-		User                 string `json:"user,omitempty"`
-		Passwd               string `json:"passwd,omitempty"`
-		Net                  string `json:"net,omitempty"`
-		Addr                 string `json:"addr,omitempty"`
-		DBName               string `json:"dbName,omitempty"`
-		ParseTime            bool   `json:"parseTime,omitempty"`
-		Loc                  string `json:"loc,omitempty"`
-		AllowNativePasswords bool   `json:"allowNativePasswords,omitempty"`
-	} `json:"db"`
 	Security struct {
 		CSRFKey string `json:"csrfKey,omitempty"`
 	} `json:"security"`

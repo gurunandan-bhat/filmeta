@@ -5,7 +5,6 @@ package cmd
 
 import (
 	"filmeta/config"
-	"filmeta/model"
 	"fmt"
 	"log"
 	"os"
@@ -14,7 +13,6 @@ import (
 )
 
 var metaCfg *config.Config
-var metaModel *model.Model
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -32,11 +30,6 @@ var rootCmd = &cobra.Command{
 		metaCfg, err = config.Configuration(cfgName)
 		if err != nil {
 			return fmt.Errorf("error reading config: %w", err)
-		}
-
-		metaModel, err = model.NewModel(metaCfg)
-		if err != nil {
-			return fmt.Errorf("error connecting to database: %w", err)
 		}
 
 		return nil

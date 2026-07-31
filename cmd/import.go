@@ -85,14 +85,6 @@ var importCmd = &cobra.Command{
 				return fmt.Errorf("error writing json to file %s: %w", oFileName, err)
 			}
 
-			if err := metaModel.Save(tmdbFilm, showType); err != nil {
-				// Transaction Failed - delete file
-				if errDel := os.Remove(oFileName); errDel != nil {
-					return fmt.Errorf("error deleting file %s after transaction rolled back with error %s: %w", oFileName, err, errDel)
-				}
-				return fmt.Errorf("error saving data to db: %w", err)
-			}
-
 			if tmdbFilm.PosterPath != "" {
 				destPath := filepath.Join(posterOutPath, tmdbFilm.PosterPath)
 				if err := client.TMDBImage(context.Background(), metaCfg.TMDB.PosterBase, tmdbFilm.PosterPath, destPath); err != nil {
@@ -130,6 +122,10 @@ func init() {
 	}
 }
 
+// dataIsAvailable checks that the input file exists and can actually be read by
+// this process. Permission bits alone cannot answer that -- whether a mode is
+// sufficient depends on ownership, group membership and any ACLs -- so the file
+// is opened rather than having its mode inspected.
 func dataIsAvailable(cmd *cobra.Command, args []string) error {
 
 	dataFile := args[0]
@@ -137,12 +133,18 @@ func dataIsAvailable(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("data file must exist and be readable")
 	}
 
-	info, err := os.Stat(dataFile)
+	fh, err := os.Open(dataFile)
 	if err != nil {
 		return fmt.Errorf("data file error: %w", err)
 	}
-	if info.Mode().Perm()&0444 != 0444 {
-		return fmt.Errorf("data file %s is not readable", dataFile)
+	defer func() { _ = fh.Close() }()
+
+	info, err := fh.Stat()
+	if err != nil {
+		return fmt.Errorf("data file error: %w", err)
+	}
+	if info.IsDir() {
+		return fmt.Errorf("data file %s is a directory", dataFile)
 	}
 
 	return nil

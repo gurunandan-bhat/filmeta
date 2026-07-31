@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -23,17 +24,12 @@ var criticReviewsCmd = &cobra.Command{
 	Short:   "Review count of Critics",
 	Aliases: []string{"critic-reviews"},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("criticReviews called")
-
-		fromDate, err := cmd.Flags().GetTime("from-date")
+		start, end, err := dateRange(cmd)
 		if err != nil {
-			return fmt.Errorf("error reading from date: %w", err)
+			return err
 		}
-		toDate, err := cmd.Flags().GetTime("to-date")
-		if err != nil {
-			return fmt.Errorf("error reading to date: %w", err)
-		}
-		fmt.Println("From and To:", fromDate.Local().Format("2006-01-02 15:04:05"), toDate.Local().Format("2006-01-02 15:04:05"))
+		// stdout carries the CSV, so progress goes to stderr
+		fmt.Fprintln(os.Stderr, "From and To:", describeRange(start, end))
 
 		// First read all members
 		guildFName := fmt.Sprintf("%s/guild/index.json", metaCfg.HugoRoot)
@@ -52,36 +48,31 @@ var criticReviewsCmd = &cobra.Command{
 
 			orgMap := make(map[string]int)
 			for _, org := range member.Organizations {
-				orgMap[strings.Trim(org, " ")] = 1
+				if org = strings.TrimSpace(org); org != "" {
+					orgMap[org] = 1
+				}
 			}
 
 			criticPath := filepath.Join(metaCfg.HugoRoot, "critics", member.ReviewURL, "index.json")
 			fh, err := os.Open(criticPath)
 			var reviewCount int
-			if err != nil {
-				if !errors.Is(err, os.ErrNotExist) {
-					return fmt.Errorf("error opening file for %s: %w", member.Name, err)
+			switch {
+			case err == nil:
+				reviewCount, err = processCritic(fh, orgMap, start, end)
+				if err != nil {
+					return fmt.Errorf("error counting reviews for %s: %w", member.Name, err)
 				}
-				critics = append(critics, []string{member.Name, member.Organizations[0], strconv.Itoa(reviewCount)})
-				continue
-			}
-			reviewCount, err = processCritic(fh, orgMap, fromDate, toDate)
-			if err != nil {
-				return fmt.Errorf("error counting reviews for %s: %w", member.Name, err)
-			}
-			if err := fh.Close(); err != nil {
-				return fmt.Errorf("error closing %s: %w", criticPath, err)
+				if err := fh.Close(); err != nil {
+					return fmt.Errorf("error closing %s: %w", criticPath, err)
+				}
+			case errors.Is(err, os.ErrNotExist):
+				// The member has no review index yet, so they keep a zero count
+				// and whatever organizations their guild entry names.
+			default:
+				return fmt.Errorf("error opening file for %s: %w", member.Name, err)
 			}
 
-			orgs := make([]string, len(orgMap))
-			i := 0
-			for key := range orgMap {
-				{
-					orgs[i] = key
-					i++
-				}
-			}
-			critics = append(critics, []string{member.Name, strings.Join(orgs, ", "), strconv.Itoa(reviewCount)})
+			critics = append(critics, []string{member.Name, joinOrgs(orgMap), strconv.Itoa(reviewCount)})
 		}
 
 		w := csv.NewWriter(os.Stdout)
@@ -104,14 +95,24 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	now := time.Now()
-	from := now.AddDate(-1, 0, 0)
-
-	criticReviewsCmd.Flags().TimeP("from-date", "f", from, []string{"2006-01-02"}, "Start Date")
-	criticReviewsCmd.Flags().TimeP("to-date", "t", now, []string{"2006-01-02"}, "End Date")
+	addDateRangeFlags(criticReviewsCmd)
 }
 
-func processCritic(fh *os.File, orgMap map[string]int, fromDate, toDate time.Time) (int, error) {
+// joinOrgs renders the organization set as a comma-separated string. Map
+// iteration order is random, so the names are sorted to keep the report
+// reproducible between runs.
+func joinOrgs(orgMap map[string]int) string {
+
+	orgs := make([]string, 0, len(orgMap))
+	for org := range orgMap {
+		orgs = append(orgs, org)
+	}
+	slices.Sort(orgs)
+
+	return strings.Join(orgs, ", ")
+}
+
+func processCritic(fh *os.File, orgMap map[string]int, start, end time.Time) (int, error) {
 
 	reviews := make(map[string]CriticReview, 0)
 	if err := json.NewDecoder(fh).Decode(&reviews); err != nil {
@@ -120,10 +121,10 @@ func processCritic(fh *os.File, orgMap map[string]int, fromDate, toDate time.Tim
 
 	reviewCount := 0
 	for _, review := range reviews {
-		if fromDate.Before(review.PublishDate) && toDate.After(review.PublishDate) {
+		if inRange(review.PublishDate, start, end) {
 			reviewCount = reviewCount + 1
-			if review.Publication != "" {
-				orgMap[strings.Trim(review.Publication, " ")] = 1
+			if pub := strings.TrimSpace(review.Publication); pub != "" {
+				orgMap[pub] = 1
 			}
 		}
 	}
