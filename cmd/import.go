@@ -101,6 +101,9 @@ var importCmd = &cobra.Command{
 			if err := os.WriteFile(oFileName, jsonBytes, 0644); err != nil {
 				return fmt.Errorf("error writing json to file %s: %w", oFileName, err)
 			}
+			if _, err := writeTagAlias(outPath, film.LinkTitle, jsonBytes); err != nil {
+				return fmt.Errorf("error writing tag alias for %s: %w", film.LinkTitle, err)
+			}
 
 			if tmdbFilm.PosterPath != "" {
 				destPath := filepath.Join(posterOutPath, tmdbFilm.PosterPath)
