@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"crypto/md5"
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -127,5 +128,153 @@ func TestBackfillTagAliasesIsIdempotent(t *testing.T) {
 	}
 	if len(entriesAfterSecond) != len(entriesAfterFirst) {
 		t.Errorf("entry count changed from %d to %d on re-run", len(entriesAfterFirst), len(entriesAfterSecond))
+	}
+}
+
+func writeMreviewsIndex(t *testing.T, hugoRoot string, films map[string]Film) {
+	t.Helper()
+
+	body, err := json.Marshal(films)
+	if err != nil {
+		t.Fatalf("marshaling mreviews index: %v", err)
+	}
+	dir := filepath.Join(hugoRoot, "mreviews")
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		t.Fatalf("making mreviews dir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(dir, "index.json"), body, 0644); err != nil {
+		t.Fatalf("writing mreviews index: %v", err)
+	}
+}
+
+func writeTermPage(t *testing.T, hugoRoot, urlPath, linkTitle string) {
+	t.Helper()
+
+	dir := filepath.Join(hugoRoot, urlPath)
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		t.Fatalf("making term page dir: %v", err)
+	}
+	body := fmt.Sprintf(`{"Metadata":{"LinkTitle":%q}}`, linkTitle)
+	if err := os.WriteFile(filepath.Join(dir, "index.json"), []byte(body), 0644); err != nil {
+		t.Fatalf("writing term page: %v", err)
+	}
+}
+
+// The motivating case: a review's title was hand-corrected after the archetype
+// derived a mangled tag from the filename, so the live mreviews tag no longer
+// matches any fold of a known title. The real title is recovered via the
+// term page Hugo already published, exactly mirroring tag-to-title.html.
+func TestResolveTagsFromReviewsCreatesAliasForDivergedTitle(t *testing.T) {
+
+	hugoRoot := t.TempDir()
+	metaDir := t.TempDir()
+
+	writeMetaFixture(t, metaDir, "The Devil's Mouth")
+	writeMreviewsIndex(t, hugoRoot, map[string]Film{
+		"key1": {LinkTitle: "The Devil S Mouth", URLPath: "/mreviews/the-devil-s-mouth"},
+	})
+	writeTermPage(t, hugoRoot, "mreviews/the-devil-s-mouth", "The Devil's Mouth")
+
+	created, alreadyPresent, unresolved, err := resolveTagsFromReviews(hugoRoot, metaDir)
+	if err != nil {
+		t.Fatalf("resolveTagsFromReviews: %v", err)
+	}
+	if created != 1 {
+		t.Errorf("created = %d, want 1", created)
+	}
+	if alreadyPresent != 0 || unresolved != 0 {
+		t.Errorf("alreadyPresent=%d unresolved=%d, want 0, 0", alreadyPresent, unresolved)
+	}
+
+	aliasName := fmt.Sprintf("%x.json", md5.Sum([]byte("The Devil S Mouth")))
+	got, err := os.ReadFile(filepath.Join(metaDir, aliasName))
+	if err != nil {
+		t.Fatalf("reading alias file %s: %v", aliasName, err)
+	}
+
+	var probe struct {
+		FCGTitle string `json:"fcg_title"`
+	}
+	if err := json.Unmarshal(got, &probe); err != nil {
+		t.Fatalf("unmarshaling alias content: %v", err)
+	}
+	if probe.FCGTitle != "The Devil's Mouth" {
+		t.Errorf("alias fcg_title = %q, want the real title copied verbatim", probe.FCGTitle)
+	}
+}
+
+// A tag that already has its own metadata file needs no resolution at all --
+// the term page is never even consulted.
+func TestResolveTagsFromReviewsSkipsTagsWithExistingMetadata(t *testing.T) {
+
+	hugoRoot := t.TempDir()
+	metaDir := t.TempDir()
+
+	writeMetaFixture(t, metaDir, "Already Covered")
+	writeMreviewsIndex(t, hugoRoot, map[string]Film{
+		"key1": {LinkTitle: "Already Covered", URLPath: "/mreviews/already-covered"},
+	})
+	// Deliberately no term page fixture: resolving this tag must not require one.
+
+	created, alreadyPresent, unresolved, err := resolveTagsFromReviews(hugoRoot, metaDir)
+	if err != nil {
+		t.Fatalf("resolveTagsFromReviews: %v", err)
+	}
+	if alreadyPresent != 1 {
+		t.Errorf("alreadyPresent = %d, want 1", alreadyPresent)
+	}
+	if created != 0 || unresolved != 0 {
+		t.Errorf("created=%d unresolved=%d, want 0, 0", created, unresolved)
+	}
+}
+
+// When a tag resolves to itself -- no review's title was ever corrected away
+// from the archetype-derived tag -- there is nothing to alias to; it is a
+// genuine missingMeta gap and must be reported, not silently skipped.
+func TestResolveTagsFromReviewsReportsSelfResolvingTagAsUnresolved(t *testing.T) {
+
+	hugoRoot := t.TempDir()
+	metaDir := t.TempDir()
+
+	writeMreviewsIndex(t, hugoRoot, map[string]Film{
+		"key1": {LinkTitle: "Foo Bar", URLPath: "/mreviews/foo-bar"},
+	})
+	writeTermPage(t, hugoRoot, "mreviews/foo-bar", "Foo Bar")
+
+	created, alreadyPresent, unresolved, err := resolveTagsFromReviews(hugoRoot, metaDir)
+	if err != nil {
+		t.Fatalf("resolveTagsFromReviews: %v", err)
+	}
+	if unresolved != 1 {
+		t.Errorf("unresolved = %d, want 1", unresolved)
+	}
+	if created != 0 || alreadyPresent != 0 {
+		t.Errorf("created=%d alreadyPresent=%d, want 0, 0", created, alreadyPresent)
+	}
+}
+
+// When the resolved real title itself has no metadata either, that is also a
+// genuine missingMeta gap -- reported as unresolved rather than aliased to
+// nothing.
+func TestResolveTagsFromReviewsReportsMissingResolvedTitleAsUnresolved(t *testing.T) {
+
+	hugoRoot := t.TempDir()
+	metaDir := t.TempDir()
+
+	writeMreviewsIndex(t, hugoRoot, map[string]Film{
+		"key1": {LinkTitle: "Messy Tag", URLPath: "/mreviews/messy-tag"},
+	})
+	writeTermPage(t, hugoRoot, "mreviews/messy-tag", "The Real Title")
+	// No metadata fixture for "The Real Title" either.
+
+	created, alreadyPresent, unresolved, err := resolveTagsFromReviews(hugoRoot, metaDir)
+	if err != nil {
+		t.Fatalf("resolveTagsFromReviews: %v", err)
+	}
+	if unresolved != 1 {
+		t.Errorf("unresolved = %d, want 1", unresolved)
+	}
+	if created != 0 || alreadyPresent != 0 {
+		t.Errorf("created=%d alreadyPresent=%d, want 0, 0", created, alreadyPresent)
 	}
 }

@@ -24,7 +24,6 @@ var importCmd = &cobra.Command{
 	Args:  cobra.MatchAll(cobra.ExactArgs(1), dataIsAvailable),
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		fmt.Println("import called")
 		outPath, err := cmd.Flags().GetString("output-dir")
 		if err != nil {
 			return err
@@ -92,17 +91,13 @@ var importCmd = &cobra.Command{
 				tmdbFilm.BackdropPath = backdropPath
 			}
 
-			fName := fmt.Sprintf("%x.json", md5.Sum([]byte(film.LinkTitle)))
-			oFileName := filepath.Join(outPath, fName)
 			jsonBytes, err := json.MarshalIndent(tmdbFilm, "", "\t")
 			if err != nil {
 				return fmt.Errorf("error marshaling film %s: %w", film.LinkTitle, err)
 			}
-			if err := os.WriteFile(oFileName, jsonBytes, 0644); err != nil {
-				return fmt.Errorf("error writing json to file %s: %w", oFileName, err)
-			}
-			if _, err := writeTagAlias(outPath, film.LinkTitle, jsonBytes); err != nil {
-				return fmt.Errorf("error writing tag alias for %s: %w", film.LinkTitle, err)
+
+			if err := writeFilmMetadata(outPath, film, jsonBytes); err != nil {
+				return err
 			}
 
 			if tmdbFilm.PosterPath != "" {
@@ -140,6 +135,25 @@ func init() {
 	if err := cobra.MarkFlagRequired(importCmd.Flags(), "output-dir"); err != nil {
 		log.Fatalf("error requiring mandatory flag %s", "output-dir")
 	}
+}
+
+// writeFilmMetadata writes a film's marshaled metadata under its title, and
+// under its mreviews tag too when the tag is set and differs from the title
+// -- both files are byte-identical copies of the same metadata, so a lookup
+// by either the title or the live Hugo tag finds the film with no
+// conditional in the caller.
+func writeFilmMetadata(outPath string, film FilmOut, jsonBytes []byte) error {
+
+	if _, err := writeAliasAt(outPath, film.LinkTitle, jsonBytes); err != nil {
+		return fmt.Errorf("error writing metadata for %s: %w", film.LinkTitle, err)
+	}
+	if film.MReviews != "" && film.MReviews != film.LinkTitle {
+		if _, err := writeAliasAt(outPath, film.MReviews, jsonBytes); err != nil {
+			return fmt.Errorf("error writing tag metadata for %s (%s): %w", film.LinkTitle, film.MReviews, err)
+		}
+	}
+
+	return nil
 }
 
 // dataIsAvailable checks that the input file exists and can actually be read by
