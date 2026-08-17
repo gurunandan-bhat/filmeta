@@ -51,8 +51,7 @@ func TestWriteTagAliasCreatesCopyWhenTitleAndTagDiffer(t *testing.T) {
 
 	dir := t.TempDir()
 	title := "Q&A: What's Next?"
-	body := []byte(fmt.Sprintf(`{"fcg_title":%q}`, title))
-
+	body := fmt.Appendf(nil, `{"fcg_title":%q}`, title)
 	wrote, err := writeTagAlias(dir, title, body)
 	if err != nil {
 		t.Fatalf("writeTagAlias: %v", err)
