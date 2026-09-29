@@ -1,0 +1,1127 @@
+[
+	{
+		"exhaustive": {
+			"nbHits": true,
+			"typo": true
+		},
+		"exhaustiveNbHits": true,
+		"exhaustiveTypo": true,
+		"hits": [
+			{
+				"AverageScore": 4.9,
+				"Camera": "Lawrence Sher",
+				"Cast": "Charlize Theron, Taron Egerton, Eric Bana, Caitlin Stasey, Bessie Holland, Zachary Garred, Matt Whelan, Rob Carlton, Aaron Pedersen, Duncan Fellows, Julia Ohannessian",
+				"Director": "Baltasar Kormákur",
+				"Editor": "Sigurður Eyþórsson",
+				"Genres": "Thriller, Action",
+				"Language": "English",
+				"LinkTitle": "Apex",
+				"LocalPosterPath": "/meta/posters/9iuGBLJBRuGKR6nRL4SxUV1tIdt_hu_43c1420b6387369b.webp",
+				"Overview": "A grieving woman pushing her limits on a solo adventure in the Australian wild is ensnared in a twisted game with a cunning killer who thinks she's prey.",
+				"Poster": "/9iuGBLJBRuGKR6nRL4SxUV1tIdt.jpg",
+				"Reviewers": "Sucharita Tyagi, Akhil Arora, Rohan Naahar, Priyanka Roy",
+				"URLPath": "/mreviews/apex",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Charlize Theron, Taron Egerton, Eric Bana, Caitlin Stasey, Bessie Holland, Zachary Garred, Matt Whelan, Rob Carlton, Aaron Pedersen, Duncan Fellows, Julia Ohannessian"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Baltasar Kormákur"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Thriller, Action"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "English"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Apex"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "A grieving woman pushing her limits on a solo adventure in the Australian wild is ensnared in a twisted game with a cunning killer who thinks she's prey."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "\u003cem\u003eSucharita\u003c/em\u003e Tyagi, Akhil Arora, Rohan Naahar, Priyanka Roy"
+					}
+				},
+				"objectID": "2eb09daf06985538e2c1b9d080d0083c"
+			},
+			{
+				"AverageScore": 4.8,
+				"Cast": "Vicky Kaushal, Rashmika Mandanna, Akshaye Khanna, Ashutosh Rana, Divya Dutta, Pradeep Ram Singh Rawat, Vineet Kumar Singh, Neil Bhoopalam, Santosh Juvekar, Rajiv Kachroo",
+				"Director": "Laxman Utekar",
+				"Genres": "History, Action, Drama",
+				"Language": "Hindi",
+				"LinkTitle": "Chhaava",
+				"LocalPosterPath": "/meta/posters/9F4lPRLjfBjsu0zjWNOZQMa8a4V_hu_16d0fc2a5f957206.webp",
+				"Overview": "Shivaji's death sparks the Maratha-Mughal conflict. His son Sambhaji leads resistance against Aurangzeb's forces. Amid battles and intrigue, both sides face challenges in a struggle for power.",
+				"Poster": "/9F4lPRLjfBjsu0zjWNOZQMa8a4V.jpg",
+				"Reviewers": "Ajay Brahmatmaj, Anuj Kumar, Anupama Chopra, Bharathi Pradhan, Bhawana Somaaya, Deepak Dua, Nonika Singh, Priyanka Roy, Rahul Desai, Renuka Vyavahare, Rohan Naahar, Rohit Khilnani, Saibal Chatterjee, Sanyukta Thakare, Shubhra Gupta, Srivathsan Nadadhur, Sucharita Tyagi, Suhani Singh, Uday Bhatia",
+				"URLPath": "/mreviews/chhaava",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Vicky Kaushal, Rashmika Mandanna, Akshaye Khanna, Ashutosh Rana, Divya Dutta, Pradeep Ram Singh Rawat, Vineet Kumar Singh, Neil Bhoopalam, Santosh Juvekar, Rajiv Kachroo"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Laxman Utekar"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "History, Action, Drama"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Chhaava"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Shivaji's death sparks the Maratha-Mughal conflict. His son Sambhaji leads resistance against Aurangzeb's forces. Amid battles and intrigue, both sides face challenges in a struggle for power."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Ajay Brahmatmaj, Anuj Kumar, Anupama Chopra, Bharathi Pradhan, Bhawana Somaaya, Deepak Dua, Nonika Singh, Priyanka Roy, Rahul Desai, Renuka Vyavahare, Rohan Naahar, Rohit Khilnani, Saibal Chatterjee, Sanyukta Thakare, Shubhra Gupta, Srivathsan Nadadhur, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Suhani Singh, Uday Bhatia"
+					}
+				},
+				"objectID": "32af19e21f9ebef06bff36790d001d87"
+			},
+			{
+				"AverageScore": 4.7,
+				"Cast": "Ayushmann Khurrana, Rashmika Mandanna, Nawazuddin Siddiqui, Paresh Rawal, Sathyaraj, Faisal Malik, Geeta Agrawal Sharma, Rachit Singh, Varun Dhawan, Vinay Pathak",
+				"Director": "Aditya Sarpotdar",
+				"Genres": "Comedy, Horror",
+				"Language": "Hindi",
+				"LinkTitle": "Thamma",
+				"LocalPosterPath": "/meta/posters/udkbDwBbysCGEydt0FHnl9dVO2k_hu_f0083990bff9d854.webp",
+				"Overview": "A determined historian sifts through old manuscripts, seeking clues about the mysterious legends of vampires in Vijay Nagar.",
+				"Poster": "/udkbDwBbysCGEydt0FHnl9dVO2k.jpg",
+				"Reviewers": "Ajay Brahmatmaj, Anmol Jamwal, Anuj Kumar, Anupama Chopra, Bharathi Pradhan, Deepak Dua, Ishita Sengupta, Keyur Seta, Nonika Singh, Priyanka Roy, Rahul Desai, Rohit Khilnani, Sachin Chatte, Saibal Chatterjee, Shomini Sen, Shubhra Gupta, Sucharita Tyagi, Suchin Mehrotra, Suhani Singh, Tusshar Sasi, Uday Bhatia",
+				"URLPath": "/mreviews/thamma",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Ayushmann Khurrana, Rashmika Mandanna, Nawazuddin Siddiqui, Paresh Rawal, Sathyaraj, Faisal Malik, Geeta Agrawal Sharma, Rachit Singh, Varun Dhawan, Vinay Pathak"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Aditya Sarpotdar"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Comedy, Horror"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Thamma"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "A determined historian sifts through old manuscripts, seeking clues about the mysterious legends of vampires in Vijay Nagar."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Ajay Brahmatmaj, Anmol Jamwal, Anuj Kumar, Anupama Chopra, Bharathi Pradhan, Deepak Dua, Ishita Sengupta, Keyur Seta, Nonika Singh, Priyanka Roy, Rahul Desai, Rohit Khilnani, Sachin Chatte, Saibal Chatterjee, Shomini Sen, Shubhra Gupta, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Suchin Mehrotra, Suhani Singh, Tusshar Sasi, Uday Bhatia"
+					}
+				},
+				"objectID": "76d854aa4453a676df6a07b092ff5395"
+			},
+			{
+				"AverageScore": 4.5,
+				"Cast": "Kamal Haasan, Silambarasan, Trisha Krishnan, Ashok Selvan, Abhirami, Nassar, Joju George, Ali Fazal, Mahesh Manjrekar, Sanjana Krishnamoorthy",
+				"Director": "Mani Ratnam",
+				"Genres": "Action, Crime, Drama",
+				"Language": "Tamil",
+				"LinkTitle": "Thug Life",
+				"LocalPosterPath": "/meta/posters/DmBbUtbA3T9sdVXDgIJ8bsIDw0_hu_9f2beb8c73d67483.webp",
+				"Overview": "In a world ruled by crime and betrayal, mafia kingpin Sakthivel and his brother Manickam rescue a young boy, Amaran, during a violent police shootout and raise him as their own. Years later, when an assassination attempt shakes Sakthivel's empire, suspicion turns inward. Consumed by vengeance, Sakthivel sets out to destroy the very family he once built.",
+				"Poster": "/DmBbUtbA3T9sdVXDgIJ8bsIDw0.jpg",
+				"Reviewers": "Aditya Shrikrishna, Ajay Brahmatmaj, Anmol Jamwal, Anupama Chopra, Avinash Ramachandran, Bharathi Pradhan, Deepak Dua, Janani K, Kirubhakar Purushothaman, Kshitij Rawat, Manoj Kumar, Rohan Naahar, Rohit Vats, Sachin Chatte, Saibal Chatterjee, Shomini Sen, Sucharita Tyagi, Sudhir Srinivasan, Uday Bhatia",
+				"URLPath": "/mreviews/thug-life",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Kamal Haasan, Silambarasan, Trisha Krishnan, Ashok Selvan, Abhirami, Nassar, Joju George, Ali Fazal, Mahesh Manjrekar, Sanjana Krishnamoorthy"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Mani Ratnam"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Action, Crime, Drama"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Tamil"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Thug Life"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "In a world ruled by crime and betrayal, mafia kingpin Sakthivel and his brother Manickam rescue a young boy, Amaran, during a violent police shootout and raise him as their own. Years later, when an assassination attempt shakes Sakthivel's empire, suspicion turns inward. Consumed by vengeance, Sakthivel sets out to destroy the very family he once built."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Aditya Shrikrishna, Ajay Brahmatmaj, Anmol Jamwal, Anupama Chopra, Avinash Ramachandran, Bharathi Pradhan, Deepak Dua, Janani K, Kirubhakar Purushothaman, Kshitij Rawat, Manoj Kumar, Rohan Naahar, Rohit Vats, Sachin Chatte, Saibal Chatterjee, Shomini Sen, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Sudhir Srinivasan, Uday Bhatia"
+					}
+				},
+				"objectID": "e5a5b44012efaf7a458aa84659cba023"
+			},
+			{
+				"AverageScore": 4.5,
+				"Cast": "Vir Das, Mona Singh, Mithila Palkar, Sharib Hashmi, Srushti Tawade, Aamir Khan, Imran Khan",
+				"Director": "Vir Das, Kavi Shastri",
+				"Genres": "Comedy, Action, Romance",
+				"Language": "Hindi",
+				"LinkTitle": "Happy Patel: Khatarnak Jasoos",
+				"LocalPosterPath": "/meta/posters/nFwtiL6qafMhn0oGkTYZQNP0WxG_hu_a74e79827afb41ed.webp",
+				"Overview": "Happy Patel, a chronically unsuccessful MI7 operative, is finally assigned a mission in Goa, where he uncovers his Indian roots and must rescue a high-profile scientist from crime lord Mama. Unaware of his Indian heritage and armed with a comically British accent, Happy’s blunders trigger a string of chaotic mishaps that could lead him to expose a criminal network.",
+				"Poster": "/nFwtiL6qafMhn0oGkTYZQNP0WxG.jpg",
+				"Reviewers": "Anmol Jamwal, Anuj Kumar, Anupama Chopra, Arnab Banerjee, Bharathi Pradhan, Deepak Dua, Rahul Desai, Rohit Khilnani, Sachin Chatte, Shomini Sen, Shubhra Gupta, Sucharita Tyagi, Tusshar Sasi, Uday Bhatia, Upma Singh",
+				"URLPath": "/mreviews/happy-patel-khatarnak-jasoos",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Vir Das, Mona Singh, Mithila Palkar, Sharib Hashmi, Srushti Tawade, Aamir Khan, Imran Khan"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Vir Das, Kavi Shastri"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Comedy, Action, Romance"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Happy Patel: Khatarnak Jasoos"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Happy Patel, a chronically unsuccessful MI7 operative, is finally assigned a mission in Goa, where he uncovers his Indian roots and must rescue a high-profile scientist from crime lord Mama. Unaware of his Indian heritage and armed with a comically British accent, Happy’s blunders trigger a string of chaotic mishaps that could lead him to expose a criminal network."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Anmol Jamwal, Anuj Kumar, Anupama Chopra, Arnab Banerjee, Bharathi Pradhan, Deepak Dua, Rahul Desai, Rohit Khilnani, Sachin Chatte, Shomini Sen, Shubhra Gupta, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Tusshar Sasi, Uday Bhatia, Upma Singh"
+					}
+				},
+				"objectID": "d2d7b515086be7db878cb3110a80ef31"
+			},
+			{
+				"AverageScore": 4.3,
+				"Cast": "Bhumi Pednekar, Ishaan Khatter, Sakshi Tanwar, Zeenat Aman, Nora Fatehi, Vihaan Samat, Udit Arora, Chunky Pandey, Lisa Mishra, Milind Soman",
+				"Director": "Priyanka Ghose, Nupur Asthana",
+				"Genres": "Drama",
+				"Language": "Hindi",
+				"LinkTitle": "The Royals",
+				"LocalPosterPath": "/meta/posters/nnD4364ToXZwDpFWEnY94xzykIs_hu_3bdd0de2c0f0615c.webp",
+				"Overview": "When charming Prince Aviraaj meets Sophia, a self-made girl boss, the worlds of royalty and startups collide in a whirlwind of romance and ambition.",
+				"Poster": "/nnD4364ToXZwDpFWEnY94xzykIs.jpg",
+				"Reviewers": "Anmol Jamwal, Bharathi Pradhan, Ishita Sengupta, Nonika Singh, Priyanka Roy, Rahul Desai, Rohit Khilnani, Rohit Vats, Shomini Sen, Shubhra Gupta, Sonal Pandya, Srivathsan Nadadhur, Sucharita Tyagi, Sukanya Verma, Udita Jhunjhunwala",
+				"URLPath": "/mreviews/the-royals",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Bhumi Pednekar, Ishaan Khatter, Sakshi Tanwar, Zeenat Aman, Nora Fatehi, Vihaan Samat, Udit Arora, Chunky Pandey, Lisa Mishra, Milind Soman"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Priyanka Ghose, Nupur Asthana"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Drama"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "The Royals"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "When charming Prince Aviraaj meets Sophia, a self-made girl boss, the worlds of royalty and startups collide in a whirlwind of romance and ambition."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Anmol Jamwal, Bharathi Pradhan, Ishita Sengupta, Nonika Singh, Priyanka Roy, Rahul Desai, Rohit Khilnani, Rohit Vats, Shomini Sen, Shubhra Gupta, Sonal Pandya, Srivathsan Nadadhur, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Sukanya Verma, Udita Jhunjhunwala"
+					}
+				},
+				"objectID": "7e3c350cb1f9b40a7f7933726860b7f4"
+			},
+			{
+				"AverageScore": 4.3,
+				"Cast": "N.T. Rama Rao Jr., Saif Ali Khan, Prakash Raj, Srikanth, Kalaiyarasan, Shruti Marathe, Janhvi Kapoor, Shine Tom Chacko, Ajay, Zarina Wahab",
+				"Director": "Koratala Siva",
+				"Genres": "Action, Drama",
+				"Language": "Telugu",
+				"LinkTitle": "Devara Part 1",
+				"LocalPosterPath": "/meta/posters/ystWz0wW4vwgcWzmkhPXavms9jz_hu_c6df7388ececfbff.webp",
+				"Overview": "Devara, a fearless man from a coastal region, embarks on a perilous journey into the treacherous world of the sea to safeguard the lives of his people. Unbeknownst to him, his brother Bhaira is plotting a conspiracy against him. As events unfold, Devara passes on his legacy to his mild-mannered and timid son, Varada.",
+				"Poster": "/ystWz0wW4vwgcWzmkhPXavms9jz.jpg",
+				"Reviewers": "Ajay Brahmatmaj, Bhawana Somaaya, Janani K, Sangeetha Devi Dundoo, Sucharita Tyagi",
+				"URLPath": "/mreviews/devara-part-1",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "N.T. Rama Rao Jr., Saif Ali Khan, Prakash Raj, Srikanth, Kalaiyarasan, Shruti Marathe, Janhvi Kapoor, Shine Tom Chacko, Ajay, Zarina Wahab"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Koratala Siva"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Action, Drama"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Telugu"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Devara Part 1"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Devara, a fearless man from a coastal region, embarks on a perilous journey into the treacherous world of the sea to safeguard the lives of his people. Unbeknownst to him, his brother Bhaira is plotting a conspiracy against him. As events unfold, Devara passes on his legacy to his mild-mannered and timid son, Varada."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Ajay Brahmatmaj, Bhawana Somaaya, Janani K, Sangeetha Devi Dundoo, \u003cem\u003eSucharita\u003c/em\u003e Tyagi"
+					}
+				},
+				"objectID": "01411942f94d5a901131268ca21272f0"
+			},
+			{
+				"AverageScore": 4.1,
+				"Cast": "Kartik Aaryan, Vidya Balan, Madhuri Dixit, Triptii Dimri, Vijay Raaz, Rajpal Yadav, Sanjay Mishra, Ashwini Kalsekar, Rajesh Sharma, Kanchan Mullick",
+				"Director": "Anees Bazmee",
+				"Genres": "Horror, Comedy",
+				"Language": "Hindi",
+				"LinkTitle": "Bhool Bhulaiyaa 3",
+				"LocalPosterPath": "/meta/posters/3AfHD1HoaQpQwKH8kxRdBKVmzeU_hu_a3625bb0b1103b3a.webp",
+				"Overview": "Rooh Baba ventures into a haunted mansion in the kingdom of Raktaghat in West Bengal, where he confronts two vengeful spirits, both asserting to be Manjulika.",
+				"Poster": "/3AfHD1HoaQpQwKH8kxRdBKVmzeU.jpg",
+				"Reviewers": "Anmol Jamwal, Anuj Kumar, Anupama Chopra, Bharathi Pradhan, Bhawana Somaaya, Deepak Dua, Kshitij Rawat, Rahul Desai, Renuka Vyavahare, Sachin Chatte, Shubhra Gupta, Sucharita Tyagi, Sukanya Verma, Udita Jhunjhunwala",
+				"URLPath": "/mreviews/bhool-bhulaiyaa-3",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Kartik Aaryan, Vidya Balan, Madhuri Dixit, Triptii Dimri, Vijay Raaz, Rajpal Yadav, Sanjay Mishra, Ashwini Kalsekar, Rajesh Sharma, Kanchan Mullick"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Anees Bazmee"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Horror, Comedy"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Bhool Bhulaiyaa 3"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Rooh Baba ventures into a haunted mansion in the kingdom of Raktaghat in West Bengal, where he confronts two vengeful spirits, both asserting to be Manjulika."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Anmol Jamwal, Anuj Kumar, Anupama Chopra, Bharathi Pradhan, Bhawana Somaaya, Deepak Dua, Kshitij Rawat, Rahul Desai, Renuka Vyavahare, Sachin Chatte, Shubhra Gupta, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Sukanya Verma, Udita Jhunjhunwala"
+					}
+				},
+				"objectID": "f6cf1685b1363f611c9ce72f75d3310a"
+			},
+			{
+				"AverageScore": 4.1,
+				"Cast": "Konkona Sen Sharma, Pratibha Ranta, Aditya Nanda, Sukant Goel, Sanjeeta Bhattacharya, Anuj Sachdeva, Mashhoor Amrohi, Monica Mahendru, Kallirroi Tziafeta",
+				"Director": "Anubhuti Kashyap",
+				"Genres": "Thriller, Mystery, Drama",
+				"Language": "Hindi",
+				"LinkTitle": "Accused",
+				"LocalPosterPath": "/meta/posters/eeP55mdqj4KpWtEPBvZJoxmnkXI_hu_4a959491dcecc24a.webp",
+				"Overview": "When a celebrated queer doctor in London is accused of sexual misconduct, her life unravels. Now under a storm of suspicion and scrutiny, her marriage fractures and the truth blurs. Her wife must decide whether to walk away, or fight for the woman the world is turning against.",
+				"Poster": "/eeP55mdqj4KpWtEPBvZJoxmnkXI.jpg",
+				"Reviewers": "Anuj Kumar, Anupama Chopra, Bharathi Pradhan, Ishita Sengupta, Nonika Singh, Priyanka Roy, Rahul Desai, Rohan Naahar, Rohit Khilnani, Shomini Sen, Srivathsan Nadadhur, Sucharita Tyagi, Sukanya Verma, Tatsam Mukherjee, Upma Singh",
+				"URLPath": "/mreviews/accused",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Konkona Sen Sharma, Pratibha Ranta, Aditya Nanda, Sukant Goel, Sanjeeta Bhattacharya, Anuj Sachdeva, Mashhoor Amrohi, Monica Mahendru, Kallirroi Tziafeta"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Anubhuti Kashyap"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Thriller, Mystery, Drama"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Accused"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "When a celebrated queer doctor in London is accused of sexual misconduct, her life unravels. Now under a storm of suspicion and scrutiny, her marriage fractures and the truth blurs. Her wife must decide whether to walk away, or fight for the woman the world is turning against."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Anuj Kumar, Anupama Chopra, Bharathi Pradhan, Ishita Sengupta, Nonika Singh, Priyanka Roy, Rahul Desai, Rohan Naahar, Rohit Khilnani, Shomini Sen, Srivathsan Nadadhur, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Sukanya Verma, Tatsam Mukherjee, Upma Singh"
+					}
+				},
+				"objectID": "5ce921df9927b4ee41daf891944cb557"
+			},
+			{
+				"AverageScore": 4.1,
+				"Camera": "Santhana Krishnan Ravichandran",
+				"Cast": "Shahid Kapoor, Kriti Sanon, Rashmika Mandanna, Rohit Saraf, Dimple Kapadia, Arjun Rampal, Ishita Dutta, Sanjay Dutt, ",
+				"Director": "Homi Adajania",
+				"Editor": "Akshara Prabhakar",
+				"Genres": "Romance, Comedy",
+				"Language": "Hindi",
+				"LinkTitle": "Cocktail 2",
+				"LocalPosterPath": "/meta/posters/oIQmtByV1LtEQSwM4EpdLTyoSlM_hu_d41caa1600de7b76.webp",
+				"Overview": "After a decade together, Diya and Kunal's relationship is shaken when Ally, an old friend, re-enters their lives. What begins as a plan between two women spirals into chaos, triggering hilarious, emotional rollercoaster none of them saw coming.",
+				"Poster": "/oIQmtByV1LtEQSwM4EpdLTyoSlM.jpg",
+				"Reviewers": "Debanjan Dhar, Priyanka Roy, Stutee Ghosh, Upma Singh, Rohan Naahar, Sukanya Verma, Rohit Khilnani, Shubhra Gupta, Deepak Dua, Saibal Chatterjee, Anmol Jamwal, Anuj Kumar, Uday Bhatia, Tusshar Sasi, Nonika Singh, Rahul Desai, Sachin Chatte, Sucharita Tyagi, Arnab Banerjee, Suhani Singh",
+				"URLPath": "/mreviews/cocktail-2",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Shahid Kapoor, Kriti Sanon, Rashmika Mandanna, Rohit Saraf, Dimple Kapadia, Arjun Rampal, Ishita Dutta, Sanjay Dutt, "
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Homi Adajania"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Romance, Comedy"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Cocktail 2"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "After a decade together, Diya and Kunal's relationship is shaken when Ally, an old friend, re-enters their lives. What begins as a plan between two women spirals into chaos, triggering hilarious, emotional rollercoaster none of them saw coming."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Debanjan Dhar, Priyanka Roy, Stutee Ghosh, Upma Singh, Rohan Naahar, Sukanya Verma, Rohit Khilnani, Shubhra Gupta, Deepak Dua, Saibal Chatterjee, Anmol Jamwal, Anuj Kumar, Uday Bhatia, Tusshar Sasi, Nonika Singh, Rahul Desai, Sachin Chatte, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Arnab Banerjee, Suhani Singh"
+					}
+				},
+				"objectID": "485b9df733040717ef54b95cd1fb3e4f"
+			},
+			{
+				"AverageScore": 4,
+				"Camera": "Dion Beebe",
+				"Cast": "Jaafar Jackson, Colman Domingo, Nia Long, Juliano Krue Valdi, KeiLyn Durrel Jones, Miles Teller, Kendrick Sampson, Joseph David-Jones, Jamal Henderson, Rhyan Hill, Trey Horton",
+				"Director": "Antoine Fuqua",
+				"Editor": "John Ottman, Harry Yoon",
+				"Genres": "Music, Drama",
+				"Language": "English",
+				"LinkTitle": "Michael",
+				"LocalPosterPath": "/meta/posters/3Qud19bBUrrJAzy0Ilm8gRJlJXP_hu_212771681c52fadf.webp",
+				"Overview": "Discover the story of Michael Jackson, one of the most influential artists the world has ever known, and his life beyond the music, tracing his journey from the discovery of his extraordinary talent as the lead of the Jackson Five, to the visionary artist whose creative ambition fueled a relentless pursuit to become the biggest entertainer in the world, highlighting both his life off-stage and some of the most iconic performances from his early solo career.",
+				"Poster": "/3Qud19bBUrrJAzy0Ilm8gRJlJXP.jpg",
+				"Reviewers": "Sachin Chatte, Uday Bhatia, Shomini Sen, Tatsam Mukherjee, Sucharita Tyagi",
+				"URLPath": "/mreviews/michael",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Jaafar Jackson, Colman Domingo, Nia Long, Juliano Krue Valdi, KeiLyn Durrel Jones, Miles Teller, Kendrick Sampson, Joseph David-Jones, Jamal Henderson, Rhyan Hill, Trey Horton"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Antoine Fuqua"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Music, Drama"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "English"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Michael"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Discover the story of Michael Jackson, one of the most influential artists the world has ever known, and his life beyond the music, tracing his journey from the discovery of his extraordinary talent as the lead of the Jackson Five, to the visionary artist whose creative ambition fueled a relentless pursuit to become the biggest entertainer in the world, highlighting both his life off-stage and some of the most iconic performances from his early solo career."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Sachin Chatte, Uday Bhatia, Shomini Sen, Tatsam Mukherjee, \u003cem\u003eSucharita\u003c/em\u003e Tyagi"
+					}
+				},
+				"objectID": "3e06fa3927cbdf4e9d93ba4541acce86"
+			},
+			{
+				"AverageScore": 3.9,
+				"Camera": "Rubais",
+				"Cast": "Alia Bhatt, Sharvari, Bobby Deol, Anil Kapoor, Dibyendu Bhattacharya, Dia Mirza, Hrithik Roshan, ",
+				"Director": "Shiv Rawail",
+				"Editor": "Aarif Sheikh",
+				"Genres": "Action, Thriller",
+				"Language": "Hindi",
+				"LinkTitle": "Alpha",
+				"LocalPosterPath": "/meta/posters/bPtRt3ajQ0EkyeQ1O6iJwAIi9Py_hu_b0be871efca9556a.webp",
+				"Overview": "Two fierce female agents tackle dangerous missions in a thrilling world of espionage, as they navigate perilous situations, execute daring stunts, and face unexpected turns in this action-packed adventure.",
+				"Poster": "/bPtRt3ajQ0EkyeQ1O6iJwAIi9Py.jpg",
+				"Reviewers": "Kartik Bhardwaj, Rohit Khilnani, Sukanya Verma, Rahul Desai, Upma Singh, Priyanka Roy, Poulomi Das, Anupama Chopra, Suhani Singh, Renuka Vyavahare, Bharathi Pradhan, Shomini Sen, Deepak Dua, Ishita Sengupta, Anuj Kumar, Tusshar Sasi, Tatsam Mukherjee, Suchin Mehrotra, Sucharita Tyagi, Sachin Chatte, Uday Bhatia, Anmol Jamwal, Stutee Ghosh",
+				"URLPath": "/mreviews/alpha",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Alia Bhatt, Sharvari, Bobby Deol, Anil Kapoor, Dibyendu Bhattacharya, Dia Mirza, Hrithik Roshan, "
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Shiv Rawail"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Action, Thriller"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Alpha"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Two fierce female agents tackle dangerous missions in a thrilling world of espionage, as they navigate perilous situations, execute daring stunts, and face unexpected turns in this action-packed adventure."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Kartik Bhardwaj, Rohit Khilnani, Sukanya Verma, Rahul Desai, Upma Singh, Priyanka Roy, Poulomi Das, Anupama Chopra, Suhani Singh, Renuka Vyavahare, Bharathi Pradhan, Shomini Sen, Deepak Dua, Ishita Sengupta, Anuj Kumar, Tusshar Sasi, Tatsam Mukherjee, Suchin Mehrotra, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Sachin Chatte, Uday Bhatia, Anmol Jamwal, Stutee Ghosh"
+					}
+				},
+				"objectID": "6132295fcf5570fb8b0a944ef322a598"
+			},
+			{
+				"AverageScore": 3.8,
+				"Cast": "Shahid Kapoor, Pooja Hegde, Pavail Gulati, Pravessh Rana, Girish Kulkarni, Kubbra Sait, Sahidur Rahaman, Meenal Sahu, Shivraj Walvekar, Upendra Limaye",
+				"Director": "Rosshan Andrrews",
+				"Genres": "Action, Thriller, Mystery, Crime",
+				"Language": "Hindi",
+				"LinkTitle": "Deva",
+				"LocalPosterPath": "/meta/posters/8KGVSYfwLQMdAUgtuiXMl7ohg1a_hu_b8e47144c3d7224c.webp",
+				"Overview": "Dev Ambre, a ruthless cop, loses his memory in an accident just after he has finished solving a murder case and now has to reinvestigate it while keeping his memory loss a secret from everyone except DCP Farhan Khan.",
+				"Poster": "/8KGVSYfwLQMdAUgtuiXMl7ohg1a.jpg",
+				"Reviewers": "Ajay Brahmatmaj, Anmol Jamwal, Anuj Kumar, Anupama Chopra, Bharathi Pradhan, Deepak Dua, Nonika Singh, Priyanka Roy, Rohan Naahar, Sanyukta Thakare, Shubhra Gupta, Srivathsan Nadadhur, Sucharita Tyagi, Uday Bhatia",
+				"URLPath": "/mreviews/deva",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Shahid Kapoor, Pooja Hegde, Pavail Gulati, Pravessh Rana, Girish Kulkarni, Kubbra Sait, Sahidur Rahaman, Meenal Sahu, Shivraj Walvekar, Upendra Limaye"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Rosshan Andrrews"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Action, Thriller, Mystery, Crime"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Deva"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Dev Ambre, a ruthless cop, loses his memory in an accident just after he has finished solving a murder case and now has to reinvestigate it while keeping his memory loss a secret from everyone except DCP Farhan Khan."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Ajay Brahmatmaj, Anmol Jamwal, Anuj Kumar, Anupama Chopra, Bharathi Pradhan, Deepak Dua, Nonika Singh, Priyanka Roy, Rohan Naahar, Sanyukta Thakare, Shubhra Gupta, Srivathsan Nadadhur, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Uday Bhatia"
+					}
+				},
+				"objectID": "c2b748829292b9b15f618ffb2642d1db"
+			},
+			{
+				"AverageScore": 3.8,
+				"Cast": "Junaid Khan, Khushi Kapoor, Kunj Anand, Grusha Kapoor, Ashutosh Rana, Tanvika Parlikar, Kiku Sharda, Aditya Kulshreshtha, Jason Tham, Aamir Khan",
+				"Director": "Advait Chandan",
+				"Genres": "Comedy, Drama, Romance",
+				"Language": "Hindi",
+				"LinkTitle": "Loveyapa",
+				"LocalPosterPath": "/meta/posters/ohHiDAwaOo6R1ovMgmUhrBuvknU_hu_4ceda37711f9bb4c.webp",
+				"Overview": "The madness after a couple exchanges their mobile phones and begins to unearth bitter truth about each other.",
+				"Poster": "/ohHiDAwaOo6R1ovMgmUhrBuvknU.jpg",
+				"Reviewers": "Anmol Jamwal, Anuj Kumar, Anupama Chopra, Bharathi Pradhan, Deepak Dua, Rohan Naahar, Rohit Khilnani, Saibal Chatterjee, Shubhra Gupta, Sucharita Tyagi",
+				"URLPath": "/mreviews/loveyapa",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Junaid Khan, Khushi Kapoor, Kunj Anand, Grusha Kapoor, Ashutosh Rana, Tanvika Parlikar, Kiku Sharda, Aditya Kulshreshtha, Jason Tham, Aamir Khan"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Advait Chandan"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Comedy, Drama, Romance"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Loveyapa"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "The madness after a couple exchanges their mobile phones and begins to unearth bitter truth about each other."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Anmol Jamwal, Anuj Kumar, Anupama Chopra, Bharathi Pradhan, Deepak Dua, Rohan Naahar, Rohit Khilnani, Saibal Chatterjee, Shubhra Gupta, \u003cem\u003eSucharita\u003c/em\u003e Tyagi"
+					}
+				},
+				"objectID": "a7c5bde3b86715a01811692434f1b407"
+			},
+			{
+				"AverageScore": 3.6,
+				"Cast": "N.T. Rama Rao Jr., Hrithik Roshan, Kiara Advani, Ashutosh Rana, Anil Kapoor, Bobby Deol, Alia Bhatt, K.C. Shankar, Varun Badola",
+				"Director": "Ayan Mukerji",
+				"Genres": "Action, Adventure, Thriller",
+				"Language": "Hindi",
+				"LinkTitle": "War 2",
+				"LocalPosterPath": "/meta/posters/kD0TOH6EM1q7UfgugBXuMoZd3m5_hu_75af59693df9ce6a.webp",
+				"Overview": "Years ago Agent Kabir went rogue, became India’s greatest villain ever.  As he descends further into the deepest shadows... India sends its deadliest, most lethal agent after him, Agent Vikram  A Special Units Officer who is more than Kabir’s equal and a relentless Terminator driven by his own demons, determined to put a bullet into Kabir’s skull.",
+				"Poster": "/kD0TOH6EM1q7UfgugBXuMoZd3m5.jpg",
+				"Reviewers": "Ajay Brahmatmaj, Anmol Jamwal, Anuj Kumar, Anupama Chopra, Arnab Banerjee, Bharathi Pradhan, Bhawana Somaaya, Deepak Dua, Ishita Sengupta, Keyur Seta, Nonika Singh, Poulomi Das, Priyanka Roy, Rahul Desai, Rohit Khilnani, Sachin Chatte, Sanyukta Thakare, Shomini Sen, Shubhra Gupta, Sucharita Tyagi, Tatsam Mukherjee, Uday Bhatia, Upma Singh",
+				"URLPath": "/mreviews/war-2",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "N.T. Rama Rao Jr., Hrithik Roshan, Kiara Advani, Ashutosh Rana, Anil Kapoor, Bobby Deol, Alia Bhatt, K.C. Shankar, Varun Badola"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Ayan Mukerji"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Action, Adventure, Thriller"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "War 2"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Years ago Agent Kabir went rogue, became India’s greatest villain ever.  As he descends further into the deepest shadows... India sends its deadliest, most lethal agent after him, Agent Vikram  A Special Units Officer who is more than Kabir’s equal and a relentless Terminator driven by his own demons, determined to put a bullet into Kabir’s skull."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Ajay Brahmatmaj, Anmol Jamwal, Anuj Kumar, Anupama Chopra, Arnab Banerjee, Bharathi Pradhan, Bhawana Somaaya, Deepak Dua, Ishita Sengupta, Keyur Seta, Nonika Singh, Poulomi Das, Priyanka Roy, Rahul Desai, Rohit Khilnani, Sachin Chatte, Sanyukta Thakare, Shomini Sen, Shubhra Gupta, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Tatsam Mukherjee, Uday Bhatia, Upma Singh"
+					}
+				},
+				"objectID": "8432bda94e7e5fa4a4bfb5db23012903"
+			},
+			{
+				"AverageScore": 3.6,
+				"Cast": "Kajol, Kriti Sanon, Shaheer Sheikh, Tanvi Azmi, Brijendra Kala, Prachee Shah, Vivek Mushran, Rohit Tiwari, Chittaranjan Tripathy, Shastra Prashant Gajbhare",
+				"Director": "Shashanka Chaturvedi",
+				"Genres": "Thriller, Mystery, Drama, Crime",
+				"Language": "Hindi",
+				"LinkTitle": "Do Patti",
+				"LocalPosterPath": "/meta/posters/cqStHxRVUtFNaNnJtieHeXIackv_hu_3d19fb3d2eb4a1d3.webp",
+				"Overview": "A puzzling investigation leads a no-nonsense cop down a dark path involving the vicious rivalry between twin sisters and the volatile man they both love.",
+				"Poster": "/cqStHxRVUtFNaNnJtieHeXIackv.jpg",
+				"Reviewers": "Anmol Jamwal, Anuj Kumar, Anupama Chopra, Bharathi Pradhan, Bhawana Somaaya, Priyanka Roy, Renuka Vyavahare, Rohit Khilnani, Rohit Vats, Saibal Chatterjee, Sanyukta Thakare, Shubhra Gupta, Sonal Pandya, Srivathsan Nadadhur, Sucharita Tyagi, Sukanya Verma, Uday Bhatia, Upma Singh",
+				"URLPath": "/mreviews/do-patti",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Kajol, Kriti Sanon, Shaheer Sheikh, Tanvi Azmi, Brijendra Kala, Prachee Shah, Vivek Mushran, Rohit Tiwari, Chittaranjan Tripathy, Shastra Prashant Gajbhare"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Shashanka Chaturvedi"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Thriller, Mystery, Drama, Crime"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Do Patti"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "A puzzling investigation leads a no-nonsense cop down a dark path involving the vicious rivalry between twin sisters and the volatile man they both love."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Anmol Jamwal, Anuj Kumar, Anupama Chopra, Bharathi Pradhan, Bhawana Somaaya, Priyanka Roy, Renuka Vyavahare, Rohit Khilnani, Rohit Vats, Saibal Chatterjee, Sanyukta Thakare, Shubhra Gupta, Sonal Pandya, Srivathsan Nadadhur, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Sukanya Verma, Uday Bhatia, Upma Singh"
+					}
+				},
+				"objectID": "26dd158d1bed3c6fae9e4850bbba54db"
+			},
+			{
+				"AverageScore": 3.5,
+				"Cast": "Varun Dhawan, Janhvi Kapoor, Sanya Malhotra, Rohit Saraf, Maniesh Paul, Akshay Oberoi, Nishigandha Wad, Neeraj Sood, Abhinav Sharma, Manini Chadha",
+				"Director": "Shashank Khaitan",
+				"Genres": "Romance, Comedy",
+				"Language": "Hindi",
+				"LinkTitle": "Sunny Sanskari Ki Tulsi Kumari",
+				"LocalPosterPath": "/meta/posters/kzSVbSHEaIavcHZr1B9QEHq6a7_hu_b65a790856839016.webp",
+				"Overview": "Two former lovers in Delhi try to rekindle old flames, leading to amusing mix-ups and deceptions. As chaos unfolds, a new unexpected romance blooms. Who will find their happy ending amid the confusion?",
+				"Poster": "/kzSVbSHEaIavcHZr1B9QEHq6a7.jpg",
+				"Reviewers": "Akhil Arora, Anmol Jamwal, Anuj Kumar, Anupama Chopra, Arnab Banerjee, Avinash Ramachandran, Bharathi Pradhan, Ishita Sengupta, Priyanka Roy, Rahul Desai, Rohan Naahar, Rohit Khilnani, Saibal Chatterjee, Shubhra Gupta, Stutee Ghosh, Sucharita Tyagi, Suhani Singh, Tatsam Mukherjee, Tusshar Sasi, Udita Jhunjhunwala",
+				"URLPath": "/mreviews/sunny-sanskari-ki-tulsi-kumari",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Varun Dhawan, Janhvi Kapoor, Sanya Malhotra, Rohit Saraf, Maniesh Paul, Akshay Oberoi, Nishigandha Wad, Neeraj Sood, Abhinav Sharma, Manini Chadha"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Shashank Khaitan"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Romance, Comedy"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Sunny Sanskari Ki Tulsi Kumari"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Two former lovers in Delhi try to rekindle old flames, leading to amusing mix-ups and deceptions. As chaos unfolds, a new unexpected romance blooms. Who will find their happy ending amid the confusion?"
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Akhil Arora, Anmol Jamwal, Anuj Kumar, Anupama Chopra, Arnab Banerjee, Avinash Ramachandran, Bharathi Pradhan, Ishita Sengupta, Priyanka Roy, Rahul Desai, Rohan Naahar, Rohit Khilnani, Saibal Chatterjee, Shubhra Gupta, Stutee Ghosh, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Suhani Singh, Tatsam Mukherjee, Tusshar Sasi, Udita Jhunjhunwala"
+					}
+				},
+				"objectID": "2d184972dc29447ec691824d0d3164f0"
+			},
+			{
+				"AverageScore": 3.5,
+				"Cast": "Diljit Dosanjh, Diana Penty, Boman Irani, Ratna Pathak Shah, Banita Sandhu, Sumeet Vyas, Mukesh Bhhatt, Kashmira Irani, Chunky Pandey, Sarah Barlondo",
+				"Director": "Ravi Chhabriya",
+				"Genres": "Comedy, Mystery",
+				"Language": "Hindi",
+				"LinkTitle": "Detective Sherdil",
+				"LocalPosterPath": "/meta/posters/gqLrdGer0xvG5ezas7Qe3alqMzV_hu_7c7afd14d87a6f23.webp",
+				"Overview": "For Detective Sherdil, crime-solving is his superpower. But can his wit, intellect and street-smart instincts help him crack the murder mystery of the industrialist Pankaj Bhatti?",
+				"Poster": "/gqLrdGer0xvG5ezas7Qe3alqMzV.jpg",
+				"Reviewers": "Bharathi Pradhan, Deepak Dua, Nonika Singh, Rahul Desai, Shilajit Mitra, Shubhra Gupta, Sucharita Tyagi, Sukanya Verma",
+				"URLPath": "/mreviews/detective-sherdil",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Diljit Dosanjh, Diana Penty, Boman Irani, Ratna Pathak Shah, Banita Sandhu, Sumeet Vyas, Mukesh Bhhatt, Kashmira Irani, Chunky Pandey, Sarah Barlondo"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Ravi Chhabriya"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Comedy, Mystery"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Detective Sherdil"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "For Detective Sherdil, crime-solving is his superpower. But can his wit, intellect and street-smart instincts help him crack the murder mystery of the industrialist Pankaj Bhatti?"
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Bharathi Pradhan, Deepak Dua, Nonika Singh, Rahul Desai, Shilajit Mitra, Shubhra Gupta, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Sukanya Verma"
+					}
+				},
+				"objectID": "07440fd94b01288e4e9b712bca235ecc"
+			},
+			{
+				"AverageScore": 3.3,
+				"Camera": "Amit Roy",
+				"Cast": "Taapsee Pannu, Ishwak Singh, Mita Vashisht, Swastika Mukherjee, Chhaya Kadam, Jatin Sarna, Prashant Narayanan, Chandan Roy, Vishwanath Chatterjee, Priti Shroff, Myrah Shivan",
+				"Director": "Devashish Makhija",
+				"Editor": "Naman Arora",
+				"Genres": "Action, Drama, Thriller",
+				"Language": "Hindi",
+				"LinkTitle": "Gandhari",
+				"LocalPosterPath": "/meta/posters/hCHei97aPYCCsh4vicz9X0wmdFV_hu_cdb98e09beb4a42d.webp",
+				"Overview": "When a mother loses her eyesight and her daughter in a kidnapping, she takes matters into her own hands to hunt down those responsible.",
+				"Poster": "/hCHei97aPYCCsh4vicz9X0wmdFV.jpg",
+				"Reviewers": "Renuka Vyavahare, Suchin Mehrotra, Priyanka Roy, Sukanya Verma, Shomini Sen, Rohit Khilnani, Nonika Singh, Upma Singh, Anuj Kumar, Sucharita Tyagi, Anupama Chopra, Shubhra Gupta, Poulomi Das, Rahul Desai, Anmol Jamwal, Stutee Ghosh, Srinivasan R",
+				"URLPath": "/mreviews/gandhari",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Taapsee Pannu, Ishwak Singh, Mita Vashisht, Swastika Mukherjee, Chhaya Kadam, Jatin Sarna, Prashant Narayanan, Chandan Roy, Vishwanath Chatterjee, Priti Shroff, Myrah Shivan"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Devashish Makhija"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Action, Drama, Thriller"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Gandhari"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "When a mother loses her eyesight and her daughter in a kidnapping, she takes matters into her own hands to hunt down those responsible."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Renuka Vyavahare, Suchin Mehrotra, Priyanka Roy, Sukanya Verma, Shomini Sen, Rohit Khilnani, Nonika Singh, Upma Singh, Anuj Kumar, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Anupama Chopra, Shubhra Gupta, Poulomi Das, Rahul Desai, Anmol Jamwal, Stutee Ghosh, Srinivasan R"
+					}
+				},
+				"objectID": "aa929fd0f5fd17d5564f378756898099"
+			},
+			{
+				"AverageScore": 3.2,
+				"Cast": "Sidharth Malhotra, Janhvi Kapoor, Manjot Singh, Sanjay Kapoor, Inayat Verma, Renji Panicker, Siddhartha Shankar, Anand Manmadhan",
+				"Director": "Tushar Jalota",
+				"Genres": "Romance, Drama, Comedy",
+				"Language": "Hindi",
+				"LinkTitle": "Param Sundari",
+				"LocalPosterPath": "/meta/posters/uLPUsH3Fwe6mAU7n6WpMSDLdYCm_hu_7e6aba4d9352bd74.webp",
+				"Overview": "In Kerala's picturesque backwaters, a North Indian and South Indian find unexpected love. Their cultural differences spark a hilarious and chaotic romance, full of twists and turns.",
+				"Poster": "/uLPUsH3Fwe6mAU7n6WpMSDLdYCm.jpg",
+				"Reviewers": "Ajay Brahmatmaj, Akhil Arora, Anmol Jamwal, Anuj Kumar, Anupama Chopra, Arnab Banerjee, Bharathi Pradhan, Bhawana Somaaya, Deepak Dua, Rahul Desai, Rohan Naahar, Rohit Khilnani, Sachin Chatte, Sanyukta Thakare, Shomini Sen, Shubhra Gupta, Sucharita Tyagi, Suchin Mehrotra, Suhani Singh, Uday Bhatia",
+				"URLPath": "/mreviews/param-sundari",
+				"_highlightResult": {
+					"Cast": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Sidharth Malhotra, Janhvi Kapoor, Manjot Singh, Sanjay Kapoor, Inayat Verma, Renji Panicker, Siddhartha Shankar, Anand Manmadhan"
+					},
+					"Director": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Tushar Jalota"
+					},
+					"Genres": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Romance, Drama, Comedy"
+					},
+					"Language": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Hindi"
+					},
+					"LinkTitle": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "Param Sundari"
+					},
+					"Overview": {
+						"matchLevel": "none",
+						"matchedWords": [],
+						"value": "In Kerala's picturesque backwaters, a North Indian and South Indian find unexpected love. Their cultural differences spark a hilarious and chaotic romance, full of twists and turns."
+					},
+					"Reviewers": {
+						"fullyHighlighted": false,
+						"matchLevel": "full",
+						"matchedWords": [
+							"sucharita"
+						],
+						"value": "Ajay Brahmatmaj, Akhil Arora, Anmol Jamwal, Anuj Kumar, Anupama Chopra, Arnab Banerjee, Bharathi Pradhan, Bhawana Somaaya, Deepak Dua, Rahul Desai, Rohan Naahar, Rohit Khilnani, Sachin Chatte, Sanyukta Thakare, Shomini Sen, Shubhra Gupta, \u003cem\u003eSucharita\u003c/em\u003e Tyagi, Suchin Mehrotra, Suhani Singh, Uday Bhatia"
+					}
+				},
+				"objectID": "c082576ee7f6b6fad6686f4e358b4335"
+			}
+		],
+		"hitsPerPage": 20,
+		"index": "fcg-index",
+		"nbHits": 97,
+		"nbPages": 5,
+		"page": 3,
+		"params": "page=3\u0026query=sucharita",
+		"processingTimeMS": 2,
+		"processingTimingsMS": {
+			"_request": {
+				"roundTrip": 132
+			},
+			"afterFetch": {
+				"format": {
+					"highlighting": 1,
+					"total": 1
+				}
+			},
+			"fetch": {
+				"total": 1
+			},
+			"total": 2
+		},
+		"query": "sucharita",
+		"renderingContent": {},
+		"serverTimeMS": 4
+	}
+]

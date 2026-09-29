@@ -86,7 +86,7 @@ var dedupMetaCmd = &cobra.Command{
 				fmt.Println("Removing ", mTagFName)
 			}
 		}
-		for fName, _ := range metaMap {
+		for fName := range metaMap {
 			toDelete := filepath.Clean(fmt.Sprintf("%s/../assets/meta/%s", metaCfg.HugoRoot, fName))
 			if err := os.Remove(toDelete); err != nil {
 				return err
