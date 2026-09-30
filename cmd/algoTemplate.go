@@ -10,6 +10,7 @@ import (
 	"os"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+	"github.com/kylelemons/godebug/pretty"
 	"github.com/spf13/cobra"
 )
 
@@ -50,22 +51,40 @@ var algoTemplateCmd = &cobra.Command{
 		if err := json.Unmarshal([]byte(jsonStr), &result); err != nil {
 			return fmt.Errorf("failed to de-serialize search result: %w", err)
 		}
-		firstIndexResult := result[0]
-		fmt.Println(firstIndexResult.SearchResponse)
 
-		// resp := result[0].SearchResponse
-		// fmt.Println(*resp.NbHits, *resp.NbPages, *resp.Page, *resp.HitsPerPage)
+		type IDXOut struct {
+			Page     int32
+			NumPages int32
+			Hits     []map[string]any
+		}
+		idxOut := make([]IDXOut, 0)
+		for _, r := range result {
+			sResp := r.SearchResponse
+			hits := sResp.Hits
+			page := sResp.Page
+			numPages := sResp.NbPages
+			allHits := make([]map[string]any, 0)
+			for _, hit := range hits {
 
-		// for _, hit := range resp.GetHits() {
+				hitMap := make(map[string]any)
+				hitMap["LocalPosterPath"] = hit.AdditionalProperties["LocalPosterPath"]
+				hitMap["URLPath"] = hit.AdditionalProperties["URLPath"]
 
-		// 	mHit := hit.GetHighlightResult()
-		// 	for key, hilightResult := range mHit {
-		// 		fmt.Println(key)
-		// 		fmt.Println(hilightResult.HighlightResultOption.GetFullyHighlighted())
-		// 		fmt.Printf("%s\n", strings.Repeat("*", 80))
-		// 	}
-		// 	fmt.Printf("%s\n", strings.Repeat("-", 80))
-		// }
+				hHit := hit.GetHighlightResult()
+				for key, val := range hHit {
+					hitMap[key] = val.HighlightResultOption.Value
+				}
+
+				allHits = append(allHits, hitMap)
+			}
+			idxOut = append(idxOut, IDXOut{
+				Page:     *page,
+				NumPages: *numPages,
+				Hits:     allHits,
+			})
+		}
+
+		pretty.Print(idxOut)
 
 		return nil
 	},
