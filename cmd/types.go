@@ -82,3 +82,13 @@ type TermPage struct {
 		LinkTitle string `json:"LinkTitle"`
 	} `json:"Metadata"`
 }
+
+// IDXOut is one page of Algolia search results, flattened for html/template.
+// Page is 1-based, to match the --page flag and what a reader sees.
+type IDXOut struct {
+	Page        int32
+	NumPages    int32
+	NbHits      int32
+	HitsPerPage int32
+	Hits        []map[string]any
+}
