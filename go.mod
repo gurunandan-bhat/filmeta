@@ -3,7 +3,7 @@ module filmeta
 go 1.27
 
 require (
-	github.com/algolia/algoliasearch-client-go/v4 v4.47.0
+	github.com/algolia/algoliasearch-client-go/v4 v4.48.0
 	github.com/gorilla/schema v1.4.1
 	github.com/kylelemons/godebug v1.1.0
 	github.com/pelletier/go-toml/v2 v2.4.3
@@ -11,7 +11,7 @@ require (
 	github.com/spf13/viper v1.21.0
 	github.com/yuin/goldmark v1.8.6
 	go.abhg.dev/goldmark/frontmatter v0.3.0
-	golang.org/x/text v0.42.0
+	golang.org/x/text v0.43.0
 )
 
 require (
@@ -25,6 +25,6 @@ require (
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
-	golang.org/x/sys v0.48.0 // indirect
+	golang.org/x/sys v0.49.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
